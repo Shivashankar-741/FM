@@ -45,15 +45,16 @@
     <div class="workspace">
       <div class="sidebar">
         <ul class="sidebar__block">
-          <li class="sidebar__block--list" id="modulatingSignal" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            data-bs-whatever="Modulating signal">
+          <li class="sidebar__block--list" id="modulatingSignal" data-bs-toggle="modal"
+            data-bs-target="#modulatingSignalModal" data-bs-whatever="Modulating signal">
             <img src="./blockImages/modulatingSignal.png" class="sidebar__block--img" alt="" srcset="">
           </li>
-          <li class="sidebar__block--list" id="carrierSignal" data-bs-toggle="modal" data-bs-target="#exampleModal"
-            data-bs-whatever="Carrier signal">
+          <li class="sidebar__block--list" id="carrierSignal" data-bs-toggle="modal"
+            data-bs-target="#carrierSignalModal" data-bs-whatever="Carrier signal">
             <img src="./blockImages/carrierSignal.png" class="sidebar__block--img" alt="" srcset="">
           </li>
-          <li class="sidebar__block--list" id="frequencySensistivity">
+          <li class="sidebar__block--list" id="frequencySensistivity" data-bs-toggle="modal"
+            data-bs-target="#exampleModal" data-bs-whatever="@mdo">
             <img src="./blockImages/frequencySensistivity.png" class="sidebar__block--img" alt="" srcset="">
           </li>
           <li class="sidebar__block--list" id="integrator">
@@ -90,14 +91,16 @@
     </footer> -->
 
     <!-- Modal Popup -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+    <!-- Modal for modulatingSignal -->
+    <div class="modal fade" id="modulatingSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <!-- <h5 class="modal-title" id="exampleModalLabel">asdf</h5> -->
-            <h6 id="exampleModalLabel">Getting frequency and amplitude
-              <!-- <span>modulating signal</span> -->
-              <span>carrier signal</span>
+            <h6 id="exampleModalLabel">
+              frequency and amplitude of modulating signal
             </h6>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
@@ -106,14 +109,14 @@
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Frequency:</label>
                 <div class="input-group">
-                  <input type="number" class="form-control" id="recipient-name" value="500">
+                  <input type="number" class="form-control" id="modulatingFrequency" value="500">
                   <span class="input-group-text" id="basic-addon1">Hz</span>
                 </div>
               </div>
               <div class="mb-3">
                 <label for="recipient-name" class="col-form-label">Amplitute:</label>
                 <div class="input-group">
-                  <input type="number" class="form-control" id="recipient-name" value="10">
+                  <input type="number" class="form-control" id="modulatingAmplitute" value="10">
                   <span class="input-group-text" id="basic-addon1">V</span>
                 </div>
               </div>
@@ -121,7 +124,83 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Create</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modulatingSubmit">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Model for carrierSignal -->
+    <div class="modal fade" id="carrierSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 id="exampleModalLabel">
+              frequency and amplitude of carrier signal
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Frequency:</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="carrierFrequency" value="1000">
+                  <span class="input-group-text" id="basic-addon1">Hz</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Amplitute:</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="carrierAmplitute" value="20">
+                  <span class="input-group-text" id="basic-addon1">V</span>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="carrierSubmit">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Model for frequency sensistivity -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 id="exampleModalLabel">
+              Choose frequency sensistivity
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="form-check form-check-inline mx-4 my-2">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+              <label class="form-check-label" for="inlineRadio1">20</label>
+            </div>
+            <div class="form-check form-check-inline mx-4 my-2">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+              <label class="form-check-label" for="inlineRadio1">40</label>
+            </div>
+            <div class="form-check form-check-inline mx-4 my-2">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
+              <label class="form-check-label" for="inlineRadio2">60</label>
+            </div>
+            <div class="form-check form-check-inline mx-4 my-2">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
+              <label class="form-check-label" for="inlineRadio2">80</label>
+            </div>
+            <div class="form-check form-check-inline mx-4 my-2">
+              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option5">
+              <label class="form-check-label" for="inlineRadio2">100</label>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Ok</button>
+            </div>
           </div>
         </div>
       </div>

@@ -1,28 +1,37 @@
-// console.log("from simulator");
 
-// document.querySelector("#modulatingSignal").addEventListener('click', () => {
-//   console.log('user has selected the modulating signal');
-// })
+let modulatingFrequency = document.querySelector("#modulatingFrequency")
+let modulatingAmplitute = document.querySelector("#modulatingAmplitute")
+let modulatingSubmit = document.querySelector("#modulatingSubmit")
+let carrierFrequency = document.querySelector("#carrierFrequency")
+let carrierAmplitute = document.querySelector("#carrierAmplitute")
+let carrierSubmit = document.querySelector("#carrierSubmit")
 
-// document.querySelector("#carrierSignal").addEventListener('click', () => {
-//   console.log('user has selected the carrier');
-// })
+const obj = {
+  modulating: {
+    frequency: 0,
+    amplitude: 0
+  },
+  carrier: {
+    frequency: 0,
+    amplitude: 0
+  }
+}
 
-// var exampleModal = document.getElementById('exampleModal')
-// exampleModal.addEventListener('show.bs.modal', function (event) {
-//   // Button that triggered the modal
-//   var button = event.relatedTarget
-//   // Extract info from data-bs-* attributes
-//   var recipient = button.getAttribute('data-bs-whatever')
-//   // If necessary, you could initiate an AJAX request here
-//   // and then do the updating in a callback.
-//   //
-//   // Update the modal's content.
-//   var modalTitle = exampleModal.querySelector('.modal-title')
-//   var modalBodyInput = exampleModal.querySelector('.modal-body input')
+modulatingSubmit.addEventListener('click', () => {
+  obj.modulating.frequency = parseInt(modulatingFrequency.value);
+  obj.modulating.amplitude = parseInt(modulatingAmplitute.value);
+  console.log(obj);
+})
 
-//   modalTitle.textContent = 'New message to ' + recipient
-//   modalBodyInput.value = recipient
-// })
+carrierSubmit.addEventListener('click', () => {
+  if (carrierFrequency.value > obj.modulating.frequency && carrierAmplitute.value > obj.modulating.amplitude) {
+    obj.carrier.frequency = parseInt(carrierFrequency.value);
+    obj.carrier.amplitude = parseInt(carrierAmplitute.value);
+  }
+  else {
+    alert("carrier frequency and amplitude should be greater than modulating frequency and amplitude")
+  }
+  console.log(obj);
+})
 
-console.log(document.querySelector('#recipient-name').value);
+console.log(obj);
