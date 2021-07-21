@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FM modulation and demodulation</title>
+  <link rel="stylesheet" href="./styles/styles.css">
+  <!-- CSS only -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- JavaScript Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</head>
+
+<body>
+  <div>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="custom-nav container-fluid">
+        <a class="navbar-brand" href="#">FM Simulation</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <select class="form-select" aria-label="Default select example">
+              <option selected>Normal</option>
+              <option value="1">Delete</option>
+              <option value="2">Edit</option>
+            </select>
+          </ul>
+          <!-- <form class="d-flex">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form> -->
+        </div>
+      </div>
+    </nav>
+    <!-- Simulator container -->
+    <div class="workspace">
+      <div class="sidebar">
+        <ul class="sidebar__block">
+          <li class="sidebar__block--list" id="modulatingSignal" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="Modulating signal">
+            <img src="./blockImages/modulatingSignal.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="carrierSignal" data-bs-toggle="modal" data-bs-target="#exampleModal"
+            data-bs-whatever="Carrier signal">
+            <img src="./blockImages/carrierSignal.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="frequencySensistivity">
+            <img src="./blockImages/frequencySensistivity.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="integrator">
+            <img src="./blockImages/integrator.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="multiplier">
+            <img src="./blockImages/multiplier.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="modulator">
+            <img src="./blockImages/modulator.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="differentiator">
+            <img src="./blockImages/differentiator.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="envelopeDetector">
+            <img src="./blockImages/envelopeDetector.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="dcLimitedCircuit">
+            <img src="./blockImages/dcLimitedCircuit.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+          <li class="sidebar__block--list" id="parameterExtraction">
+            <img src="./blockImages/parameterExtraction.png" class="sidebar__block--img" alt="" srcset="">
+          </li>
+        </ul>
+      </div>
+      <div class="simulation-area">
+        <h1>simulation area</h1>
+      </div>
+    </div>
+    <!-- <footer class="footer">
+      <h1 class="container">
+        We Acknowledge NITK and PALS for extending their support towards successful completion of the experiment
+      </h1>
+    </footer> -->
+
+    <!-- Modal Popup -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <!-- <h5 class="modal-title" id="exampleModalLabel">asdf</h5> -->
+            <h6 id="exampleModalLabel">Getting frequency and amplitude
+              <!-- <span>modulating signal</span> -->
+              <span>carrier signal</span>
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Frequency:</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="recipient-name" value="500">
+                  <span class="input-group-text" id="basic-addon1">Hz</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="recipient-name" class="col-form-label">Amplitute:</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" id="recipient-name" value="10">
+                  <span class="input-group-text" id="basic-addon1">V</span>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Create</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="./js/index.js"></script>
+</body>
+
+</html>
