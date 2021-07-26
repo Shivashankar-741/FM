@@ -2,9 +2,11 @@ let modulatingFrequency = document.querySelector("#modulatingFrequency")
 let modulatingAmplitute = document.querySelector("#modulatingAmplitute")
 let modulatingSubmit = document.querySelector("#modulatingSubmit")
 let carrierFrequency = document.querySelector("#carrierFrequency")
+let frequencySensistivitySubmit = document.querySelector("#frequencySensistivitySubmit")
 let carrierAmplitute = document.querySelector("#carrierAmplitute")
 let carrierSubmit = document.querySelector("#carrierSubmit")
 let simulationArea = document.querySelector(".simulation-area")
+let frequencySensistivityInput = document.querySelector('#frequencySensitivityInput')
 
 let integrator = document.querySelector('#integrator');
 let multiplier = document.querySelector('#multiplier');
@@ -16,12 +18,14 @@ let parameterExtraction = document.querySelector('#parameterExtraction');
 
 let modulatingSignalRight = document.querySelector('.modulatingSignal--block__right')
 let carrierSignalRight = document.querySelector('.carrierSignal--block__right')
+let frequencySensistivityRight = document.querySelector('.frequencySensistivity--block__right')
 let integratorBlockLeft = document.querySelector('.integrator--block__left')
 let integratorBlockBottom = document.querySelector('.integrator--block__bottom')
 let multiplierBlockTop = document.querySelector('.multiplier--block__top')
 let multiplierBlockLeft = document.querySelector('.multiplier--block__left')
 let multiplierBlockBottom = document.querySelector('.multiplier--block__bottom')
 let modulatorBlockTop = document.querySelector('.modulator--block__top')
+let modulatorBlockLeft = document.querySelector('.modulator--block__left')
 let modulatorBlockRight = document.querySelector('.modulator--block__right')
 let differentiatorBlockLeft = document.querySelector('.differentiator--block__left')
 let differentiatorBlockRight = document.querySelector('.differentiator--block__right')
@@ -30,6 +34,180 @@ let dcLimitedCircuitBlockRight = document.querySelector('.dcLimitedCircuit--bloc
 let envelopeDetectorBlockLeft = document.querySelector('.envelopeDetector--block__left')
 let envelopeDetectorBlockRight = document.querySelector('.envelopeDetector--block__right')
 let parameterExtractionBlockLeft = document.querySelector('.parameterExtraction--block__left')
+
+let model = document.querySelector('#selectMode')
+
+
+const obj = {
+  modulating: {
+    frequency: 0,
+    amplitude: 0
+  },
+  carrier: {
+    frequency: 0,
+    amplitude: 0
+  },
+  frequencySensistivity: 0
+}
+
+
+
+modulatingSubmit.onmousedown = () => {
+  obj.modulating.frequency = parseInt(modulatingFrequency.value);
+  obj.modulating.amplitude = parseInt(modulatingAmplitute.value);
+
+  let imgBlock = document.createElement("img");
+  imgBlock.setAttribute('src', '../blockImages/modulatingSignal.png');
+  imgBlock.setAttribute('class', 'modulating__signal--block');
+  simulationArea.appendChild(imgBlock);
+}
+
+modulatingSubmit.onmouseup = () => {
+  let modulatingSignal = document.querySelector('.modulating__signal--block')
+
+  modulatingSignal.style.position = 'absolute';
+  modulatingSignal.style.zIndex = 1000;
+
+
+  modulatingSignalRight.style.position = 'absolute';
+  modulatingSignalRight.style.zIndex = 1000;
+  modulatingSignalRight.style.display = 'block';
+
+  function onMouseMove(event) {
+    modulatingSignal.style.left = event.pageX - modulatingSignal.offsetWidth / 2 + 'px';
+    modulatingSignal.style.top = event.pageY - modulatingSignal.offsetHeight / 2 + 'px';
+
+    modulatingSignalRight.style.left = event.pageX + 53 - modulatingSignalRight.offsetWidth / 2 + 'px';
+    modulatingSignalRight.style.top = event.pageY + 1 - modulatingSignalRight.offsetHeight / 2 + 'px';
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  modulatingSignal.ondblclick = () => {
+    document.addEventListener('mousemove', onMouseMove);
+  }
+
+
+
+  modulatingSignal.onclick = () => {
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.modulating__signal--block'))
+      modulatingSignalRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
+    document.removeEventListener('mousemove', onMouseMove)
+  }
+}
+
+
+carrierSubmit.onmousedown = () => {
+  if (carrierFrequency.value > obj.modulating.frequency && carrierAmplitute.value > obj.modulating.amplitude) {
+    obj.carrier.frequency = parseInt(carrierFrequency.value);
+    obj.carrier.amplitude = parseInt(carrierAmplitute.value);
+
+    let imgBlock = document.createElement("img");
+    imgBlock.setAttribute('src', '../blockImages/carrierSignal.png');
+    imgBlock.setAttribute('class', 'carrier__signal--block');
+    simulationArea.appendChild(imgBlock);
+  }
+  else {
+    alert("carrier frequency and amplitude should be greater than modulating frequency and amplitude")
+  }
+}
+
+carrierSubmit.onmouseup = () => {
+  let carrierSignal = document.querySelector('.carrier__signal--block')
+
+  carrierSignal.style.position = 'absolute';
+  carrierSignal.style.zIndex = 1000;
+
+
+  carrierSignalRight.style.position = 'absolute';
+  carrierSignalRight.style.zIndex = 1000;
+  carrierSignalRight.style.display = 'block';
+
+  function onMouseMove(event) {
+    carrierSignal.style.left = event.pageX - carrierSignal.offsetWidth / 2 + 'px';
+    carrierSignal.style.top = event.pageY - carrierSignal.offsetHeight / 2 + 'px';
+
+    carrierSignalRight.style.left = event.pageX + 53 - carrierSignalRight.offsetWidth / 2 + 'px';
+    carrierSignalRight.style.top = event.pageY + 1 - carrierSignalRight.offsetHeight / 2 + 'px';
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  carrierSignal.ondblclick = () => {
+    document.addEventListener('mousemove', onMouseMove);
+  }
+
+  carrierSignal.onclick = () => {
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.carrier__signal--block'));
+      carrierSignalRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
+    document.removeEventListener('mousemove', onMouseMove)
+  }
+}
+
+frequencySensistivitySubmit.onmousedown = () => {
+  obj.frequencySensistivity = parseInt(frequencySensistivityInput.value)
+  let imgBlock = document.createElement("img");
+  imgBlock.setAttribute('src', '../blockImages/frequencySensistivity.png');
+  imgBlock.setAttribute('class', 'frequencySensistivity__signal--block');
+  simulationArea.appendChild(imgBlock);
+}
+
+frequencySensistivitySubmit.onmouseup = () => {
+  let frequencySensistivity = document.querySelector('.frequencySensistivity__signal--block')
+
+  frequencySensistivity.style.position = 'absolute';
+  frequencySensistivity.style.zIndex = 1000;
+
+
+  frequencySensistivityRight.style.position = 'absolute';
+  frequencySensistivityRight.style.zIndex = 1000;
+  frequencySensistivityRight.style.display = 'block';
+
+  function onMouseMove(event) {
+    frequencySensistivity.style.left = event.pageX - frequencySensistivity.offsetWidth / 2 + 'px';
+    frequencySensistivity.style.top = event.pageY - frequencySensistivity.offsetHeight / 2 + 'px';
+
+    frequencySensistivityRight.style.left = event.pageX + 53 - frequencySensistivityRight.offsetWidth / 2 + 'px';
+    frequencySensistivityRight.style.top = event.pageY + 1 - frequencySensistivityRight.offsetHeight / 2 + 'px';
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+
+  frequencySensistivity.ondblclick = () => {
+    document.addEventListener('mousemove', onMouseMove);
+  }
+
+  frequencySensistivity.onclick = () => {
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.frequencySensistivity__signal--block'));
+      frequencySensistivityRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
+    document.removeEventListener('mousemove', onMouseMove)
+  }
+}
+
 
 // INTEGRATOR
 integrator.onmousedown = () => {
@@ -41,8 +219,6 @@ integrator.onmousedown = () => {
 
 integrator.onmouseup = () => {
   let integrator = document.querySelector('.integrator--block')
-  console.log('mouse up');
-  console.log(integrator);
 
   integrator.style.position = 'absolute';
   integrator.style.zIndex = 1000;
@@ -56,7 +232,6 @@ integrator.onmouseup = () => {
   integratorBlockBottom.style.display = 'block';
 
   function onMouseMove(event) {
-    console.log(event);
     integrator.style.left = event.pageX - integrator.offsetWidth / 2 + 'px';
     integrator.style.top = event.pageY - integrator.offsetHeight / 2 + 'px';
     integratorBlockLeft.style.left = event.pageX - 53 - integratorBlockLeft.offsetWidth / 2 + 'px';
@@ -72,7 +247,17 @@ integrator.onmouseup = () => {
   }
 
   integrator.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.integrator--block'));
+      integratorBlockLeft.style.display = 'none';
+      integratorBlockBottom.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -87,8 +272,6 @@ multiplier.onmousedown = () => {
 
 multiplier.onmouseup = () => {
   let multiplier = document.querySelector('.multiplier--block')
-  console.log('mouse up');
-  console.log(multiplier);
 
   multiplier.style.position = 'absolute';
   multiplier.style.zIndex = 1000;
@@ -108,7 +291,6 @@ multiplier.onmouseup = () => {
   multiplierBlockBottom.style.display = 'block';
 
   function onMouseMove(event) {
-    console.log(event);
     multiplier.style.left = event.pageX - multiplier.offsetWidth / 2 + 'px';
     multiplier.style.top = event.pageY - multiplier.offsetHeight / 2 + 'px';
 
@@ -127,7 +309,18 @@ multiplier.onmouseup = () => {
   }
 
   multiplier.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.multiplier--block'));
+      multiplierBlockLeft.style.display = 'none';
+      multiplierBlockTop.style.display = 'none';
+      multiplierBlockBottom.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -142,8 +335,6 @@ modulator.onmousedown = () => {
 
 modulator.onmouseup = () => {
   let modulator = document.querySelector('.modulator--block')
-  console.log('mouse up');
-  console.log(modulator);
 
   modulator.style.position = 'absolute';
   modulator.style.zIndex = 1000;
@@ -156,21 +347,20 @@ modulator.onmouseup = () => {
   modulatorBlockRight.style.zIndex = 1000;
   modulatorBlockRight.style.display = 'block';
 
-  multiplierBlockLeft.style.position = 'absolute';
-  multiplierBlockLeft.style.zIndex = 1000;
-  multiplierBlockLeft.style.display = 'block';
+  modulatorBlockLeft.style.position = 'absolute';
+  modulatorBlockLeft.style.zIndex = 1000;
+  modulatorBlockLeft.style.display = 'block';
 
 
   function onMouseMove(event) {
-    console.log(event);
     modulator.style.left = event.pageX - modulator.offsetWidth / 2 + 'px';
     modulator.style.top = event.pageY - modulator.offsetHeight / 2 + 'px';
 
     modulatorBlockTop.style.left = event.pageX + 0 - modulatorBlockTop.offsetWidth / 2 + 'px';
     modulatorBlockTop.style.top = event.pageY - 38 - modulatorBlockTop.offsetHeight / 2 + 'px';
 
-    multiplierBlockLeft.style.left = event.pageX - 53 - multiplierBlockLeft.offsetWidth / 2 + 'px';
-    multiplierBlockLeft.style.top = event.pageY + 1 - multiplierBlockLeft.offsetHeight / 2 + 'px';
+    modulatorBlockLeft.style.left = event.pageX - 53 - modulatorBlockLeft.offsetWidth / 2 + 'px';
+    modulatorBlockLeft.style.top = event.pageY + 1 - modulatorBlockLeft.offsetHeight / 2 + 'px';
     modulatorBlockRight.style.left = event.pageX + 53 - modulatorBlockRight.offsetWidth / 2 + 'px';
     modulatorBlockRight.style.top = event.pageY + 1 - modulatorBlockRight.offsetHeight / 2 + 'px';
   }
@@ -182,7 +372,18 @@ modulator.onmouseup = () => {
   }
 
   modulator.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.modulator--block'));
+      modulatorBlockLeft.style.display = 'none';
+      modulatorBlockRight.style.display = 'none';
+      modulatorBlockTop.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -197,13 +398,10 @@ differentiator.onmousedown = () => {
 
 differentiator.onmouseup = () => {
   let differentiator = document.querySelector('.differentiator--block')
-  console.log('mouse up');
-  console.log(differentiator);
 
   differentiator.style.position = 'absolute';
   differentiator.style.zIndex = 1000;
 
-  console.log('first');
 
   differentiatorBlockLeft.style.position = 'absolute';
   differentiatorBlockLeft.style.zIndex = '1000';
@@ -213,10 +411,8 @@ differentiator.onmouseup = () => {
   differentiatorBlockRight.style.zIndex = '1000';
   differentiatorBlockRight.style.display = 'block';
 
-  console.log('second');
 
   function onMouseMove(event) {
-    console.log(event);
     differentiator.style.left = event.pageX - differentiator.offsetWidth / 2 + 'px';
     differentiator.style.top = event.pageY - differentiator.offsetHeight / 2 + 'px';
 
@@ -233,7 +429,17 @@ differentiator.onmouseup = () => {
   }
 
   differentiator.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.differentiator--block'));
+      differentiatorBlockLeft.style.display = 'none';
+      differentiatorBlockRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -248,8 +454,6 @@ envelopeDetector.onmousedown = () => {
 
 envelopeDetector.onmouseup = () => {
   let envelopeDetector = document.querySelector('.envelopeDetector--block')
-  console.log('mouse up');
-  console.log(envelopeDetector);
 
   envelopeDetector.style.position = 'absolute';
   envelopeDetector.style.zIndex = 1000;
@@ -263,7 +467,6 @@ envelopeDetector.onmouseup = () => {
   envelopeDetectorBlockRight.style.display = 'block';
 
   function onMouseMove(event) {
-    console.log(event);
     envelopeDetector.style.left = event.pageX - envelopeDetector.offsetWidth / 2 + 'px';
     envelopeDetector.style.top = event.pageY - envelopeDetector.offsetHeight / 2 + 'px';
 
@@ -280,7 +483,17 @@ envelopeDetector.onmouseup = () => {
   }
 
   envelopeDetector.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.envelopeDetector--block'));
+      envelopeDetectorBlockLeft.style.display = 'none';
+      envelopeDetectorBlockRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -295,8 +508,6 @@ dcLimitedCircuit.onmousedown = () => {
 
 dcLimitedCircuit.onmouseup = () => {
   let dcLimitedCircuit = document.querySelector('.dcLimitedCircuit--block')
-  console.log('mouse up');
-  console.log(dcLimitedCircuit);
 
   dcLimitedCircuit.style.position = 'absolute';
   dcLimitedCircuit.style.zIndex = 1000;
@@ -311,7 +522,6 @@ dcLimitedCircuit.onmouseup = () => {
 
 
   function onMouseMove(event) {
-    console.log(event);
     dcLimitedCircuit.style.left = event.pageX - dcLimitedCircuit.offsetWidth / 2 + 'px';
     dcLimitedCircuit.style.top = event.pageY - dcLimitedCircuit.offsetHeight / 2 + 'px';
 
@@ -328,7 +538,17 @@ dcLimitedCircuit.onmouseup = () => {
   }
 
   dcLimitedCircuit.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.dcLimitedCircuit--block'));
+      dcLimitedCircuitBlockLeft.style.display = 'none';
+      dcLimitedCircuitBlockRight.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -343,8 +563,6 @@ parameterExtraction.onmousedown = () => {
 
 parameterExtraction.onmouseup = () => {
   let parameterExtraction = document.querySelector('.parameterExtraction--block')
-  console.log('mouse up');
-  console.log(parameterExtraction);
 
   parameterExtraction.style.position = 'absolute';
   parameterExtraction.style.zIndex = 1000;
@@ -358,7 +576,6 @@ parameterExtraction.onmouseup = () => {
 
 
   function onMouseMove(event) {
-    console.log(event);
     parameterExtraction.style.left = event.pageX - parameterExtraction.offsetWidth / 2 + 'px';
     parameterExtraction.style.top = event.pageY - parameterExtraction.offsetHeight / 2 + 'px';
 
@@ -373,170 +590,19 @@ parameterExtraction.onmouseup = () => {
   }
 
   parameterExtraction.onclick = () => {
-    console.log('text click');
+    if (model.value === "Delete") {
+      document.getElementsByClassName('simulation-area')[0].removeChild(
+        document.querySelector('.parameterExtraction--block'));
+      parameterExtractionBlockLeft.style.display = 'none';
+      model.value = "mode"
+    } else if (model.value === "Edit") {
+      model.value = "mode"
+    } else if (model.value === "output") {
+      model.value = "mode"
+    }
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
 
 
-const obj = {
-  modulating: {
-    frequency: 0,
-    amplitude: 0
-  },
-  carrier: {
-    frequency: 0,
-    amplitude: 0
-  }
-}
 
-modulatingSubmit.onmousedown = () => {
-  console.log('mouse down');
-  obj.modulating.frequency = parseInt(modulatingFrequency.value);
-  obj.modulating.amplitude = parseInt(modulatingAmplitute.value);
-
-  let imgBlock = document.createElement("img");
-  imgBlock.setAttribute('src', '../blockImages/modulatingSignal.png');
-  imgBlock.setAttribute('class', 'modulating__signal--block');
-  simulationArea.appendChild(imgBlock);
-}
-
-modulatingSubmit.onmouseup = () => {
-  let modulatingSignal = document.querySelector('.modulating__signal--block')
-  console.log('mouse up');
-  console.log(modulatingSignal);
-
-  modulatingSignal.style.position = 'absolute';
-  modulatingSignal.style.zIndex = 1000;
-
-
-  modulatingSignalRight.style.position = 'absolute';
-  modulatingSignalRight.style.zIndex = 1000;
-  modulatingSignalRight.style.display = 'block';
-
-  function onMouseMove(event) {
-    console.log(event);
-    modulatingSignal.style.left = event.pageX - modulatingSignal.offsetWidth / 2 + 'px';
-    modulatingSignal.style.top = event.pageY - modulatingSignal.offsetHeight / 2 + 'px';
-
-    modulatingSignalRight.style.left = event.pageX + 53 - modulatingSignalRight.offsetWidth / 2 + 'px';
-    modulatingSignalRight.style.top = event.pageY + 1 - modulatingSignalRight.offsetHeight / 2 + 'px';
-  }
-
-  document.addEventListener('mousemove', onMouseMove);
-
-  modulatingSignal.ondblclick = () => {
-    document.addEventListener('mousemove', onMouseMove);
-  }
-
-  modulatingSignal.onclick = () => {
-    console.log('text click');
-    document.removeEventListener('mousemove', onMouseMove)
-  }
-}
-
-
-// carrierSubmit.addEventListener('click', () => {
-carrierSubmit.onmousedown = () => {
-  if (carrierFrequency.value > obj.modulating.frequency && carrierAmplitute.value > obj.modulating.amplitude) {
-    obj.carrier.frequency = parseInt(carrierFrequency.value);
-    obj.carrier.amplitude = parseInt(carrierAmplitute.value);
-
-    let imgBlock = document.createElement("img");
-    imgBlock.setAttribute('src', '../blockImages/carrierSignal.png');
-    imgBlock.setAttribute('class', 'carrier__signal--block');
-    simulationArea.appendChild(imgBlock);
-  }
-  else {
-    alert("carrier frequency and amplitude should be greater than modulating frequency and amplitude")
-  }
-}
-
-carrierSubmit.onmouseup = () => {
-  let carrierSignal = document.querySelector('.carrier__signal--block')
-  console.log('mouse up');
-  console.log(carrierSignal);
-
-  carrierSignal.style.position = 'absolute';
-  carrierSignal.style.zIndex = 1000;
-
-
-  carrierSignalRight.style.position = 'absolute';
-  carrierSignalRight.style.zIndex = 1000;
-  carrierSignalRight.style.display = 'block';
-
-  function onMouseMove(event) {
-    console.log(event);
-    carrierSignal.style.left = event.pageX - carrierSignal.offsetWidth / 2 + 'px';
-    carrierSignal.style.top = event.pageY - carrierSignal.offsetHeight / 2 + 'px';
-
-    carrierSignalRight.style.left = event.pageX + 53 - carrierSignalRight.offsetWidth / 2 + 'px';
-    carrierSignalRight.style.top = event.pageY + 1 - carrierSignalRight.offsetHeight / 2 + 'px';
-  }
-
-  document.addEventListener('mousemove', onMouseMove);
-
-  carrierSignal.ondblclick = () => {
-    document.addEventListener('mousemove', onMouseMove);
-  }
-
-  carrierSignal.onclick = () => {
-    console.log('text click');
-    document.removeEventListener('mousemove', onMouseMove)
-  }
-}
-
-console.log(obj);
-
-const canvasEle = document.getElementById('drawContainer');
-const context = canvasEle.getContext('2d');
-let startPosition = { x: 0, y: 0 };
-let lineCoordinates = { x: 0, y: 0 };
-let isDrawStart = false;
-
-const getClientOffset = (event) => {
-  const { pageX, pageY } = event.touches ? event.touches[0] : event;
-  const x = pageX - canvasEle.offsetLeft;
-  const y = pageY - canvasEle.offsetTop;
-
-  return {
-    x,
-    y
-  }
-}
-
-const drawLine = () => {
-  context.beginPath();
-  context.moveTo(startPosition.x, startPosition.y);
-  context.lineTo(lineCoordinates.x, lineCoordinates.y);
-  context.stroke();
-}
-
-const mouseDownListener = (event) => {
-  startPosition = getClientOffset(event);
-  isDrawStart = true;
-}
-
-const mouseMoveListener = (event) => {
-  if (!isDrawStart) return;
-
-  lineCoordinates = getClientOffset(event);
-  clearCanvas();
-  drawLine();
-}
-
-const mouseupListener = (event) => {
-  isDrawStart = false;
-}
-
-const clearCanvas = () => {
-  context.clearRect(0, 0, canvasEle.width, canvasEle.height);
-}
-
-canvasEle.addEventListener('mousedown', mouseDownListener);
-canvasEle.addEventListener('mousemove', mouseMoveListener);
-canvasEle.addEventListener('mouseup', mouseupListener);
-
-canvasEle.addEventListener('touchstart', mouseDownListener);
-canvasEle.addEventListener('touchmove', mouseMoveListener);
-canvasEle.addEventListener('touchend', mouseupListener);

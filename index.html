@@ -30,10 +30,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <select class="form-select" aria-label="Default select example">
-              <option selected>output</option>
-              <option value="1">Delete</option>
-              <option value="2">Edit</option>
+            <select class="form-select" aria-label="Default select example" id="selectMode">
+              <option selected>mode</option>
+              <option value="output">output</option>
+              <option value="Delete">Delete</option>
+              <option value="Edit">Edit</option>
             </select>
           </ul>
           <!-- <form class="d-flex">
@@ -85,12 +86,14 @@
       <div class="simulation-area">
         <div class="modulatingSignal--block__right circle"></div>
         <div class="carrierSignal--block__right circle"></div>
+        <div class="frequencySensistivity--block__right circle"></div>
         <div class="integrator--block__left circle"></div>
         <div class="integrator--block__bottom circle"></div>
         <div class="multiplier--block__top circle"></div>
         <div class="multiplier--block__left circle"></div>
         <div class="multiplier--block__bottom circle"></div>
         <div class="modulator--block__top circle"></div>
+        <div class="modulator--block__left circle"></div>
         <div class="modulator--block__right circle"></div>
         <div class="differentiator--block__left circle"></div>
         <div class="differentiator--block__right circle"></div>
@@ -99,7 +102,6 @@
         <div class="envelopeDetector--block__left circle"></div>
         <div class="envelopeDetector--block__right circle"></div>
         <div class="parameterExtraction--block__left circle"></div>
-        <!-- <canvas id="drawContainer" width="1600" height="1000" style="border: 1px solid #333"></canvas> -->
       </div>
     </div>
 
@@ -196,29 +198,17 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="form-check form-check-inline mx-4 my-2">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-              <label class="form-check-label" for="inlineRadio1">20</label>
-            </div>
-            <div class="form-check form-check-inline mx-4 my-2">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-              <label class="form-check-label" for="inlineRadio1">40</label>
-            </div>
-            <div class="form-check form-check-inline mx-4 my-2">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-              <label class="form-check-label" for="inlineRadio2">60</label>
-            </div>
-            <div class="form-check form-check-inline mx-4 my-2">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option4">
-              <label class="form-check-label" for="inlineRadio2">80</label>
-            </div>
-            <div class="form-check form-check-inline mx-4 my-2">
-              <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio4" value="option5">
-              <label class="form-check-label" for="inlineRadio2">100</label>
-            </div>
+            <select class="form-select" aria-label="Default select example" id="frequencySensitivityInput">
+              <option selected>20</option>
+              <option value="40">40</option>
+              <option value="60">60</option>
+              <option value="80">80</option>
+              <option value="100">100</option>
+            </select>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Ok</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                id="frequencySensistivitySubmit">Ok</button>
             </div>
           </div>
         </div>
