@@ -14,6 +14,8 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
     crossorigin="anonymous"></script>
+
+  <script type="module" src="./js/index.js"></script>
 </head>
 
 <body>
@@ -29,7 +31,7 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <select class="form-select" aria-label="Default select example">
-              <option selected>Normal</option>
+              <option selected>output</option>
               <option value="1">Delete</option>
               <option value="2">Edit</option>
             </select>
@@ -73,7 +75,7 @@
             <img src="./blockImages/envelopeDetector.png" class="sidebar__block--img" alt="" srcset="">
           </li>
           <li class="sidebar__block--list" id="dcLimitedCircuit">
-            <img src="./blockImages/dcLimitedCircuit.png" class="sidebar__block--img" alt="" srcset="">
+            <img src="./blockImages/d.png" class="sidebar__block--img" alt="" srcset="">
           </li>
           <li class="sidebar__block--list" id="parameterExtraction">
             <img src="./blockImages/parameterExtraction.png" class="sidebar__block--img" alt="" srcset="">
@@ -81,9 +83,26 @@
         </ul>
       </div>
       <div class="simulation-area">
-        <h1>simulation area</h1>
+        <div class="modulatingSignal--block__right circle"></div>
+        <div class="carrierSignal--block__right circle"></div>
+        <div class="integrator--block__left circle"></div>
+        <div class="integrator--block__bottom circle"></div>
+        <div class="multiplier--block__top circle"></div>
+        <div class="multiplier--block__left circle"></div>
+        <div class="multiplier--block__bottom circle"></div>
+        <div class="modulator--block__top circle"></div>
+        <div class="modulator--block__right circle"></div>
+        <div class="differentiator--block__left circle"></div>
+        <div class="differentiator--block__right circle"></div>
+        <div class="dcLimitedCircuit--block__left circle"></div>
+        <div class="dcLimitedCircuit--block__right circle"></div>
+        <div class="envelopeDetector--block__left circle"></div>
+        <div class="envelopeDetector--block__right circle"></div>
+        <div class="parameterExtraction--block__left circle"></div>
+        <!-- <canvas id="drawContainer" width="1600" height="1000" style="border: 1px solid #333"></canvas> -->
       </div>
     </div>
+
     <!-- <footer class="footer">
       <h1 class="container">
         We Acknowledge NITK and PALS for extending their support towards successful completion of the experiment
@@ -206,7 +225,6 @@
       </div>
     </div>
   </div>
-  <script src="./js/index.js"></script>
 </body>
 
 </html>

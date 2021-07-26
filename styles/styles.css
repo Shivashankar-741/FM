@@ -41,9 +41,9 @@
 }
 
 .simulation-area{
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; */
 
   border: 3px solid black;
 }
@@ -53,3 +53,23 @@
   color:whitesmoke;
   font-size: 16px;
 }
+
+.circle{
+  width: 12px;
+  height: 12px;
+  border-radius:50%;
+  background-color:rgb(231, 231, 19);
+  cursor:pointer;
+
+  display: none;
+}
+
+/* .parameterExtraction--block--left{
+  display:block;
+} */
+
+/* .modulating__signal--block{
+  position: absolute;
+  top: 200px;
+  left: 500px;
+} */
