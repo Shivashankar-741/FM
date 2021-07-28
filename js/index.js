@@ -1,3 +1,4 @@
+
 let modulatingFrequency = document.querySelector("#modulatingFrequency")
 let modulatingAmplitute = document.querySelector("#modulatingAmplitute")
 let modulatingSubmit = document.querySelector("#modulatingSubmit")
@@ -35,8 +36,9 @@ let envelopeDetectorBlockLeft = document.querySelector('.envelopeDetector--block
 let envelopeDetectorBlockRight = document.querySelector('.envelopeDetector--block__right')
 let parameterExtractionBlockLeft = document.querySelector('.parameterExtraction--block__left')
 
-let model = document.querySelector('#selectMode')
 
+
+let model = document.querySelector('#selectMode')
 
 const obj = {
   modulating: {
@@ -50,7 +52,48 @@ const obj = {
   frequencySensistivity: 0
 }
 
+//canvas
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 
+var canvasx = canvas.offsetLeft;
+var canvasy = canvas.offsetTop
+var last_mousex = 0;
+var last_mousey = 0;
+var mousex = 0;
+var mousey = 0;
+var mousedown = false;
+
+console.log(mousedown);
+
+modulatingSignalRight.onclick = function (e) {
+  last_mousex = parseInt(e.clientX - canvasx);
+  last_mousey = parseInt(e.clientY - canvasy);
+  mousedown = true;
+  console.log(mousedown);
+};
+
+
+integratorBlockLeft.onclick = function (e) {
+  mousedown = false;
+  console.log(mousedown);
+};
+
+simulationArea.onmousemove = function (e) {
+  mousex = parseInt(e.clientX - canvasx);
+  mousey = parseInt(e.clientY - canvasy);
+  console.log(mousedown);
+  if (mousedown) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
+    ctx.beginPath();
+    ctx.moveTo(last_mousex, last_mousey);
+    ctx.lineTo(mousex, mousey);
+    ctx.strokeStyle = 'black';
+    ctx.lineWidth = 5;
+    ctx.lineJoin = ctx.lineCap = 'round';
+    ctx.stroke();
+  }
+};
 
 modulatingSubmit.onmousedown = () => {
   obj.modulating.frequency = parseInt(modulatingFrequency.value);
@@ -244,6 +287,8 @@ integrator.onmouseup = () => {
 
   integrator.ondblclick = () => {
     document.addEventListener('mousemove', onMouseMove);
+    mousedown = true;
+    console.log(mousedown);
   }
 
   integrator.onclick = () => {
@@ -258,6 +303,8 @@ integrator.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    mousedown = false;
+    console.log(mousedown);
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
