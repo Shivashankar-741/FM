@@ -52,48 +52,87 @@ const obj = {
   frequencySensistivity: 0
 }
 
-//canvas
-var canvas = document.getElementById('canvas');
-var ctx = canvas.getContext('2d');
+//wire between modulating signal and integrator
+let canvasBwModAndIntegrator = document.getElementById('canvasBwModAndIntegrator');
+let canvasBwModAndIntegratorCtx = canvasBwModAndIntegrator.getContext('2d');
 
-var canvasx = canvas.offsetLeft;
-var canvasy = canvas.offsetTop
-var last_mousex = 0;
-var last_mousey = 0;
-var mousex = 0;
-var mousey = 0;
-var mousedown = false;
+let canvasBwModAndIntegratorCanvasx = canvasBwModAndIntegrator.offsetLeft;
+let canvasBwModAndIntegratorCanvasy = canvasBwModAndIntegrator.offsetTop
+let canvasBwModAndIntegratorInitial_mousex = 0;
+let canvasBwModAndIntegratorInitial_mousey = 0;
+let canvasBwModAndIntegratorLast_mousex = 0;
+let canvasBwModAndIntegratorLast_mousey = 0;
+let canvasBwModAndIntegratorMousex = 0;
+let canvasBwModAndIntegratorMousey = 0;
+let canvasBwModAndIntegratorIsWireConnected = false;
+let canvasBwModAndIntegratorWireBwModulatingtoIntegrator = false;
+let canvasBwModAndIntegratorIsModulatingSignalMoving = false;
+let canvasBwModAndIntegratorIsIntegratorMoving = false;
 
-console.log(mousedown);
+
 
 modulatingSignalRight.onclick = function (e) {
-  last_mousex = parseInt(e.clientX - canvasx);
-  last_mousey = parseInt(e.clientY - canvasy);
-  mousedown = true;
-  console.log(mousedown);
+  canvasBwModAndIntegratorInitial_mousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx);
+  canvasBwModAndIntegratorInitial_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+  canvasBwModAndIntegratorWireBwModulatingtoIntegrator = true;
+  canvasBwModAndIntegratorIsWireConnected = true
 };
 
 
 integratorBlockLeft.onclick = function (e) {
-  mousedown = false;
-  console.log(mousedown);
-};
-
-simulationArea.onmousemove = function (e) {
-  mousex = parseInt(e.clientX - canvasx);
-  mousey = parseInt(e.clientY - canvasy);
-  console.log(mousedown);
-  if (mousedown) {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); //clear canvas
-    ctx.beginPath();
-    ctx.moveTo(last_mousex, last_mousey);
-    ctx.lineTo(mousex, mousey);
-    ctx.strokeStyle = 'black';
-    ctx.lineWidth = 5;
-    ctx.lineJoin = ctx.lineCap = 'round';
-    ctx.stroke();
+  canvasBwModAndIntegratorLast_mousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx)
+  canvasBwModAndIntegratorLast_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy)
+  canvasBwModAndIntegratorWireBwModulatingtoIntegrator = false;
+  console.log(canvasBwModAndIntegratorWireBwModulatingtoIntegrator);
+  if (canvasBwModAndIntegratorIsWireConnected) {
+    canvasBwModAndIntegratorIsWireConnected = true
   }
 };
+
+
+simulationArea.onmousemove = function (e) {
+  if (canvasBwModAndIntegratorWireBwModulatingtoIntegrator) {
+    canvasBwModAndIntegratorMousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx);
+    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
+    canvasBwModAndIntegratorCtx.beginPath();
+    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorInitial_mousex, canvasBwModAndIntegratorInitial_mousey);
+    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
+    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
+    canvasBwModAndIntegratorCtx.lineWidth = 5;
+    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
+    canvasBwModAndIntegratorCtx.stroke();
+  } else if (canvasBwModAndIntegratorIsIntegratorMoving && canvasBwModAndIntegratorIsWireConnected) {
+    canvasBwModAndIntegratorMousex = parseInt((e.pageX - 53) - canvasBwModAndIntegratorCanvasx);
+    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+    canvasBwModAndIntegratorLast_mousex = parseInt((e.pageX - 53) - canvasBwModAndIntegratorCanvasx);
+    canvasBwModAndIntegratorLast_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
+    canvasBwModAndIntegratorCtx.beginPath();
+    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorInitial_mousex, canvasBwModAndIntegratorInitial_mousey);
+    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
+    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
+    canvasBwModAndIntegratorCtx.lineWidth = 5;
+    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
+    canvasBwModAndIntegratorCtx.stroke();
+  }
+  else if (canvasBwModAndIntegratorIsModulatingSignalMoving && canvasBwModAndIntegratorIsWireConnected) {
+    canvasBwModAndIntegratorMousex = parseInt((e.pageX + 53) - canvasBwModAndIntegratorCanvasx);
+    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+    canvasBwModAndIntegratorInitial_mousex = parseInt((e.pageX + 53) - canvasBwModAndIntegratorCanvasx);
+    canvasBwModAndIntegratorInitial_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
+    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
+    canvasBwModAndIntegratorCtx.beginPath();
+    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
+    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorLast_mousex, canvasBwModAndIntegratorLast_mousey);
+    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
+    canvasBwModAndIntegratorCtx.lineWidth = 5;
+    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
+    canvasBwModAndIntegratorCtx.stroke();
+  }
+};
+
+// wire between frequencySensistivity to multiplier
 
 modulatingSubmit.onmousedown = () => {
   obj.modulating.frequency = parseInt(modulatingFrequency.value);
@@ -127,6 +166,7 @@ modulatingSubmit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   modulatingSignal.ondblclick = () => {
+    canvasBwModAndIntegratorIsModulatingSignalMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -143,6 +183,7 @@ modulatingSubmit.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    canvasBwModAndIntegratorIsModulatingSignalMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -287,8 +328,7 @@ integrator.onmouseup = () => {
 
   integrator.ondblclick = () => {
     document.addEventListener('mousemove', onMouseMove);
-    mousedown = true;
-    console.log(mousedown);
+    canvasBwModAndIntegratorIsIntegratorMoving = true;
   }
 
   integrator.onclick = () => {
@@ -303,8 +343,7 @@ integrator.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
-    mousedown = false;
-    console.log(mousedown);
+    canvasBwModAndIntegratorIsIntegratorMoving = false;
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
