@@ -36,9 +36,11 @@ let envelopeDetectorBlockLeft = document.querySelector('.envelopeDetector--block
 let envelopeDetectorBlockRight = document.querySelector('.envelopeDetector--block__right')
 let parameterExtractionBlockLeft = document.querySelector('.parameterExtraction--block__left')
 
-
-
 let model = document.querySelector('#selectMode')
+
+let connectionWireBwModsigToIntegrator = document.querySelector('.connectionWireBwModsigToIntegrator')
+let connectionWireBwFreqSenToMultiplier = document.querySelector('.connectionWireBwFreqSenToMultiplier')
+let connectionWireBwCarsigToModulator = document.querySelector('.connectionWireBwCarsigToModulator')
 
 const obj = {
   modulating: {
@@ -53,86 +55,235 @@ const obj = {
 }
 
 //wire between modulating signal and integrator
-let canvasBwModAndIntegrator = document.getElementById('canvasBwModAndIntegrator');
-let canvasBwModAndIntegratorCtx = canvasBwModAndIntegrator.getContext('2d');
+let canvasWireBwModsigToIntegrator = document.getElementById('canvasWireBwModsigToIntegrator');
+let modSig_ctx = canvasWireBwModsigToIntegrator.getContext('2d');
 
-let canvasBwModAndIntegratorCanvasx = canvasBwModAndIntegrator.offsetLeft;
-let canvasBwModAndIntegratorCanvasy = canvasBwModAndIntegrator.offsetTop
-let canvasBwModAndIntegratorInitial_mousex = 0;
-let canvasBwModAndIntegratorInitial_mousey = 0;
-let canvasBwModAndIntegratorLast_mousex = 0;
-let canvasBwModAndIntegratorLast_mousey = 0;
-let canvasBwModAndIntegratorMousex = 0;
-let canvasBwModAndIntegratorMousey = 0;
-let canvasBwModAndIntegratorIsWireConnected = false;
-let canvasBwModAndIntegratorWireBwModulatingtoIntegrator = false;
-let canvasBwModAndIntegratorIsModulatingSignalMoving = false;
-let canvasBwModAndIntegratorIsIntegratorMoving = false;
-
+let modSig_canvasx = canvasWireBwModsigToIntegrator.offsetLeft;
+let modSig_canvasy = canvasWireBwModsigToIntegrator.offsetTop;
+let modSig_initial_mousex = 0;
+let modSig_initial_mousey = 0;
+let modSig_last_mousex = 0;
+let modSig_last_mousey = 0;
+let modSig_mousex = 0;
+let modSig_mousey = 0;
+let modSig_isWireConnected = false;
+let modSig_WireBwModulatingtoIntegrator = false;
+let modSig_isModulatingSignalMoving = false;
+let modSig_isIntegratorMoving = false;
 
 
 modulatingSignalRight.onclick = function (e) {
-  canvasBwModAndIntegratorInitial_mousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx);
-  canvasBwModAndIntegratorInitial_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-  canvasBwModAndIntegratorWireBwModulatingtoIntegrator = true;
-  canvasBwModAndIntegratorIsWireConnected = true
+  modSig_initial_mousex = parseInt(e.pageX - modSig_canvasx);
+  modSig_initial_mousey = parseInt(e.pageY - modSig_canvasy);
+  modSig_WireBwModulatingtoIntegrator = true;
+  modSig_isWireConnected = true
 };
-
 
 integratorBlockLeft.onclick = function (e) {
-  canvasBwModAndIntegratorLast_mousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx)
-  canvasBwModAndIntegratorLast_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy)
-  canvasBwModAndIntegratorWireBwModulatingtoIntegrator = false;
-  console.log(canvasBwModAndIntegratorWireBwModulatingtoIntegrator);
-  if (canvasBwModAndIntegratorIsWireConnected) {
-    canvasBwModAndIntegratorIsWireConnected = true
+  modSig_last_mousex = parseInt(e.pageX - modSig_canvasx)
+  modSig_last_mousey = parseInt(e.pageY - modSig_canvasy)
+  modSig_WireBwModulatingtoIntegrator = false;
+  if (modSig_isWireConnected) {
+    modSig_isWireConnected = true
   }
 };
 
 
-simulationArea.onmousemove = function (e) {
-  if (canvasBwModAndIntegratorWireBwModulatingtoIntegrator) {
-    canvasBwModAndIntegratorMousex = parseInt(e.pageX - canvasBwModAndIntegratorCanvasx);
-    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
-    canvasBwModAndIntegratorCtx.beginPath();
-    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorInitial_mousex, canvasBwModAndIntegratorInitial_mousey);
-    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
-    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
-    canvasBwModAndIntegratorCtx.lineWidth = 5;
-    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
-    canvasBwModAndIntegratorCtx.stroke();
-  } else if (canvasBwModAndIntegratorIsIntegratorMoving && canvasBwModAndIntegratorIsWireConnected) {
-    canvasBwModAndIntegratorMousex = parseInt((e.pageX - 53) - canvasBwModAndIntegratorCanvasx);
-    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-    canvasBwModAndIntegratorLast_mousex = parseInt((e.pageX - 53) - canvasBwModAndIntegratorCanvasx);
-    canvasBwModAndIntegratorLast_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
-    canvasBwModAndIntegratorCtx.beginPath();
-    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorInitial_mousex, canvasBwModAndIntegratorInitial_mousey);
-    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
-    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
-    canvasBwModAndIntegratorCtx.lineWidth = 5;
-    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
-    canvasBwModAndIntegratorCtx.stroke();
+connectionWireBwModsigToIntegrator.onmousemove = function (e) {
+  if (modSig_WireBwModulatingtoIntegrator) {
+    modSig_mousex = parseInt(e.pageX - modSig_canvasx);
+    modSig_mousey = parseInt(e.pageY - modSig_canvasy);
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
+    modSig_ctx.beginPath();
+    modSig_ctx.moveTo(modSig_initial_mousex, modSig_initial_mousey);
+    modSig_ctx.lineTo(modSig_mousex, modSig_mousey);
+    modSig_ctx.strokeStyle = 'black';
+    modSig_ctx.lineWidth = 5;
+    modSig_ctx.lineJoin = modSig_ctx.lineCap = 'round';
+    modSig_ctx.stroke();
+  } else if (modSig_isIntegratorMoving && modSig_isWireConnected) {
+    modSig_mousex = parseInt((e.pageX - 53) - modSig_canvasx);
+    modSig_mousey = parseInt(e.pageY - modSig_canvasy);
+    modSig_last_mousex = parseInt((e.pageX - 53) - modSig_canvasx);
+    modSig_last_mousey = parseInt(e.pageY - modSig_canvasy);
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
+    modSig_ctx.beginPath();
+    modSig_ctx.moveTo(modSig_initial_mousex, modSig_initial_mousey);
+    modSig_ctx.lineTo(modSig_mousex, modSig_mousey);
+    modSig_ctx.strokeStyle = 'black';
+    modSig_ctx.lineWidth = 5;
+    modSig_ctx.lineJoin = modSig_ctx.lineCap = 'round';
+    modSig_ctx.stroke();
   }
-  else if (canvasBwModAndIntegratorIsModulatingSignalMoving && canvasBwModAndIntegratorIsWireConnected) {
-    canvasBwModAndIntegratorMousex = parseInt((e.pageX + 53) - canvasBwModAndIntegratorCanvasx);
-    canvasBwModAndIntegratorMousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-    canvasBwModAndIntegratorInitial_mousex = parseInt((e.pageX + 53) - canvasBwModAndIntegratorCanvasx);
-    canvasBwModAndIntegratorInitial_mousey = parseInt(e.pageY - canvasBwModAndIntegratorCanvasy);
-    canvasBwModAndIntegratorCtx.clearRect(0, 0, canvasBwModAndIntegrator.width, canvasBwModAndIntegrator.height); //clear canvas
-    canvasBwModAndIntegratorCtx.beginPath();
-    canvasBwModAndIntegratorCtx.moveTo(canvasBwModAndIntegratorMousex, canvasBwModAndIntegratorMousey);
-    canvasBwModAndIntegratorCtx.lineTo(canvasBwModAndIntegratorLast_mousex, canvasBwModAndIntegratorLast_mousey);
-    canvasBwModAndIntegratorCtx.strokeStyle = 'black';
-    canvasBwModAndIntegratorCtx.lineWidth = 5;
-    canvasBwModAndIntegratorCtx.lineJoin = canvasBwModAndIntegratorCtx.lineCap = 'round';
-    canvasBwModAndIntegratorCtx.stroke();
+  else if (modSig_isModulatingSignalMoving && modSig_isWireConnected) {
+    modSig_mousex = parseInt((e.pageX + 53) - modSig_canvasx);
+    modSig_mousey = parseInt(e.pageY - modSig_canvasy);
+    modSig_initial_mousex = parseInt((e.pageX + 53) - modSig_canvasx);
+    modSig_initial_mousey = parseInt(e.pageY - modSig_canvasy);
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
+    modSig_ctx.beginPath();
+    modSig_ctx.moveTo(modSig_mousex, modSig_mousey);
+    modSig_ctx.lineTo(modSig_last_mousex, modSig_last_mousey);
+    modSig_ctx.strokeStyle = 'black';
+    modSig_ctx.lineWidth = 5;
+    modSig_ctx.lineJoin = modSig_ctx.lineCap = 'round';
+    modSig_ctx.stroke();
   }
 };
+
 
 // wire between frequencySensistivity to multiplier
+let canvasWireBwModsigToMultiplier = document.getElementById('canvasWireBwModsigToMultiplier');
+let freqSen_ctx = canvasWireBwModsigToMultiplier.getContext('2d');
+
+let freqSen_canvasx = canvasWireBwModsigToMultiplier.offsetLeft;
+let freqSen_canvasy = canvasWireBwModsigToMultiplier.offsetTop;
+let freqSen_initial_mousex = 0;
+let freqSen_initial_mousey = 0;
+let freqSen_last_mousex = 0;
+let freqSen_last_mousey = 0;
+let freqSen_mousex = 0;
+let freqSen_mousey = 0;
+let freqSen_isWireConnected = false;
+let freqSen_WireBwFreqSensistivityToMultiplier = false;
+let freqSen_isFreqSensistivityMoving = false;
+let freqSen_isMultiplierMoving = false;
+
+
+frequencySensistivityRight.onclick = function (e) {
+  freqSen_initial_mousex = parseInt(e.pageX - freqSen_canvasx);
+  freqSen_initial_mousey = parseInt(e.pageY - freqSen_canvasy);
+  freqSen_WireBwFreqSensistivityToMultiplier = true;
+  freqSen_isWireConnected = true
+};
+
+multiplierBlockLeft.onclick = function (e) {
+  freqSen_last_mousex = parseInt(e.pageX - freqSen_canvasx)
+  freqSen_last_mousey = parseInt(e.pageY - freqSen_canvasy)
+  freqSen_WireBwFreqSensistivityToMultiplier = false;
+  if (freqSen_isWireConnected) {
+    freqSen_isWireConnected = true
+  }
+};
+
+connectionWireBwFreqSenToMultiplier.onmousemove = function (e) {
+  if (freqSen_WireBwFreqSensistivityToMultiplier) {
+    freqSen_mousex = parseInt(e.pageX - freqSen_canvasx);
+    freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
+    freqSen_ctx.beginPath();
+    freqSen_ctx.moveTo(freqSen_initial_mousex, freqSen_initial_mousey);
+    freqSen_ctx.lineTo(freqSen_mousex, freqSen_mousey);
+    freqSen_ctx.strokeStyle = 'black';
+    freqSen_ctx.lineWidth = 5;
+    freqSen_ctx.lineJoin = freqSen_ctx.lineCap = 'round';
+    freqSen_ctx.stroke();
+  } else if (freqSen_isMultiplierMoving && freqSen_isWireConnected) {
+    freqSen_mousex = parseInt((e.pageX - 53) - freqSen_canvasx);
+    freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
+    freqSen_last_mousex = parseInt((e.pageX - 53) - freqSen_canvasx);
+    freqSen_last_mousey = parseInt(e.pageY - freqSen_canvasy);
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
+    freqSen_ctx.beginPath();
+    freqSen_ctx.moveTo(freqSen_initial_mousex, freqSen_initial_mousey);
+    freqSen_ctx.lineTo(freqSen_mousex, freqSen_mousey);
+    freqSen_ctx.strokeStyle = 'black';
+    freqSen_ctx.lineWidth = 5;
+    freqSen_ctx.lineJoin = freqSen_ctx.lineCap = 'round';
+    freqSen_ctx.stroke();
+  }
+  else if (freqSen_isFreqSensistivityMoving && freqSen_isWireConnected) {
+    freqSen_mousex = parseInt((e.pageX + 53) - freqSen_canvasx);
+    freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
+    freqSen_initial_mousex = parseInt((e.pageX + 53) - freqSen_canvasx);
+    freqSen_initial_mousey = parseInt(e.pageY - freqSen_canvasy);
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
+    freqSen_ctx.beginPath();
+    freqSen_ctx.moveTo(freqSen_mousex, freqSen_mousey);
+    freqSen_ctx.lineTo(freqSen_last_mousex, freqSen_last_mousey);
+    freqSen_ctx.strokeStyle = 'black';
+    freqSen_ctx.lineWidth = 5;
+    freqSen_ctx.lineJoin = freqSen_ctx.lineCap = 'round';
+    freqSen_ctx.stroke();
+  }
+};
+
+// wire between carrierSignal to modulator
+
+let canvasWireBwCarsigToModulator = document.getElementById('canvasWireBwCarsigToModulator');
+let carrierSig_ctx = canvasWireBwCarsigToModulator.getContext('2d');
+
+let carrierSig_canvasx = canvasWireBwCarsigToModulator.offsetLeft;
+let carrierSig_canvasy = canvasWireBwCarsigToModulator.offsetTop;
+let carrierSig_initial_mousex = 0;
+let carrierSig_initial_mousey = 0;
+let carrierSig_last_mousex = 0;
+let carrierSig_last_mousey = 0;
+let carrierSig_mousex = 0;
+let carrierSig_mousey = 0;
+let carrierSig_isWireConnected = false;
+let carrierSig_WireBwCarSignaltoMultiplier = false;
+let carrierSig_isCarrierSignalMoving = false;
+let carrierSig_isModulatorMoving = false;
+
+
+carrierSignalRight.onclick = function (e) {
+  carrierSig_initial_mousex = parseInt(e.pageX - carrierSig_canvasx);
+  carrierSig_initial_mousey = parseInt(e.pageY - carrierSig_canvasy);
+  carrierSig_WireBwCarSignaltoMultiplier = true;
+  carrierSig_isWireConnected = true
+};
+
+modulatorBlockLeft.onclick = function (e) {
+  carrierSig_last_mousex = parseInt(e.pageX - carrierSig_canvasx)
+  carrierSig_last_mousey = parseInt(e.pageY - carrierSig_canvasy)
+  carrierSig_WireBwCarSignaltoMultiplier = false;
+  if (carrierSig_isWireConnected) {
+    carrierSig_isWireConnected = true
+  }
+};
+
+connectionWireBwCarsigToModulator.onmousemove = function (e) {
+  if (carrierSig_WireBwCarSignaltoMultiplier) {
+    carrierSig_mousex = parseInt(e.pageX - carrierSig_canvasx);
+    carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+    carrierSig_ctx.beginPath();
+    carrierSig_ctx.moveTo(carrierSig_initial_mousex, carrierSig_initial_mousey);
+    carrierSig_ctx.lineTo(carrierSig_mousex, carrierSig_mousey);
+    carrierSig_ctx.strokeStyle = 'black';
+    carrierSig_ctx.lineWidth = 5;
+    carrierSig_ctx.lineJoin = carrierSig_ctx.lineCap = 'round';
+    carrierSig_ctx.stroke();
+  } else if (carrierSig_isModulatorMoving && carrierSig_isWireConnected) {
+    carrierSig_mousex = parseInt((e.pageX - 53) - carrierSig_canvasx);
+    carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
+    carrierSig_last_mousex = parseInt((e.pageX - 53) - carrierSig_canvasx);
+    carrierSig_last_mousey = parseInt(e.pageY - carrierSig_canvasy);
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+    carrierSig_ctx.beginPath();
+    carrierSig_ctx.moveTo(carrierSig_initial_mousex, carrierSig_initial_mousey);
+    carrierSig_ctx.lineTo(carrierSig_mousex, carrierSig_mousey);
+    carrierSig_ctx.strokeStyle = 'black';
+    carrierSig_ctx.lineWidth = 5;
+    carrierSig_ctx.lineJoin = carrierSig_ctx.lineCap = 'round';
+    carrierSig_ctx.stroke();
+  }
+  else if (carrierSig_isCarrierSignalMoving && carrierSig_isWireConnected) {
+    carrierSig_mousex = parseInt((e.pageX + 53) - carrierSig_canvasx);
+    carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
+    carrierSig_initial_mousex = parseInt((e.pageX + 53) - carrierSig_canvasx);
+    carrierSig_initial_mousey = parseInt(e.pageY - carrierSig_canvasy);
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+    carrierSig_ctx.beginPath();
+    carrierSig_ctx.moveTo(carrierSig_mousex, carrierSig_mousey);
+    carrierSig_ctx.lineTo(carrierSig_last_mousex, carrierSig_last_mousey);
+    carrierSig_ctx.strokeStyle = 'black';
+    carrierSig_ctx.lineWidth = 5;
+    carrierSig_ctx.lineJoin = carrierSig_ctx.lineCap = 'round';
+    carrierSig_ctx.stroke();
+  }
+};
 
 modulatingSubmit.onmousedown = () => {
   obj.modulating.frequency = parseInt(modulatingFrequency.value);
@@ -166,11 +317,9 @@ modulatingSubmit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   modulatingSignal.ondblclick = () => {
-    canvasBwModAndIntegratorIsModulatingSignalMoving = true
+    modSig_isModulatingSignalMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
-
-
 
   modulatingSignal.onclick = () => {
     if (model.value === "Delete") {
@@ -183,7 +332,7 @@ modulatingSubmit.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
-    canvasBwModAndIntegratorIsModulatingSignalMoving = false
+    modSig_isModulatingSignalMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -226,6 +375,7 @@ carrierSubmit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   carrierSignal.ondblclick = () => {
+    carrierSig_isCarrierSignalMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -240,6 +390,7 @@ carrierSubmit.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    carrierSig_isCarrierSignalMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -274,6 +425,7 @@ frequencySensistivitySubmit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   frequencySensistivity.ondblclick = () => {
+    freqSen_isFreqSensistivityMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -288,6 +440,7 @@ frequencySensistivitySubmit.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    freqSen_isFreqSensistivityMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -327,8 +480,8 @@ integrator.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   integrator.ondblclick = () => {
+    modSig_isIntegratorMoving = true;
     document.addEventListener('mousemove', onMouseMove);
-    canvasBwModAndIntegratorIsIntegratorMoving = true;
   }
 
   integrator.onclick = () => {
@@ -343,7 +496,7 @@ integrator.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
-    canvasBwModAndIntegratorIsIntegratorMoving = false;
+    modSig_isIntegratorMoving = false;
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -391,6 +544,7 @@ multiplier.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   multiplier.ondblclick = () => {
+    freqSen_isMultiplierMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -407,6 +561,7 @@ multiplier.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    freqSen_isMultiplierMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -454,6 +609,7 @@ modulator.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   modulator.ondblclick = () => {
+    carrierSig_isModulatorMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -470,6 +626,7 @@ modulator.onmouseup = () => {
     } else if (model.value === "output") {
       model.value = "mode"
     }
+    carrierSig_isModulatorMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }

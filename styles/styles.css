@@ -17,9 +17,8 @@
 }
 
 .simulation-area{
-  width: 90%;
+  width: 100%;
   background-color: whitesmoke;
-
 }
 
 .sidebar__block{
@@ -45,7 +44,7 @@
   justify-content: center;
   align-items: center; */
 
-  border: 3px solid black;
+  /* border: 3px solid black; */
 }
 
 .footer{
@@ -62,6 +61,14 @@
   cursor:pointer;
 
   display: none;
+}
+
+.canvas{
+  position:absolute;
+  top: 75px;
+  left: 190px;
+
+  border: 5px solid black;
 }
 
 /* .parameterExtraction--block--left{

@@ -83,141 +83,147 @@
           </li>
         </ul>
       </div>
-      <div class="simulation-area">
-        <!-- <div class="wire"> -->
-        <canvas id="canvasBwModAndIntegrator" width="1700" height="1000px"></canvas>
-        <div class="modulatingSignal--block__right circle"></div>
-        <div class="carrierSignal--block__right circle"></div>
-        <div class="frequencySensistivity--block__right circle"></div>
-        <div class="integrator--block__left circle"></div>
-        <div class="integrator--block__bottom circle"></div>
-        <div class="multiplier--block__top circle"></div>
-        <div class="multiplier--block__left circle"></div>
-        <div class="multiplier--block__bottom circle"></div>
-        <div class="modulator--block__top circle"></div>
-        <div class="modulator--block__left circle"></div>
-        <div class="modulator--block__right circle"></div>
-        <div class="differentiator--block__left circle"></div>
-        <div class="differentiator--block__right circle"></div>
-        <div class="dcLimitedCircuit--block__left circle"></div>
-        <div class="dcLimitedCircuit--block__right circle"></div>
-        <div class="envelopeDetector--block__left circle"></div>
-        <div class="envelopeDetector--block__right circle"></div>
-        <div class="parameterExtraction--block__left circle"></div>
-        <!-- </div> -->
+      <div class="connectionWireBwModsigToIntegrator">
+        <div class="connectionWireBwFreqSenToMultiplier">
+          <div class="connectionWireBwCarsigToModulator">
+            <div class="simulation-area">
+              <canvas class='canvas' id="canvasWireBwModsigToIntegrator" width="1695" height="1080px"></canvas>
+              <canvas class='canvas' id="canvasWireBwModsigToMultiplier" width="1695" height="1080px"></canvas>
+              <canvas class='canvas' id="canvasWireBwCarsigToModulator" width="1695" height="1080px"></canvas>
+              <div class="modulatingSignal--block__right circle"></div>
+              <div class="carrierSignal--block__right circle"></div>
+              <div class="frequencySensistivity--block__right circle"></div>
+              <div class="integrator--block__left circle"></div>
+              <div class="integrator--block__bottom circle"></div>
+              <div class="multiplier--block__top circle"></div>
+              <div class="multiplier--block__left circle"></div>
+              <div class="multiplier--block__bottom circle"></div>
+              <div class="modulator--block__top circle"></div>
+              <div class="modulator--block__left circle"></div>
+              <div class="modulator--block__right circle"></div>
+              <div class="differentiator--block__left circle"></div>
+              <div class="differentiator--block__right circle"></div>
+              <div class="dcLimitedCircuit--block__left circle"></div>
+              <div class="dcLimitedCircuit--block__right circle"></div>
+              <div class="envelopeDetector--block__left circle"></div>
+              <div class="envelopeDetector--block__right circle"></div>
+              <div class="parameterExtraction--block__left circle"></div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
 
-    <!-- <footer class="footer">
+      <!-- <footer class="footer">
       <h1 class="container">
         We Acknowledge NITK and PALS for extending their support towards successful completion of the experiment
       </h1>
     </footer> -->
 
-    <!-- Modal Popup -->
+      <!-- Modal Popup -->
 
-    <!-- Modal for modulatingSignal -->
-    <div class="modal fade" id="modulatingSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <!-- <h5 class="modal-title" id="exampleModalLabel">asdf</h5> -->
-            <h6 id="exampleModalLabel">
-              frequency and amplitude of modulating signal
-            </h6>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Frequency:</label>
-                <div class="input-group">
-                  <input type="number" class="form-control" id="modulatingFrequency" value="500">
-                  <span class="input-group-text" id="basic-addon1">Hz</span>
+      <!-- Modal for modulatingSignal -->
+      <div class="modal fade" id="modulatingSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <!-- <h5 class="modal-title" id="exampleModalLabel">asdf</h5> -->
+              <h6 id="exampleModalLabel">
+                frequency and amplitude of modulating signal
+              </h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Frequency:</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="modulatingFrequency" value="500">
+                    <span class="input-group-text" id="basic-addon1">Hz</span>
+                  </div>
                 </div>
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Amplitute:</label>
-                <div class="input-group">
-                  <input type="number" class="form-control" id="modulatingAmplitute" value="10">
-                  <span class="input-group-text" id="basic-addon1">V</span>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Amplitute:</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="modulatingAmplitute" value="10">
+                    <span class="input-group-text" id="basic-addon1">V</span>
+                  </div>
                 </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modulatingSubmit">Create</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Model for carrierSignal -->
-    <div class="modal fade" id="carrierSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h6 id="exampleModalLabel">
-              frequency and amplitude of carrier signal
-            </h6>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Frequency:</label>
-                <div class="input-group">
-                  <input type="number" class="form-control" id="carrierFrequency" value="1000">
-                  <span class="input-group-text" id="basic-addon1">Hz</span>
-                </div>
-              </div>
-              <div class="mb-3">
-                <label for="recipient-name" class="col-form-label">Amplitute:</label>
-                <div class="input-group">
-                  <input type="number" class="form-control" id="carrierAmplitute" value="20">
-                  <span class="input-group-text" id="basic-addon1">V</span>
-                </div>
-              </div>
-            </form>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="carrierSubmit">Create</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Model for frequency sensistivity -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h6 id="exampleModalLabel">
-              Choose frequency sensistivity
-            </h6>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <select class="form-select" aria-label="Default select example" id="frequencySensitivityInput">
-              <option selected>20</option>
-              <option value="40">40</option>
-              <option value="60">60</option>
-              <option value="80">80</option>
-              <option value="100">100</option>
-            </select>
+              </form>
+            </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                id="frequencySensistivitySubmit">Ok</button>
+                id="modulatingSubmit">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Model for carrierSignal -->
+      <div class="modal fade" id="carrierSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 id="exampleModalLabel">
+                frequency and amplitude of carrier signal
+              </h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Frequency:</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="carrierFrequency" value="1000">
+                    <span class="input-group-text" id="basic-addon1">Hz</span>
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Amplitute:</label>
+                  <div class="input-group">
+                    <input type="number" class="form-control" id="carrierAmplitute" value="20">
+                    <span class="input-group-text" id="basic-addon1">V</span>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="carrierSubmit">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Model for frequency sensistivity -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 id="exampleModalLabel">
+                Choose frequency sensistivity
+              </h6>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <select class="form-select" aria-label="Default select example" id="frequencySensitivityInput">
+                <option selected>20</option>
+                <option value="40">40</option>
+                <option value="60">60</option>
+                <option value="80">80</option>
+                <option value="100">100</option>
+              </select>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                  id="frequencySensistivitySubmit">Ok</button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 </body>
 
 </html>
