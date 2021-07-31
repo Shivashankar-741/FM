@@ -38,9 +38,30 @@ let parameterExtractionBlockLeft = document.querySelector('.parameterExtraction-
 
 let model = document.querySelector('#selectMode')
 
+// Wires
 let connectionWireBwModsigToIntegrator = document.querySelector('.connectionWireBwModsigToIntegrator')
 let connectionWireBwFreqSenToMultiplier = document.querySelector('.connectionWireBwFreqSenToMultiplier')
 let connectionWireBwCarsigToModulator = document.querySelector('.connectionWireBwCarsigToModulator')
+let connectionWireBwIntegratorToMultiplier = document.querySelector('.connectionWireBwIntegratorToMultiplier')
+let connectionWireBwMultiplierToModulator = document.querySelector('.connectionWireBwMultiplierToModulator')
+let connectionWireBwModulatorToDifferentiator = document.querySelector('.connectionWireBwModulatorToDifferentiator')
+let connectionWireBwDifferentiatorTodcLimiter = document.querySelector('.connectionWireBwDifferentiatorTodcLimiter')
+let connectionWireBwdcLimiterToEnvelopeDetector = document.querySelector('.connectionWireBwdcLimiterToEnvelopeDetector')
+let check = document.querySelector('.check')
+let check2 = document.querySelector('.check2')
+let connectionWireBwenvelopeDetToParamExtract = document.querySelector('.connectionWireBwenvelopeDetToParamExtract')
+
+let isModulatingSignalPlaced = false
+let isCarrierSignalPlaced = false
+let isFreqSensistivityPlaced = false
+let isIntegratorPlaced = false
+let isMultiplierPlaced = false
+let isModulatorPlaced = false
+let isDifferentiatorPlaced = false
+let isEnvelopeDetectorPlaced = false
+let isDcLimiterPlaced = false
+let isParamExtractionPlaced = false
+
 
 const obj = {
   modulating: {
@@ -285,6 +306,520 @@ connectionWireBwCarsigToModulator.onmousemove = function (e) {
   }
 };
 
+// wire between integrator to multiplier
+
+let canvasWireBwIntegratorToMultiplier = document.getElementById('canvasWireBwIntegratorToMultiplier');
+let integrator_ctx = canvasWireBwIntegratorToMultiplier.getContext('2d');
+
+let integrator_canvasx = canvasWireBwIntegratorToMultiplier.offsetLeft;
+let integrator_canvasy = canvasWireBwIntegratorToMultiplier.offsetTop;
+let integrator_initial_mousex = 0;
+let integrator_initial_mousey = 0;
+let integrator_last_mousex = 0;
+let integrator_last_mousey = 0;
+let integrator_mousex = 0;
+let integrator_mousey = 0;
+let integrator_isWireConnected = false;
+let integrator_WireBwIntegratorToMultiplier = false;
+let integrator_isIntegratorMoving = false;
+let integrator_isMulitplierMoving = false;
+
+
+integratorBlockBottom.onclick = function (e) {
+  integrator_initial_mousex = parseInt(e.pageX - integrator_canvasx);
+  integrator_initial_mousey = parseInt(e.pageY - integrator_canvasy);
+  integrator_WireBwIntegratorToMultiplier = true;
+  integrator_isWireConnected = true
+};
+
+multiplierBlockTop.onclick = function (e) {
+  integrator_last_mousex = parseInt(e.pageX - integrator_canvasx)
+  integrator_last_mousey = parseInt(e.pageY - integrator_canvasy)
+  integrator_WireBwIntegratorToMultiplier = false;
+  if (integrator_isWireConnected) {
+    integrator_isWireConnected = true
+  }
+};
+
+connectionWireBwIntegratorToMultiplier.onmousemove = function (e) {
+  if (integrator_WireBwIntegratorToMultiplier) {
+    integrator_mousex = parseInt(e.pageX - integrator_canvasx);
+    integrator_mousey = parseInt(e.pageY - integrator_canvasy);
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
+    integrator_ctx.beginPath();
+    integrator_ctx.moveTo(integrator_initial_mousex, integrator_initial_mousey);
+    integrator_ctx.lineTo(integrator_mousex, integrator_mousey);
+    integrator_ctx.strokeStyle = 'black';
+    integrator_ctx.lineWidth = 5;
+    integrator_ctx.lineJoin = integrator_ctx.lineCap = 'round';
+    integrator_ctx.stroke();
+  } else if (integrator_isMulitplierMoving && integrator_isWireConnected) {
+    integrator_mousex = parseInt((e.pageX + 0) - integrator_canvasx);
+    integrator_mousey = parseInt((e.pageY - 38) - integrator_canvasy);
+    integrator_last_mousex = parseInt((e.pageX + 0) - integrator_canvasx);
+    integrator_last_mousey = parseInt((e.pageY - 38) - integrator_canvasy);
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
+    integrator_ctx.beginPath();
+    integrator_ctx.moveTo(integrator_initial_mousex, integrator_initial_mousey);
+    integrator_ctx.lineTo(integrator_mousex, integrator_mousey);
+    integrator_ctx.strokeStyle = 'black';
+    integrator_ctx.lineWidth = 5;
+    integrator_ctx.lineJoin = integrator_ctx.lineCap = 'round';
+    integrator_ctx.stroke();
+  }
+  else if (integrator_isIntegratorMoving && integrator_isWireConnected) {
+    integrator_mousex = parseInt((e.pageX + 0) - integrator_canvasx);
+    integrator_mousey = parseInt((e.pageY + 38) - integrator_canvasy);
+    integrator_initial_mousex = parseInt((e.pageX + 0) - integrator_canvasx);
+    integrator_initial_mousey = parseInt((e.pageY + 38) - integrator_canvasy);
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
+    integrator_ctx.beginPath();
+    integrator_ctx.moveTo(integrator_mousex, integrator_mousey);
+    integrator_ctx.lineTo(integrator_last_mousex, integrator_last_mousey);
+    integrator_ctx.strokeStyle = 'black';
+    integrator_ctx.lineWidth = 5;
+    integrator_ctx.lineJoin = integrator_ctx.lineCap = 'round';
+    integrator_ctx.stroke();
+  }
+};
+
+// Wire between multiplier to modulator
+
+let canvasWireBwMultiplierToModulator
+  = document.getElementById('canvasWireBwMultiplierToModulator');
+let multiplier_ctx = canvasWireBwMultiplierToModulator
+  .getContext('2d');
+
+let multiplier_canvasx = canvasWireBwMultiplierToModulator
+  .offsetLeft;
+let multiplier_canvasy = canvasWireBwMultiplierToModulator
+  .offsetTop;
+let multiplier_initial_mousex = 0;
+let multiplier_initial_mousey = 0;
+let multiplier_last_mousex = 0;
+let multiplier_last_mousey = 0;
+let multiplier_mousex = 0;
+let multiplier_mousey = 0;
+let multiplier_isWireConnected = false;
+let multiplier_WireBwMultiplierToModulator = false;
+let multiplier_isMultiplierMoving = false;
+let multiplier_isModulatorMoving = false;
+
+
+multiplierBlockBottom.onclick = function (e) {
+  multiplier_initial_mousex = parseInt(e.pageX - multiplier_canvasx);
+  multiplier_initial_mousey = parseInt(e.pageY - multiplier_canvasy);
+  multiplier_WireBwMultiplierToModulator = true;
+  multiplier_isWireConnected = true
+};
+
+modulatorBlockTop.onclick = function (e) {
+  multiplier_last_mousex = parseInt(e.pageX - multiplier_canvasx)
+  multiplier_last_mousey = parseInt(e.pageY - multiplier_canvasy)
+  multiplier_WireBwMultiplierToModulator = false;
+  if (multiplier_isWireConnected) {
+    multiplier_isWireConnected = true
+  }
+};
+
+connectionWireBwMultiplierToModulator.onmousemove = function (e) {
+  if (multiplier_WireBwMultiplierToModulator) {
+    multiplier_mousex = parseInt(e.pageX - multiplier_canvasx);
+    multiplier_mousey = parseInt(e.pageY - multiplier_canvasy);
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator
+      .width, canvasWireBwMultiplierToModulator
+      .height); //clear canvas
+    multiplier_ctx.beginPath();
+    multiplier_ctx.moveTo(multiplier_initial_mousex, multiplier_initial_mousey);
+    multiplier_ctx.lineTo(multiplier_mousex, multiplier_mousey);
+    multiplier_ctx.strokeStyle = 'black';
+    multiplier_ctx.lineWidth = 5;
+    multiplier_ctx.lineJoin = multiplier_ctx.lineCap = 'round';
+    multiplier_ctx.stroke();
+  } else if (multiplier_isModulatorMoving && multiplier_isWireConnected) {
+    multiplier_mousex = parseInt((e.pageX + 0) - multiplier_canvasx);
+    multiplier_mousey = parseInt((e.pageY - 38) - multiplier_canvasy);
+    multiplier_last_mousex = parseInt((e.pageX + 0) - multiplier_canvasx);
+    multiplier_last_mousey = parseInt((e.pageY - 38) - multiplier_canvasy);
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator
+      .width, canvasWireBwMultiplierToModulator
+      .height); //clear canvas
+    multiplier_ctx.beginPath();
+    multiplier_ctx.moveTo(multiplier_initial_mousex, multiplier_initial_mousey);
+    multiplier_ctx.lineTo(multiplier_mousex, multiplier_mousey);
+    multiplier_ctx.strokeStyle = 'black';
+    multiplier_ctx.lineWidth = 5;
+    multiplier_ctx.lineJoin = multiplier_ctx.lineCap = 'round';
+    multiplier_ctx.stroke();
+  }
+  else if (multiplier_isMultiplierMoving && multiplier_isWireConnected) {
+    multiplier_mousex = parseInt((e.pageX + 0) - multiplier_canvasx);
+    multiplier_mousey = parseInt((e.pageY + 38) - multiplier_canvasy);
+    multiplier_initial_mousex = parseInt((e.pageX + 0) - multiplier_canvasx);
+    multiplier_initial_mousey = parseInt((e.pageY + 38) - multiplier_canvasy);
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator
+      .width, canvasWireBwMultiplierToModulator
+      .height); //clear canvas
+    multiplier_ctx.beginPath();
+    multiplier_ctx.moveTo(multiplier_mousex, multiplier_mousey);
+    multiplier_ctx.lineTo(multiplier_last_mousex, multiplier_last_mousey);
+    multiplier_ctx.strokeStyle = 'black';
+    multiplier_ctx.lineWidth = 5;
+    multiplier_ctx.lineJoin = multiplier_ctx.lineCap = 'round';
+    multiplier_ctx.stroke();
+  }
+};
+
+// wire between modulator to differentiator
+let canvasWireBwModulatorToDifferentiator
+  = document.getElementById('canvasWireBwModulatorToDifferentiator');
+let modulator_ctx = canvasWireBwModulatorToDifferentiator
+  .getContext('2d');
+
+let modulator_canvasx = canvasWireBwModulatorToDifferentiator
+  .offsetLeft;
+let modulator_canvasy = canvasWireBwModulatorToDifferentiator
+  .offsetTop;
+let modulator_initial_mousex = 0;
+let modulator_initial_mousey = 0;
+let modulator_last_mousex = 0;
+let modulator_last_mousey = 0;
+let modulator_mousex = 0;
+let modulator_mousey = 0;
+let modulator_isWireConnected = false;
+let modulator_WireBwModulatorToDifferentiator = false;
+let modulator_isModulatorMoving = false;
+let modulator_isDifferentiatorMoving = false;
+
+
+modulatorBlockRight.onclick = function (e) {
+  modulator_initial_mousex = parseInt(e.pageX - modulator_canvasx);
+  modulator_initial_mousey = parseInt(e.pageY - modulator_canvasy);
+  modulator_WireBwModulatorToDifferentiator = true;
+  modulator_isWireConnected = true
+};
+
+differentiatorBlockLeft.onclick = function (e) {
+  modulator_last_mousex = parseInt(e.pageX - modulator_canvasx)
+  modulator_last_mousey = parseInt(e.pageY - modulator_canvasy)
+  modulator_WireBwModulatorToDifferentiator = false;
+  if (modulator_isWireConnected) {
+    modulator_isWireConnected = true
+  }
+};
+
+connectionWireBwModulatorToDifferentiator.onmousemove = function (e) {
+  // console.log('dfd');
+  if (modulator_WireBwModulatorToDifferentiator) {
+    modulator_mousex = parseInt(e.pageX - modulator_canvasx);
+    modulator_mousey = parseInt(e.pageY - modulator_canvasy);
+    modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+      .width, canvasWireBwModulatorToDifferentiator
+      .height); //clear canvas
+    modulator_ctx.beginPath();
+    modulator_ctx.moveTo(modulator_initial_mousex, modulator_initial_mousey);
+    modulator_ctx.lineTo(modulator_mousex, modulator_mousey);
+    modulator_ctx.strokeStyle = 'black';
+    modulator_ctx.lineWidth = 5;
+    modulator_ctx.lineJoin = modulator_ctx.lineCap = 'round';
+    modulator_ctx.stroke();
+  } else if (modulator_isDifferentiatorMoving && modulator_isWireConnected) {
+    modulator_mousex = parseInt((e.pageX - 53) - modulator_canvasx);
+    modulator_mousey = parseInt((e.pageY + 1) - modulator_canvasy);
+    modulator_last_mousex = parseInt((e.pageX - 53) - modulator_canvasx);
+    modulator_last_mousey = parseInt((e.pageY + 1) - modulator_canvasy);
+    modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+      .width, canvasWireBwModulatorToDifferentiator
+      .height); //clear canvas
+    modulator_ctx.beginPath();
+    modulator_ctx.moveTo(modulator_initial_mousex, modulator_initial_mousey);
+    modulator_ctx.lineTo(modulator_mousex, modulator_mousey);
+    modulator_ctx.strokeStyle = 'black';
+    modulator_ctx.lineWidth = 5;
+    modulator_ctx.lineJoin = modulator_ctx.lineCap = 'round';
+    modulator_ctx.stroke();
+  }
+  else if (modulator_isModulatorMoving && modulator_isWireConnected) {
+    modulator_mousex = parseInt((e.pageX + 53) - modulator_canvasx);
+    modulator_mousey = parseInt((e.pageY + 1) - modulator_canvasy);
+    modulator_initial_mousex = parseInt((e.pageX + 53) - modulator_canvasx);
+    modulator_initial_mousey = parseInt((e.pageY + 1) - modulator_canvasy);
+    modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+      .width, canvasWireBwModulatorToDifferentiator
+      .height); //clear canvas
+    modulator_ctx.beginPath();
+    modulator_ctx.moveTo(modulator_mousex, modulator_mousey);
+    modulator_ctx.lineTo(modulator_last_mousex, modulator_last_mousey);
+    modulator_ctx.strokeStyle = 'black';
+    modulator_ctx.lineWidth = 5;
+    modulator_ctx.lineJoin = modulator_ctx.lineCap = 'round';
+    modulator_ctx.stroke();
+  }
+};
+
+// wire between differentiator to dcLimiterCircuit
+
+let canvasWireBwDifferentiatorTodcLimiter
+  = document.getElementById('canvasWireBwDifferentiatorTodcLimiter');
+let differentiator_ctx = canvasWireBwDifferentiatorTodcLimiter
+  .getContext('2d');
+
+let differentiator_canvasx = canvasWireBwDifferentiatorTodcLimiter
+  .offsetLeft;
+let differentiator_canvasy = canvasWireBwDifferentiatorTodcLimiter
+  .offsetTop;
+let differentiator_initial_mousex = 0;
+let differentiator_initial_mousey = 0;
+let differentiator_last_mousex = 0;
+let differentiator_last_mousey = 0;
+let differentiator_mousex = 0;
+let differentiator_mousey = 0;
+let differentiator_isWireConnected = false;
+let differentiator_WireBwDifferentiatorTodcLimiter = false;
+let differentiator_isDifferentiatorMoving = false;
+let differentiator_isDcLimiterMoving = false;
+
+
+differentiatorBlockRight.onclick = function (e) {
+  console.log('clickasdf');
+  differentiator_initial_mousex = parseInt(e.pageX - differentiator_canvasx);
+  differentiator_initial_mousey = parseInt(e.pageY - differentiator_canvasy);
+  differentiator_WireBwDifferentiatorTodcLimiter = true;
+  differentiator_isWireConnected = true
+};
+
+dcLimitedCircuitBlockLeft.onclick = function (e) {
+  differentiator_last_mousex = parseInt(e.pageX - differentiator_canvasx)
+  differentiator_last_mousey = parseInt(e.pageY - differentiator_canvasy)
+  differentiator_WireBwDifferentiatorTodcLimiter = false;
+  if (differentiator_isWireConnected) {
+    differentiator_isWireConnected = true
+  }
+};
+
+
+check.onmousemove = function (e) {
+  if (differentiator_WireBwDifferentiatorTodcLimiter) {
+    differentiator_mousex = parseInt(e.pageX - differentiator_canvasx);
+    differentiator_mousey = parseInt(e.pageY - differentiator_canvasy);
+    differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
+      .width, canvasWireBwDifferentiatorTodcLimiter
+      .height); //clear canvas
+    differentiator_ctx.beginPath();
+    differentiator_ctx.moveTo(differentiator_initial_mousex, differentiator_initial_mousey);
+    differentiator_ctx.lineTo(differentiator_mousex, differentiator_mousey);
+    differentiator_ctx.strokeStyle = 'black';
+    differentiator_ctx.lineWidth = 5;
+    differentiator_ctx.lineJoin = differentiator_ctx.lineCap = 'round';
+    differentiator_ctx.stroke();
+  } else if (differentiator_isDcLimiterMoving && differentiator_isWireConnected) {
+    differentiator_mousex = parseInt((e.pageX - 53) - differentiator_canvasx);
+    differentiator_mousey = parseInt((e.pageY + 1) - differentiator_canvasy);
+    differentiator_last_mousex = parseInt((e.pageX - 53) - differentiator_canvasx);
+    differentiator_last_mousey = parseInt((e.pageY + 1) - differentiator_canvasy);
+    differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
+      .width, canvasWireBwDifferentiatorTodcLimiter
+      .height); //clear canvas
+    differentiator_ctx.beginPath();
+    differentiator_ctx.moveTo(differentiator_initial_mousex, differentiator_initial_mousey);
+    differentiator_ctx.lineTo(differentiator_mousex, differentiator_mousey);
+    differentiator_ctx.strokeStyle = 'black';
+    differentiator_ctx.lineWidth = 5;
+    differentiator_ctx.lineJoin = differentiator_ctx.lineCap = 'round';
+    differentiator_ctx.stroke();
+  }
+  else if (differentiator_isDifferentiatorMoving && differentiator_isWireConnected) {
+    differentiator_mousex = parseInt((e.pageX + 53) - differentiator_canvasx);
+    differentiator_mousey = parseInt((e.pageY + 1) - differentiator_canvasy);
+    differentiator_initial_mousex = parseInt((e.pageX + 53) - differentiator_canvasx);
+    differentiator_initial_mousey = parseInt((e.pageY + 1) - differentiator_canvasy);
+    differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
+      .width, canvasWireBwDifferentiatorTodcLimiter
+      .height); //clear canvas
+    differentiator_ctx.beginPath();
+    differentiator_ctx.moveTo(differentiator_mousex, differentiator_mousey);
+    differentiator_ctx.lineTo(differentiator_last_mousex, differentiator_last_mousey);
+    differentiator_ctx.strokeStyle = 'black';
+    differentiator_ctx.lineWidth = 5;
+    differentiator_ctx.lineJoin = differentiator_ctx.lineCap = 'round';
+    differentiator_ctx.stroke();
+  }
+};
+
+// wire between dcLimiter to envelopeDetector
+
+let canvasWireBwdcLimiterToEnvelopeDetector
+  = document.getElementById('canvasWireBwdcLimiterToEnvelopeDetector');
+let dcLimiter_ctx = canvasWireBwdcLimiterToEnvelopeDetector
+  .getContext('2d');
+
+let dcLimiter_canvasx = canvasWireBwdcLimiterToEnvelopeDetector
+  .offsetLeft;
+let dcLimiter_canvasy = canvasWireBwdcLimiterToEnvelopeDetector
+  .offsetTop;
+let dcLimiter_initial_mousex = 0;
+let dcLimiter_initial_mousey = 0;
+let dcLimiter_last_mousex = 0;
+let dcLimiter_last_mousey = 0;
+let dcLimiter_mousex = 0;
+let dcLimiter_mousey = 0;
+let dcLimiter_isWireConnected = false;
+let dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
+let dcLimiter_isdcLimiterMoving = false;
+let dcLimiter_envelopeDetectorMoving = false;
+
+dcLimitedCircuitBlockRight.onclick = function (e) {
+  dcLimiter_initial_mousex = parseInt(e.pageX - dcLimiter_canvasx);
+  dcLimiter_initial_mousey = parseInt(e.pageY - dcLimiter_canvasy);
+  dcLimiter_WireBwdcLimiterToEnvelopeDetector = true;
+  dcLimiter_isWireConnected = true
+};
+
+envelopeDetectorBlockLeft.onclick = function (e) {
+  dcLimiter_last_mousex = parseInt(e.pageX - dcLimiter_canvasx)
+  dcLimiter_last_mousey = parseInt(e.pageY - dcLimiter_canvasy)
+  dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
+  if (dcLimiter_isWireConnected) {
+    dcLimiter_isWireConnected = true
+  }
+};
+
+check2.onmousemove = function (e) {
+  if (dcLimiter_WireBwdcLimiterToEnvelopeDetector) {
+    dcLimiter_mousex = parseInt(e.pageX - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt(e.pageY - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
+  } else if (dcLimiter_envelopeDetectorMoving && dcLimiter_isWireConnected) {
+    dcLimiter_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_last_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
+    dcLimiter_last_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
+  }
+  else if (dcLimiter_isdcLimiterMoving && dcLimiter_isWireConnected) {
+    dcLimiter_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_initial_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
+    dcLimiter_initial_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_last_mousex, dcLimiter_last_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
+  }
+};
+
+// wire between envelopeDetector to paramter extraction
+
+let canvasWireBwenvelopeDetToParamExtract
+  = document.getElementById('canvasWireBwenvelopeDetToParamExtract');
+let envelope_ctx = canvasWireBwenvelopeDetToParamExtract
+  .getContext('2d');
+
+let envelope_canvasx = canvasWireBwenvelopeDetToParamExtract
+  .offsetLeft;
+let envelope_canvasy = canvasWireBwenvelopeDetToParamExtract
+  .offsetTop;
+let envelope_initial_mousex = 0;
+let envelope_initial_mousey = 0;
+let envelope_last_mousex = 0;
+let envelope_last_mousey = 0;
+let envelope_mousex = 0;
+let envelope_mousey = 0;
+let envelope_isWireConnected = false;
+let envelope_WireBwEnvelopeToParameterExtraction = false;
+let envelope_isEnvelopeDetectorMoving = false;
+let envelope_ParameterExtractionMoving = false;
+
+envelopeDetectorBlockRight.onclick = function (e) {
+  envelope_initial_mousex = parseInt(e.pageX - envelope_canvasx);
+  envelope_initial_mousey = parseInt(e.pageY - envelope_canvasy);
+  envelope_WireBwEnvelopeToParameterExtraction = true;
+  envelope_isWireConnected = true
+};
+
+parameterExtractionBlockLeft.onclick = function (e) {
+  envelope_last_mousex = parseInt(e.pageX - envelope_canvasx)
+  envelope_last_mousey = parseInt(e.pageY - envelope_canvasy)
+  envelope_WireBwEnvelopeToParameterExtraction = false;
+  if (envelope_isWireConnected) {
+    envelope_isWireConnected = true
+  }
+};
+
+connectionWireBwDifferentiatorTodcLimiter.onmousemove = function (e) {
+  if (envelope_WireBwEnvelopeToParameterExtraction) {
+    envelope_mousex = parseInt(e.pageX - envelope_canvasx);
+    envelope_mousey = parseInt(e.pageY - envelope_canvasy);
+    envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
+      .width, canvasWireBwenvelopeDetToParamExtract
+      .height); //clear canvas
+    envelope_ctx.beginPath();
+    envelope_ctx.moveTo(envelope_initial_mousex, envelope_initial_mousey);
+    envelope_ctx.lineTo(envelope_mousex, envelope_mousey);
+    envelope_ctx.strokeStyle = 'black';
+    envelope_ctx.lineWidth = 5;
+    envelope_ctx.lineJoin = envelope_ctx.lineCap = 'round';
+    envelope_ctx.stroke();
+  } else if (envelope_ParameterExtractionMoving && envelope_isWireConnected) {
+    envelope_mousex = parseInt((e.pageX - 53) - envelope_canvasx);
+    envelope_mousey = parseInt((e.pageY + 1) - envelope_canvasy);
+    envelope_last_mousex = parseInt((e.pageX - 53) - envelope_canvasx);
+    envelope_last_mousey = parseInt((e.pageY + 1) - envelope_canvasy);
+    envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
+      .width, canvasWireBwenvelopeDetToParamExtract
+      .height); //clear canvas
+    envelope_ctx.beginPath();
+    envelope_ctx.moveTo(envelope_initial_mousex, envelope_initial_mousey);
+    envelope_ctx.lineTo(envelope_mousex, envelope_mousey);
+    envelope_ctx.strokeStyle = 'black';
+    envelope_ctx.lineWidth = 5;
+    envelope_ctx.lineJoin = envelope_ctx.lineCap = 'round';
+    envelope_ctx.stroke();
+  }
+  else if (envelope_isEnvelopeDetectorMoving && envelope_isWireConnected) {
+    envelope_mousex = parseInt((e.pageX + 53) - envelope_canvasx);
+    envelope_mousey = parseInt((e.pageY + 1) - envelope_canvasy);
+    envelope_initial_mousex = parseInt((e.pageX + 53) - envelope_canvasx);
+    envelope_initial_mousey = parseInt((e.pageY + 1) - envelope_canvasy);
+    envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
+      .width, canvasWireBwenvelopeDetToParamExtract
+      .height); //clear canvas
+    envelope_ctx.beginPath();
+    envelope_ctx.moveTo(envelope_mousex, envelope_mousey);
+    envelope_ctx.lineTo(envelope_last_mousex, envelope_last_mousey);
+    envelope_ctx.strokeStyle = 'black';
+    envelope_ctx.lineWidth = 5;
+    envelope_ctx.lineJoin = envelope_ctx.lineCap = 'round';
+    envelope_ctx.stroke();
+  }
+};
+
+// wire end
+
 modulatingSubmit.onmousedown = () => {
   obj.modulating.frequency = parseInt(modulatingFrequency.value);
   obj.modulating.amplitude = parseInt(modulatingAmplitute.value);
@@ -327,9 +862,12 @@ modulatingSubmit.onmouseup = () => {
         document.querySelector('.modulating__signal--block'))
       modulatingSignalRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      alert("output of modulating signal")
       model.value = "mode"
     }
     modSig_isModulatingSignalMoving = false
@@ -385,9 +923,12 @@ carrierSubmit.onmouseup = () => {
         document.querySelector('.carrier__signal--block'));
       carrierSignalRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      alert('output of carrier signal')
       model.value = "mode"
     }
     carrierSig_isCarrierSignalMoving = false
@@ -435,9 +976,11 @@ frequencySensistivitySubmit.onmouseup = () => {
         document.querySelector('.frequencySensistivity__signal--block'));
       frequencySensistivityRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
       model.value = "mode"
     }
     freqSen_isFreqSensistivityMoving = false
@@ -481,6 +1024,7 @@ integrator.onmouseup = () => {
 
   integrator.ondblclick = () => {
     modSig_isIntegratorMoving = true;
+    integrator_isIntegratorMoving = true;
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -491,12 +1035,20 @@ integrator.onmouseup = () => {
       integratorBlockLeft.style.display = 'none';
       integratorBlockBottom.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (modSig_isWireConnected) {
+        alert('output of integrator')
+      } else {
+        alert('Please connnect the wires')
+      }
       model.value = "mode"
     }
     modSig_isIntegratorMoving = false;
+    integrator_isIntegratorMoving = false;
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -545,6 +1097,8 @@ multiplier.onmouseup = () => {
 
   multiplier.ondblclick = () => {
     freqSen_isMultiplierMoving = true
+    integrator_isMulitplierMoving = true
+    multiplier_isMultiplierMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -556,12 +1110,21 @@ multiplier.onmouseup = () => {
       multiplierBlockTop.style.display = 'none';
       multiplierBlockBottom.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (freqSen_isWireConnected && integrator_isWireConnected) {
+        alert('output of multiplier')
+      } else {
+        alert('Please connect the wires')
+      }
       model.value = "mode"
     }
     freqSen_isMultiplierMoving = false
+    integrator_isMulitplierMoving = false
+    multiplier_isMultiplierMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -610,6 +1173,8 @@ modulator.onmouseup = () => {
 
   modulator.ondblclick = () => {
     carrierSig_isModulatorMoving = true
+    multiplier_isModulatorMoving = true
+    modulator_isModulatorMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -621,12 +1186,22 @@ modulator.onmouseup = () => {
       modulatorBlockRight.style.display = 'none';
       modulatorBlockTop.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      // if (freqSen_isWireConnected && integrator_isWireConnected) {
+      if (carrierSig_isWireConnected && multiplier_isWireConnected) {
+        alert('output of multiplier')
+      } else {
+        alert('Please connect the wires')
+      }
       model.value = "mode"
     }
     carrierSig_isModulatorMoving = false
+    multiplier_isModulatorMoving = false
+    modulator_isModulatorMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -668,6 +1243,8 @@ differentiator.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   differentiator.ondblclick = () => {
+    modulator_isDifferentiatorMoving = true
+    differentiator_isDifferentiatorMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -678,11 +1255,21 @@ differentiator.onmouseup = () => {
       differentiatorBlockLeft.style.display = 'none';
       differentiatorBlockRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (modulator_isWireConnected) {
+        alert('outpu of differentiator')
+      }
+      else {
+        alert('please connect the wires')
+      }
       model.value = "mode"
     }
+    modulator_isDifferentiatorMoving = false
+    differentiator_isDifferentiatorMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -722,6 +1309,8 @@ envelopeDetector.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   envelopeDetector.ondblclick = () => {
+    dcLimiter_envelopeDetectorMoving = true;
+    envelope_isEnvelopeDetectorMoving = true;
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -732,11 +1321,20 @@ envelopeDetector.onmouseup = () => {
       envelopeDetectorBlockLeft.style.display = 'none';
       envelopeDetectorBlockRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (dcLimiter_isWireConnected) {
+        alert('output of the dc limiter')
+      } else {
+        alert('please connect the wires')
+      }
       model.value = "mode"
     }
+    dcLimiter_envelopeDetectorMoving = false;
+    envelope_isEnvelopeDetectorMoving = false;
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -777,6 +1375,8 @@ dcLimitedCircuit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   dcLimitedCircuit.ondblclick = () => {
+    differentiator_isDcLimiterMoving = true
+    dcLimiter_isdcLimiterMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -787,11 +1387,20 @@ dcLimitedCircuit.onmouseup = () => {
       dcLimitedCircuitBlockLeft.style.display = 'none';
       dcLimitedCircuitBlockRight.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (differentiator_isWireConnected) {
+        alert('output of dc limiter')
+      } else {
+        alert('Please connect the wires')
+      }
       model.value = "mode"
     }
+    differentiator_isDcLimiterMoving = false
+    dcLimiter_isdcLimiterMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -810,8 +1419,6 @@ parameterExtraction.onmouseup = () => {
   parameterExtraction.style.position = 'absolute';
   parameterExtraction.style.zIndex = 1000;
 
-
-
   parameterExtractionBlockLeft.style.position = 'absolute';
   parameterExtractionBlockLeft.style.zIndex = '1000';
   parameterExtractionBlockLeft.style.display = 'block';
@@ -829,6 +1436,7 @@ parameterExtraction.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   parameterExtraction.ondblclick = () => {
+    envelope_ParameterExtractionMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -838,11 +1446,19 @@ parameterExtraction.onmouseup = () => {
         document.querySelector('.parameterExtraction--block'));
       parameterExtractionBlockLeft.style.display = 'none';
       model.value = "mode"
-    } else if (model.value === "Edit") {
-      model.value = "mode"
-    } else if (model.value === "output") {
+    }
+    // else if (model.value === "Edit") {
+    //   model.value = "mode"
+    // }
+    else if (model.value === "output") {
+      if (envelope_isWireConnected) {
+        alert('output of the parameterExtraction')
+      } else {
+        alert('please connect the wires')
+      }
       model.value = "mode"
     }
+    envelope_ParameterExtractionMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
