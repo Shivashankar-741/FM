@@ -1,6 +1,5 @@
 import * as selectors from "./domSelector/domSelector.js"
 
-
 let isModulatingSignalPlaced = false
 let isCarrierSignalPlaced = false
 let isFreqSensistivityPlaced = false
@@ -12,6 +11,10 @@ let isEnvelopeDetectorPlaced = false
 let isDcLimiterPlaced = false
 let isParamExtractionPlaced = false
 
+document.getElementById('removeGraph').onclick = () => {
+  document.getElementById('calculator').removeChild(
+    document.querySelector('.dcg-wrapper'))
+}
 
 const obj = {
   modulating: {
@@ -823,7 +826,12 @@ selectors.modulatingSubmit.onmouseup = () => {
     //   selectors.model.value = "mode"
     // }
     else if (selectors.model.value === "output") {
-      alert("output of modulating signal")
+      // Output graph
+      let elt = document.getElementById('calculator');
+      let calculator = Desmos.GraphingCalculator(elt);
+      let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+      calculator.setExpression({ id: 'graph1', latex: s });
+      $('#output').modal('show');
       selectors.model.value = "mode"
     }
     modSig_isModulatingSignalMoving = false
@@ -890,7 +898,11 @@ selectors.carrierSubmit.onmouseup = () => {
     //   selectors.model.value = "mode"
     // }
     else if (selectors.model.value === "output") {
-      alert('output of carrier signal')
+      let elt = document.getElementById('calculator');
+      let calculator = Desmos.GraphingCalculator(elt);
+      let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\sin( 2 * \\pi * ${obj.carrier.frequency} * x))`;
+      calculator.setExpression({ id: 'graph1', latex: s });
+      $('#output').modal('show');
       selectors.model.value = "mode"
     }
     carrierSig_isCarrierSignalMoving = false
@@ -1472,6 +1484,7 @@ selectors.parameterExtraction.onmouseup = () => {
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
+
 
 
 

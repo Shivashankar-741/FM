@@ -48,5 +48,4 @@ export let connectionWireBwDifferentiatorTodcLimiter = document.querySelector('.
 export let check = document.querySelector('.check')
 export let check2 = document.querySelector('.check2')
 
-export let name = "shiva shankar"
 

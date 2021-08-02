@@ -254,10 +254,35 @@
           </div>
         </div>
       </div>
+
+      <!-- output modal -->
+      <div class="modal fade" id="output" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 id="exampleModalLabel">
+                Output of modulating signal
+              </h6>
+              <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+            </div>
+            <div class="modal-body" id='container'>
+              <div id="calculator" style="width: 1000px; height: 450px;"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" id='removeGraph' data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="carrierSubmit">Create</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <script type="module" src="./js/index.js"></script>
 
+    <script type="module" src="./js/index.js"></script>
+    <script src="./js/index.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
 </body>
 
 </html>
