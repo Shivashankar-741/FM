@@ -1,4 +1,5 @@
 import * as selectors from "./domSelector/domSelector.js"
+import { wire } from "./wire.js"
 
 let isModulatingSignalPlaced = false
 let isCarrierSignalPlaced = false
@@ -42,12 +43,15 @@ let modSig_last_mousey = 0;
 let modSig_mousex = 0;
 let modSig_mousey = 0;
 let modSig_isWireConnected = false;
-var modSig_WireBwModulatingtoIntegrator = false;
+let modSig_WireBwModulatingtoIntegrator = false;
 let modSig_isModulatingSignalMoving = false;
 let modSig_isIntegratorMoving = false;
 
 
 selectors.modulatingSignalRight.onclick = function (e) {
+  // wire(e.pageX, e.pageY, modSig_canvasx, modSig_canvasy, modSig_initial_mousex,
+  //   modSig_initial_mousey, modSig_WireBwModulatingtoIntegrator,
+  //   modSig_isWireConnected)
   modSig_initial_mousex = parseInt(e.pageX - modSig_canvasx);
   modSig_initial_mousey = parseInt(e.pageY - modSig_canvasy);
   modSig_WireBwModulatingtoIntegrator = true;
@@ -784,7 +788,7 @@ selectors.modulatingSubmit.onmousedown = () => {
     imgBlock.setAttribute('class', 'modulating__signal--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('You already selected modulating signal')
+    alert('You have already selected modulating signal')
   }
 }
 
@@ -856,7 +860,7 @@ selectors.carrierSubmit.onmousedown = () => {
       alert("carrier frequency and amplitude should be greater than modulating frequency and amplitude")
     }
   } else {
-    alert('you already selected carrier signal')
+    alert('you have already selected carrier signal')
   }
 }
 
@@ -919,7 +923,7 @@ selectors.frequencySensistivitySubmit.onmousedown = () => {
     imgBlock.setAttribute('class', 'frequencySensistivity__signal--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('You already selected frequency sensistivity')
+    alert('You have already selected frequency sensistivity')
   }
 }
 
@@ -978,7 +982,7 @@ selectors.integrator.onmousedown = () => {
     imgBlock.setAttribute('class', 'integrator--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('You already selected integrator')
+    alert('You have already selected integrator')
   }
 }
 
@@ -1056,7 +1060,7 @@ selectors.multiplier.onmousedown = () => {
     imgBlock.setAttribute('class', 'multiplier--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected multiplier')
+    alert('you have already selected multiplier')
   }
 }
 
@@ -1145,7 +1149,7 @@ selectors.modulator.onmousedown = () => {
     imgBlock.setAttribute('class', 'modulator--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected modulator')
+    alert('you have already selected modulator')
   }
 }
 
@@ -1233,7 +1237,7 @@ selectors.differentiator.onmousedown = () => {
     imgBlock.setAttribute('class', 'differentiator--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected differentiator')
+    alert('you have already selected differentiator')
   }
 }
 
@@ -1313,7 +1317,7 @@ selectors.envelopeDetector.onmousedown = () => {
     imgBlock.setAttribute('class', 'envelopeDetector--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected envelope detector')
+    alert('you have already selected envelope detector')
   }
 }
 
@@ -1389,7 +1393,7 @@ selectors.dcLimitedCircuit.onmousedown = () => {
     imgBlock.setAttribute('class', 'dcLimitedCircuit--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected dc limiter')
+    alert('you have already selected dc limiter')
   }
 }
 
@@ -1466,7 +1470,7 @@ selectors.parameterExtraction.onmousedown = () => {
     imgBlock.setAttribute('class', 'parameterExtraction--block');
     selectors.simulationArea.appendChild(imgBlock);
   } else {
-    alert('you already selected paramter extraction')
+    alert('you have already selected paramter extraction')
   }
 }
 
