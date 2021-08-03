@@ -1363,8 +1363,13 @@ selectors.envelopeDetector.onmouseup = () => {
     //   selectors.model.value = "mode"
     // }
     else if (selectors.model.value === "output") {
-      if (dcLimiter_isWireConnected) {
-        alert('output of the dc limiter')
+      if (differentiator_isWireConnected) {
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}+((${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`
+        let s = 'y(x) = ' + `${eqn}`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
       } else {
         alert('please connect the wires')
       }
@@ -1435,8 +1440,13 @@ selectors.dcLimitedCircuit.onmouseup = () => {
     //   selectors.model.value = "mode"
     // }
     else if (selectors.model.value === "output") {
-      if (differentiator_isWireConnected) {
-        alert('output of dc limiter')
+      if (envelope_isWireConnected) {
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let eqn = `(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x)`
+        let s = 'y(x) = ' + `${eqn}`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
       } else {
         alert('Please connect the wires')
       }
