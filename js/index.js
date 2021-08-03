@@ -510,7 +510,7 @@ selectors.connectionWireBwModulatorToDifferentiator.onmousemove = function (e) {
   }
 };
 
-// wire between differentiator to dcLimiterCircuit
+// wire between differentiator to envelopedetector
 
 let canvasWireBwDifferentiatorTodcLimiter
   = document.getElementById('canvasWireBwDifferentiatorTodcLimiter');
@@ -530,7 +530,7 @@ let differentiator_mousey = 0;
 let differentiator_isWireConnected = false;
 let differentiator_WireBwDifferentiatorTodcLimiter = false;
 let differentiator_isDifferentiatorMoving = false;
-let differentiator_isDcLimiterMoving = false;
+let differentiator_isenvelopeDetectorMoving = false;
 
 
 selectors.differentiatorBlockRight.onclick = function (e) {
@@ -541,7 +541,7 @@ selectors.differentiatorBlockRight.onclick = function (e) {
   differentiator_isWireConnected = true
 };
 
-selectors.dcLimitedCircuitBlockLeft.onclick = function (e) {
+selectors.envelopeDetectorBlockLeft.onclick = function (e) {
   differentiator_last_mousex = parseInt(e.pageX - differentiator_canvasx)
   differentiator_last_mousey = parseInt(e.pageY - differentiator_canvasy)
   differentiator_WireBwDifferentiatorTodcLimiter = false;
@@ -565,7 +565,7 @@ selectors.check.onmousemove = function (e) {
     differentiator_ctx.lineWidth = 5;
     differentiator_ctx.lineJoin = differentiator_ctx.lineCap = 'round';
     differentiator_ctx.stroke();
-  } else if (differentiator_isDcLimiterMoving && differentiator_isWireConnected) {
+  } else if (differentiator_isenvelopeDetectorMoving && differentiator_isWireConnected) {
     differentiator_mousex = parseInt((e.pageX - 53) - differentiator_canvasx);
     differentiator_mousey = parseInt((e.pageY + 1) - differentiator_canvasy);
     differentiator_last_mousex = parseInt((e.pageX - 53) - differentiator_canvasx);
@@ -599,93 +599,7 @@ selectors.check.onmousemove = function (e) {
   }
 };
 
-// wire between dcLimiter to envelopeDetector
-
-let canvasWireBwdcLimiterToEnvelopeDetector
-  = document.getElementById('canvasWireBwdcLimiterToEnvelopeDetector');
-let dcLimiter_ctx = canvasWireBwdcLimiterToEnvelopeDetector
-  .getContext('2d');
-
-let dcLimiter_canvasx = canvasWireBwdcLimiterToEnvelopeDetector
-  .offsetLeft;
-let dcLimiter_canvasy = canvasWireBwdcLimiterToEnvelopeDetector
-  .offsetTop;
-let dcLimiter_initial_mousex = 0;
-let dcLimiter_initial_mousey = 0;
-let dcLimiter_last_mousex = 0;
-let dcLimiter_last_mousey = 0;
-let dcLimiter_mousex = 0;
-let dcLimiter_mousey = 0;
-let dcLimiter_isWireConnected = false;
-let dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
-let dcLimiter_isdcLimiterMoving = false;
-let dcLimiter_envelopeDetectorMoving = false;
-
-selectors.dcLimitedCircuitBlockRight.onclick = function (e) {
-  dcLimiter_initial_mousex = parseInt(e.pageX - dcLimiter_canvasx);
-  dcLimiter_initial_mousey = parseInt(e.pageY - dcLimiter_canvasy);
-  dcLimiter_WireBwdcLimiterToEnvelopeDetector = true;
-  dcLimiter_isWireConnected = true
-};
-
-selectors.envelopeDetectorBlockLeft.onclick = function (e) {
-  dcLimiter_last_mousex = parseInt(e.pageX - dcLimiter_canvasx)
-  dcLimiter_last_mousey = parseInt(e.pageY - dcLimiter_canvasy)
-  dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
-  if (dcLimiter_isWireConnected) {
-    dcLimiter_isWireConnected = true
-  }
-};
-
-selectors.check2.onmousemove = function (e) {
-  if (dcLimiter_WireBwdcLimiterToEnvelopeDetector) {
-    dcLimiter_mousex = parseInt(e.pageX - dcLimiter_canvasx);
-    dcLimiter_mousey = parseInt(e.pageY - dcLimiter_canvasy);
-    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
-      .width, canvasWireBwdcLimiterToEnvelopeDetector
-      .height); //clear canvas
-    dcLimiter_ctx.beginPath();
-    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
-    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
-    dcLimiter_ctx.strokeStyle = 'black';
-    dcLimiter_ctx.lineWidth = 5;
-    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
-    dcLimiter_ctx.stroke();
-  } else if (dcLimiter_envelopeDetectorMoving && dcLimiter_isWireConnected) {
-    dcLimiter_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
-    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
-    dcLimiter_last_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
-    dcLimiter_last_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
-    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
-      .width, canvasWireBwdcLimiterToEnvelopeDetector
-      .height); //clear canvas
-    dcLimiter_ctx.beginPath();
-    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
-    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
-    dcLimiter_ctx.strokeStyle = 'black';
-    dcLimiter_ctx.lineWidth = 5;
-    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
-    dcLimiter_ctx.stroke();
-  }
-  else if (dcLimiter_isdcLimiterMoving && dcLimiter_isWireConnected) {
-    dcLimiter_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
-    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
-    dcLimiter_initial_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
-    dcLimiter_initial_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
-    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
-      .width, canvasWireBwdcLimiterToEnvelopeDetector
-      .height); //clear canvas
-    dcLimiter_ctx.beginPath();
-    dcLimiter_ctx.moveTo(dcLimiter_mousex, dcLimiter_mousey);
-    dcLimiter_ctx.lineTo(dcLimiter_last_mousex, dcLimiter_last_mousey);
-    dcLimiter_ctx.strokeStyle = 'black';
-    dcLimiter_ctx.lineWidth = 5;
-    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
-    dcLimiter_ctx.stroke();
-  }
-};
-
-// wire between envelopeDetector to paramter extraction
+// wire between envelopeDetector to dclimiter
 
 let canvasWireBwenvelopeDetToParamExtract
   = document.getElementById('canvasWireBwenvelopeDetToParamExtract');
@@ -705,7 +619,7 @@ let envelope_mousey = 0;
 let envelope_isWireConnected = false;
 let envelope_WireBwEnvelopeToParameterExtraction = false;
 let envelope_isEnvelopeDetectorMoving = false;
-let envelope_ParameterExtractionMoving = false;
+let envelope_isDcLimiterMoving = false;
 
 selectors.envelopeDetectorBlockRight.onclick = function (e) {
   envelope_initial_mousex = parseInt(e.pageX - envelope_canvasx);
@@ -714,7 +628,7 @@ selectors.envelopeDetectorBlockRight.onclick = function (e) {
   envelope_isWireConnected = true
 };
 
-selectors.parameterExtractionBlockLeft.onclick = function (e) {
+selectors.dcLimitedCircuitBlockLeft.onclick = function (e) {
   envelope_last_mousex = parseInt(e.pageX - envelope_canvasx)
   envelope_last_mousey = parseInt(e.pageY - envelope_canvasy)
   envelope_WireBwEnvelopeToParameterExtraction = false;
@@ -737,7 +651,7 @@ selectors.connectionWireBwDifferentiatorTodcLimiter.onmousemove = function (e) {
     envelope_ctx.lineWidth = 5;
     envelope_ctx.lineJoin = envelope_ctx.lineCap = 'round';
     envelope_ctx.stroke();
-  } else if (envelope_ParameterExtractionMoving && envelope_isWireConnected) {
+  } else if (envelope_isDcLimiterMoving && envelope_isWireConnected) {
     envelope_mousex = parseInt((e.pageX - 53) - envelope_canvasx);
     envelope_mousey = parseInt((e.pageY + 1) - envelope_canvasy);
     envelope_last_mousex = parseInt((e.pageX - 53) - envelope_canvasx);
@@ -768,6 +682,93 @@ selectors.connectionWireBwDifferentiatorTodcLimiter.onmousemove = function (e) {
     envelope_ctx.lineWidth = 5;
     envelope_ctx.lineJoin = envelope_ctx.lineCap = 'round';
     envelope_ctx.stroke();
+  }
+};
+
+
+// wire between dcLimiter to parameter extraction
+
+let canvasWireBwdcLimiterToEnvelopeDetector
+  = document.getElementById('canvasWireBwdcLimiterToEnvelopeDetector');
+let dcLimiter_ctx = canvasWireBwdcLimiterToEnvelopeDetector
+  .getContext('2d');
+
+let dcLimiter_canvasx = canvasWireBwdcLimiterToEnvelopeDetector
+  .offsetLeft;
+let dcLimiter_canvasy = canvasWireBwdcLimiterToEnvelopeDetector
+  .offsetTop;
+let dcLimiter_initial_mousex = 0;
+let dcLimiter_initial_mousey = 0;
+let dcLimiter_last_mousex = 0;
+let dcLimiter_last_mousey = 0;
+let dcLimiter_mousex = 0;
+let dcLimiter_mousey = 0;
+let dcLimiter_isWireConnected = false;
+let dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
+let dcLimiter_isdcLimiterMoving = false;
+let dcLimiter_parameterExtractionMoving = false;
+
+selectors.dcLimitedCircuitBlockRight.onclick = function (e) {
+  dcLimiter_initial_mousex = parseInt(e.pageX - dcLimiter_canvasx);
+  dcLimiter_initial_mousey = parseInt(e.pageY - dcLimiter_canvasy);
+  dcLimiter_WireBwdcLimiterToEnvelopeDetector = true;
+  dcLimiter_isWireConnected = true
+};
+
+selectors.parameterExtractionBlockLeft.onclick = function (e) {
+  dcLimiter_last_mousex = parseInt(e.pageX - dcLimiter_canvasx)
+  dcLimiter_last_mousey = parseInt(e.pageY - dcLimiter_canvasy)
+  dcLimiter_WireBwdcLimiterToEnvelopeDetector = false;
+  if (dcLimiter_isWireConnected) {
+    dcLimiter_isWireConnected = true
+  }
+};
+
+selectors.check2.onmousemove = function (e) {
+  if (dcLimiter_WireBwdcLimiterToEnvelopeDetector) {
+    dcLimiter_mousex = parseInt(e.pageX - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt(e.pageY - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
+  } else if (dcLimiter_parameterExtractionMoving && dcLimiter_isWireConnected) {
+    dcLimiter_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_last_mousex = parseInt((e.pageX - 53) - dcLimiter_canvasx);
+    dcLimiter_last_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_initial_mousex, dcLimiter_initial_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
+  }
+  else if (dcLimiter_isdcLimiterMoving && dcLimiter_isWireConnected) {
+    dcLimiter_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
+    dcLimiter_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_initial_mousex = parseInt((e.pageX + 53) - dcLimiter_canvasx);
+    dcLimiter_initial_mousey = parseInt((e.pageY + 1) - dcLimiter_canvasy);
+    dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+      .width, canvasWireBwdcLimiterToEnvelopeDetector
+      .height); //clear canvas
+    dcLimiter_ctx.beginPath();
+    dcLimiter_ctx.moveTo(dcLimiter_mousex, dcLimiter_mousey);
+    dcLimiter_ctx.lineTo(dcLimiter_last_mousex, dcLimiter_last_mousey);
+    dcLimiter_ctx.strokeStyle = 'black';
+    dcLimiter_ctx.lineWidth = 5;
+    dcLimiter_ctx.lineJoin = dcLimiter_ctx.lineCap = 'round';
+    dcLimiter_ctx.stroke();
   }
 };
 
@@ -1344,8 +1345,8 @@ selectors.envelopeDetector.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   envelopeDetector.ondblclick = () => {
-    dcLimiter_envelopeDetectorMoving = true;
-    envelope_isEnvelopeDetectorMoving = true;
+    differentiator_isenvelopeDetectorMoving = true
+    envelope_isEnvelopeDetectorMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -1369,8 +1370,8 @@ selectors.envelopeDetector.onmouseup = () => {
       }
       selectors.model.value = "mode"
     }
-    dcLimiter_envelopeDetectorMoving = false;
-    envelope_isEnvelopeDetectorMoving = false;
+    differentiator_isenvelopeDetectorMoving = false
+    envelope_isEnvelopeDetectorMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -1416,8 +1417,8 @@ selectors.dcLimitedCircuit.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   dcLimitedCircuit.ondblclick = () => {
-    differentiator_isDcLimiterMoving = true
     dcLimiter_isdcLimiterMoving = true
+    envelope_isDcLimiterMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -1441,8 +1442,8 @@ selectors.dcLimitedCircuit.onmouseup = () => {
       }
       selectors.model.value = "mode"
     }
-    differentiator_isDcLimiterMoving = false
     dcLimiter_isdcLimiterMoving = false
+    envelope_isDcLimiterMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
@@ -1483,7 +1484,7 @@ selectors.parameterExtraction.onmouseup = () => {
   document.addEventListener('mousemove', onMouseMove);
 
   parameterExtraction.ondblclick = () => {
-    envelope_ParameterExtractionMoving = true
+    dcLimiter_parameterExtractionMoving = true
     document.addEventListener('mousemove', onMouseMove);
   }
 
@@ -1506,7 +1507,7 @@ selectors.parameterExtraction.onmouseup = () => {
       }
       selectors.model.value = "mode"
     }
-    envelope_ParameterExtractionMoving = false
+    dcLimiter_parameterExtractionMoving = false
     document.removeEventListener('mousemove', onMouseMove)
   }
 }
