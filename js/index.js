@@ -829,7 +829,7 @@ selectors.modulatingSubmit.onmouseup = () => {
       // Output graph
       let elt = document.getElementById('calculator');
       let calculator = Desmos.GraphingCalculator(elt);
-      let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+      let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
       calculator.setExpression({ id: 'graph1', latex: s });
       $('#output').modal('show');
       selectors.model.value = "mode"
@@ -900,7 +900,7 @@ selectors.carrierSubmit.onmouseup = () => {
     else if (selectors.model.value === "output") {
       let elt = document.getElementById('calculator');
       let calculator = Desmos.GraphingCalculator(elt);
-      let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\sin( 2 * \\pi * ${obj.carrier.frequency} * x))`;
+      let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
       calculator.setExpression({ id: 'graph1', latex: s });
       $('#output').modal('show');
       selectors.model.value = "mode"
@@ -1027,7 +1027,15 @@ selectors.integrator.onmouseup = () => {
     // }
     else if (selectors.model.value === "output") {
       if (modSig_isWireConnected) {
-        alert('output of integrator')
+        // alert('output of integrator')
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let numerator = `(${obj.modulating.amplitude} * \\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+        let denominator = `( 2 * \\pi * ${obj.modulating.frequency})`
+        let s = 'y(x) = ' + `${numerator}/${denominator}`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        selectors.model.value = "mode"
       } else {
         alert('Please connnect the wires')
       }
@@ -1108,7 +1116,14 @@ selectors.multiplier.onmouseup = () => {
     // }
     else if (selectors.model.value === "output") {
       if (freqSen_isWireConnected && integrator_isWireConnected) {
-        alert('output of multiplier')
+        // alert('output of integrator')
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let eqn = `((${obj.frequencySensistivity} * ${obj.modulating.amplitude}/${obj.modulating.frequency}))`;
+        let s = 'y(x) = ' + `${eqn}*(\\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        selectors.model.value = "mode"
       } else {
         alert('Please connect the wires')
       }
@@ -1189,9 +1204,14 @@ selectors.modulator.onmouseup = () => {
     //   selectors.model.value = "mode"
     // }
     else if (selectors.model.value === "output") {
-      // if (freqSen_isWireConnected && integrator_isWireConnected) {
       if (carrierSig_isWireConnected && multiplier_isWireConnected) {
-        alert('output of multiplier')
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let eqn = `(${obj.carrier.amplitude}* \\cos( 2 * \\pi * ${obj.carrier.frequency} * x+((${obj.frequencySensistivity}*${obj.modulating.amplitude}/${obj.modulating.frequency}))*(\\sin( 2 * \\pi * ${obj.modulating.frequency} * x))))`
+        let s = 'y(x) = ' + `${eqn}`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        selectors.model.value = "mode"
       } else {
         alert('Please connect the wires')
       }
@@ -1265,7 +1285,13 @@ selectors.differentiator.onmouseup = () => {
     // }
     else if (selectors.model.value === "output") {
       if (modulator_isWireConnected) {
-        alert('outpu of differentiator')
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}(1+(${obj.frequencySensistivity}/${obj.carrier.frequency})*${obj.modulating.amplitude}* \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))*\\sin(2 * \\pi * ${obj.carrier.frequency} * x+((${obj.frequencySensistivity * obj.modulating.amplitude})/${obj.modulating.frequency})* \\sin( 2 * \\pi * ${obj.modulating.frequency} * x)-180)`
+        let s = 'y(x) = ' + `${eqn}`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        selectors.model.value = "mode"
       }
       else {
         alert('please connect the wires')
