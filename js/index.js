@@ -15,7 +15,21 @@ let isParamExtractionPlaced = false
 document.getElementById('removeGraph').onclick = () => {
   document.getElementById('calculator').removeChild(
     document.querySelector('.dcg-wrapper'))
+  document.querySelector('.result').innerHTML = ''
 }
+
+document.getElementById('downloadGraph').onclick = () => {
+  console.log('its working fine');
+  let div = document.getElementById('calculator');
+  html2canvas(div).then(
+    function (canvas) {
+      document
+        .getElementById('checkgraph')
+        .appendChild(canvas);
+    })
+}
+
+// document.querySelector('.dcg-exppanel-outer').style.display = 'none'
 
 const obj = {
   modulating: {
@@ -68,6 +82,7 @@ selectors.integratorBlockLeft.onclick = function (e) {
 };
 
 selectors.connectionWireBwModsigToIntegrator.onmousemove = function (e) {
+  // console.log(e);
   if (modSig_WireBwModulatingtoIntegrator) {
     modSig_mousex = parseInt(e.pageX - modSig_canvasx);
     modSig_mousey = parseInt(e.pageY - modSig_canvasy);
@@ -777,73 +792,98 @@ selectors.check2.onmousemove = function (e) {
 };
 
 // wire end
+console.log(obj);
+
+let editModulatingSignal = false
 
 selectors.modulatingSubmit.onmousedown = () => {
   if (!isModulatingSignalPlaced) {
     obj.modulating.frequency = parseInt(selectors.modulatingFrequency.value);
     obj.modulating.amplitude = parseInt(selectors.modulatingAmplitute.value);
-
+    console.log(obj);
     let imgBlock = document.createElement("img");
     imgBlock.setAttribute('src', '../blockImages/modulatingSignal.png');
     imgBlock.setAttribute('class', 'modulating__signal--block');
     selectors.simulationArea.appendChild(imgBlock);
-  } else {
+  } else if (editModulatingSignal) {
+    if (selectors.modulatingFrequency.value < obj.carrier.frequency && selectors.modulatingAmplitute.value < obj.carrier.amplitude) {
+      obj.modulating.frequency = parseInt(selectors.modulatingFrequency.value);
+      obj.modulating.amplitude = parseInt(selectors.modulatingAmplitute.value);
+      editModulatingSignal = true
+      console.log(obj);
+    } else {
+      alert('updating modulating frequency and amplitude should be less than actual carrier frequency and amplitute')
+    }
+  }
+  else {
     alert('You have already selected modulating signal')
   }
 }
 
 selectors.modulatingSubmit.onmouseup = () => {
-  isModulatingSignalPlaced = true
-  let modulatingSignal = document.querySelector('.modulating__signal--block')
+  if (!editModulatingSignal) {
+    isModulatingSignalPlaced = true
+    let modulatingSignal = document.querySelector('.modulating__signal--block')
 
-  modulatingSignal.style.position = 'absolute';
-  modulatingSignal.style.zIndex = 1000;
+    modulatingSignal.style.position = 'absolute';
+    modulatingSignal.style.zIndex = 1000;
 
 
-  selectors.modulatingSignalRight.style.position = 'absolute';
-  selectors.modulatingSignalRight.style.zIndex = 1000;
-  selectors.modulatingSignalRight.style.display = 'block';
+    selectors.modulatingSignalRight.style.position = 'absolute';
+    selectors.modulatingSignalRight.style.zIndex = 1000;
+    selectors.modulatingSignalRight.style.display = 'block';
 
-  function onMouseMove(event) {
-    modulatingSignal.style.left = event.pageX - modulatingSignal.offsetWidth / 2 + 'px';
-    modulatingSignal.style.top = event.pageY - modulatingSignal.offsetHeight / 2 + 'px';
+    function onMouseMove(event) {
+      modulatingSignal.style.left = event.pageX - modulatingSignal.offsetWidth / 2 + 'px';
+      modulatingSignal.style.top = event.pageY - modulatingSignal.offsetHeight / 2 + 'px';
 
-    selectors.modulatingSignalRight.style.left = event.pageX + 53 - selectors.modulatingSignalRight.offsetWidth / 2 + 'px';
-    selectors.modulatingSignalRight.style.top = event.pageY + 1 - selectors.modulatingSignalRight.offsetHeight / 2 + 'px';
-  }
+      selectors.modulatingSignalRight.style.left = event.pageX + 53 - selectors.modulatingSignalRight.offsetWidth / 2 + 'px';
+      selectors.modulatingSignalRight.style.top = event.pageY + 1 - selectors.modulatingSignalRight.offsetHeight / 2 + 'px';
+    }
 
-  document.addEventListener('mousemove', onMouseMove);
-
-  modulatingSignal.ondblclick = () => {
-    modSig_isModulatingSignalMoving = true
     document.addEventListener('mousemove', onMouseMove);
-  }
 
-  modulatingSignal.onclick = () => {
-    if (selectors.model.value === "Delete") {
-      document.getElementsByClassName('simulation-area')[0].removeChild(
-        document.querySelector('.modulating__signal--block'))
-      selectors.modulatingSignalRight.style.display = 'none';
-      isModulatingSignalPlaced = false
-      selectors.model.value = "mode"
+    modulatingSignal.ondblclick = () => {
+      modSig_isModulatingSignalMoving = true
+      document.addEventListener('mousemove', onMouseMove);
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
-    else if (selectors.model.value === "output") {
-      // Output graph
-      let elt = document.getElementById('calculator');
-      let calculator = Desmos.GraphingCalculator(elt);
-      let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
-      calculator.setExpression({ id: 'graph1', latex: s });
-      $('#output').modal('show');
-      selectors.model.value = "mode"
+
+    modulatingSignal.onclick = () => {
+      if (selectors.model.value === "Delete") {
+        document.getElementsByClassName('simulation-area')[0].removeChild(
+          document.querySelector('.modulating__signal--block'))
+        selectors.modulatingSignalRight.style.display = 'none';
+        isModulatingSignalPlaced = false
+        // removing the wire
+        modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
+        //
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "Edit") {
+        editModulatingSignal = true
+        $('#modulatingSignalModal').modal('show');
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "output") {
+        // Output graph
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+          <h1 class='fontStyle'>Modulating frequency (Hz) : ${obj.modulating.frequency}</h1>
+          <h1 class='fontStyle'>Modulating amplitute (v): ${obj.modulating.amplitude}</h1>
+        `
+        selectors.model.value = "mode"
+      }
+      modSig_isModulatingSignalMoving = false
+      document.removeEventListener('mousemove', onMouseMove)
     }
-    modSig_isModulatingSignalMoving = false
-    document.removeEventListener('mousemove', onMouseMove)
   }
 }
 
+let editCarrierSignal = false
 
 selectors.carrierSubmit.onmousedown = () => {
   if (!isCarrierSignalPlaced) {
@@ -859,61 +899,83 @@ selectors.carrierSubmit.onmousedown = () => {
     else {
       alert("carrier frequency and amplitude should be greater than modulating frequency and amplitude")
     }
-  } else {
+  } else if (editCarrierSignal) {
+    if (selectors.carrierFrequency.value > obj.modulating.frequency && selectors.carrierAmplitute.value > obj.modulating.amplitude) {
+      obj.carrier.frequency = parseInt(selectors.carrierFrequency.value);
+      obj.carrier.amplitude = parseInt(selectors.carrierAmplitute.value);
+      editCarrierSignal = true
+      console.log(obj);
+    }
+    else {
+      alert("updating carrier frequency and amplitude should be greater than modulating frequency and amplitude")
+    }
+  }
+  else {
     alert('you have already selected carrier signal')
   }
 }
 
 selectors.carrierSubmit.onmouseup = () => {
-  isCarrierSignalPlaced = true
-  let carrierSignal = document.querySelector('.carrier__signal--block')
+  if (!editCarrierSignal) {
+    isCarrierSignalPlaced = true
+    let carrierSignal = document.querySelector('.carrier__signal--block')
 
-  carrierSignal.style.position = 'absolute';
-  carrierSignal.style.zIndex = 1000;
+    carrierSignal.style.position = 'absolute';
+    carrierSignal.style.zIndex = 1000;
 
 
-  selectors.carrierSignalRight.style.position = 'absolute';
-  selectors.carrierSignalRight.style.zIndex = 1000;
-  selectors.carrierSignalRight.style.display = 'block';
+    selectors.carrierSignalRight.style.position = 'absolute';
+    selectors.carrierSignalRight.style.zIndex = 1000;
+    selectors.carrierSignalRight.style.display = 'block';
 
-  function onMouseMove(event) {
-    carrierSignal.style.left = event.pageX - carrierSignal.offsetWidth / 2 + 'px';
-    carrierSignal.style.top = event.pageY - carrierSignal.offsetHeight / 2 + 'px';
+    function onMouseMove(event) {
+      carrierSignal.style.left = event.pageX - carrierSignal.offsetWidth / 2 + 'px';
+      carrierSignal.style.top = event.pageY - carrierSignal.offsetHeight / 2 + 'px';
 
-    selectors.carrierSignalRight.style.left = event.pageX + 53 - selectors.carrierSignalRight.offsetWidth / 2 + 'px';
-    selectors.carrierSignalRight.style.top = event.pageY + 1 - selectors.carrierSignalRight.offsetHeight / 2 + 'px';
-  }
+      selectors.carrierSignalRight.style.left = event.pageX + 53 - selectors.carrierSignalRight.offsetWidth / 2 + 'px';
+      selectors.carrierSignalRight.style.top = event.pageY + 1 - selectors.carrierSignalRight.offsetHeight / 2 + 'px';
+    }
 
-  document.addEventListener('mousemove', onMouseMove);
-
-  carrierSignal.ondblclick = () => {
-    carrierSig_isCarrierSignalMoving = true
     document.addEventListener('mousemove', onMouseMove);
-  }
 
-  carrierSignal.onclick = () => {
-    if (selectors.model.value === "Delete") {
-      document.getElementsByClassName('simulation-area')[0].removeChild(
-        document.querySelector('.carrier__signal--block'));
-      selectors.carrierSignalRight.style.display = 'none';
-      isCarrierSignalPlaced = false;
-      selectors.model.value = "mode"
+    carrierSignal.ondblclick = () => {
+      carrierSig_isCarrierSignalMoving = true
+      document.addEventListener('mousemove', onMouseMove);
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
-    else if (selectors.model.value === "output") {
-      let elt = document.getElementById('calculator');
-      let calculator = Desmos.GraphingCalculator(elt);
-      let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
-      calculator.setExpression({ id: 'graph1', latex: s });
-      $('#output').modal('show');
-      selectors.model.value = "mode"
+
+    carrierSignal.onclick = () => {
+      if (selectors.model.value === "Delete") {
+        document.getElementsByClassName('simulation-area')[0].removeChild(
+          document.querySelector('.carrier__signal--block'));
+        selectors.carrierSignalRight.style.display = 'none';
+        isCarrierSignalPlaced = false;
+        //remove wire
+        carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "Edit") {
+        editCarrierSignal = true
+        $('#carrierSignalModal').modal('show');
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "output") {
+        let elt = document.getElementById('calculator');
+        let calculator = Desmos.GraphingCalculator(elt);
+        let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
+        calculator.setExpression({ id: 'graph1', latex: s });
+        $('#output').modal('show');
+        selectors.model.value = "mode"
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+      `
+      }
+      carrierSig_isCarrierSignalMoving = false
+      document.removeEventListener('mousemove', onMouseMove)
     }
-    carrierSig_isCarrierSignalMoving = false
-    document.removeEventListener('mousemove', onMouseMove)
   }
 }
+let editFreqSensistivity = false
 
 selectors.frequencySensistivitySubmit.onmousedown = () => {
   if (!isFreqSensistivityPlaced) {
@@ -922,54 +984,69 @@ selectors.frequencySensistivitySubmit.onmousedown = () => {
     imgBlock.setAttribute('src', '../blockImages/frequencySensistivity.png');
     imgBlock.setAttribute('class', 'frequencySensistivity__signal--block');
     selectors.simulationArea.appendChild(imgBlock);
-  } else {
+  } else if (editFreqSensistivity) {
+    obj.frequencySensistivity = parseInt(selectors.frequencySensistivityInput.value)
+    console.log(obj);
+  }
+  else {
     alert('You have already selected frequency sensistivity')
   }
 }
 
 selectors.frequencySensistivitySubmit.onmouseup = () => {
-  isFreqSensistivityPlaced = true
-  let frequencySensistivity = document.querySelector('.frequencySensistivity__signal--block')
+  if (!editFreqSensistivity) {
+    isFreqSensistivityPlaced = true
+    let frequencySensistivity = document.querySelector('.frequencySensistivity__signal--block')
 
-  frequencySensistivity.style.position = 'absolute';
-  frequencySensistivity.style.zIndex = 1000;
+    frequencySensistivity.style.position = 'absolute';
+    frequencySensistivity.style.zIndex = 1000;
 
 
-  selectors.frequencySensistivityRight.style.position = 'absolute';
-  selectors.frequencySensistivityRight.style.zIndex = 1000;
-  selectors.frequencySensistivityRight.style.display = 'block';
+    selectors.frequencySensistivityRight.style.position = 'absolute';
+    selectors.frequencySensistivityRight.style.zIndex = 1000;
+    selectors.frequencySensistivityRight.style.display = 'block';
 
-  function onMouseMove(event) {
-    frequencySensistivity.style.left = event.pageX - frequencySensistivity.offsetWidth / 2 + 'px';
-    frequencySensistivity.style.top = event.pageY - frequencySensistivity.offsetHeight / 2 + 'px';
+    function onMouseMove(event) {
+      frequencySensistivity.style.left = event.pageX - frequencySensistivity.offsetWidth / 2 + 'px';
+      frequencySensistivity.style.top = event.pageY - frequencySensistivity.offsetHeight / 2 + 'px';
 
-    selectors.frequencySensistivityRight.style.left = event.pageX + 53 - selectors.frequencySensistivityRight.offsetWidth / 2 + 'px';
-    selectors.frequencySensistivityRight.style.top = event.pageY + 1 - selectors.frequencySensistivityRight.offsetHeight / 2 + 'px';
-  }
+      selectors.frequencySensistivityRight.style.left = event.pageX + 53 - selectors.frequencySensistivityRight.offsetWidth / 2 + 'px';
+      selectors.frequencySensistivityRight.style.top = event.pageY + 1 - selectors.frequencySensistivityRight.offsetHeight / 2 + 'px';
+    }
 
-  document.addEventListener('mousemove', onMouseMove);
-
-  frequencySensistivity.ondblclick = () => {
-    freqSen_isFreqSensistivityMoving = true
     document.addEventListener('mousemove', onMouseMove);
-  }
 
-  frequencySensistivity.onclick = () => {
-    if (selectors.model.value === "Delete") {
-      document.getElementsByClassName('simulation-area')[0].removeChild(
-        document.querySelector('.frequencySensistivity__signal--block'));
-      selectors.frequencySensistivityRight.style.display = 'none';
-      isFreqSensistivityPlaced = false
-      selectors.model.value = "mode"
+    frequencySensistivity.ondblclick = () => {
+      freqSen_isFreqSensistivityMoving = true
+      document.addEventListener('mousemove', onMouseMove);
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
-    else if (selectors.model.value === "output") {
-      selectors.model.value = "mode"
+
+    frequencySensistivity.onclick = () => {
+      if (selectors.model.value === "Delete") {
+        document.getElementsByClassName('simulation-area')[0].removeChild(
+          document.querySelector('.frequencySensistivity__signal--block'));
+        selectors.frequencySensistivityRight.style.display = 'none';
+        isFreqSensistivityPlaced = false
+        //removing the wire
+        freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
+        //
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "Edit") {
+        editFreqSensistivity = true
+        $('#exampleModal').modal('show');
+        selectors.model.value = "mode"
+      }
+      else if (selectors.model.value === "output") {
+        $('#freqSenOutput').modal('show');
+        document.querySelector('.freqSenResult').innerHTML = `
+        <h2 class='fontStyle'>frequency sensistivity : ${2 * 3.14 * obj.frequencySensistivity}</h4>
+      `
+        selectors.model.value = "mode"
+      }
+      freqSen_isFreqSensistivityMoving = false
+      document.removeEventListener('mousemove', onMouseMove)
     }
-    freqSen_isFreqSensistivityMoving = false
-    document.removeEventListener('mousemove', onMouseMove)
   }
 }
 
@@ -1025,11 +1102,14 @@ selectors.integrator.onmouseup = () => {
       selectors.integratorBlockLeft.style.display = 'none';
       selectors.integratorBlockBottom.style.display = 'none';
       isIntegratorPlaced = false
+
+      // removing the wire
+      modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
+      integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (modSig_isWireConnected) {
         // alert('output of integrator')
@@ -1040,6 +1120,10 @@ selectors.integrator.onmouseup = () => {
         let s = 'y(x) = ' + `${numerator}/${denominator}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+      `
         selectors.model.value = "mode"
       } else {
         alert('Please connnect the wires')
@@ -1114,11 +1198,16 @@ selectors.multiplier.onmouseup = () => {
       selectors.multiplierBlockTop.style.display = 'none';
       selectors.multiplierBlockBottom.style.display = 'none';
       isMultiplierPlaced = false
+      //removing the wire
+      integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
+      freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
+      multiplier_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+        .width, canvasWireBwModulatorToDifferentiator
+        .height);
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (freqSen_isWireConnected && integrator_isWireConnected) {
         // alert('output of integrator')
@@ -1128,6 +1217,11 @@ selectors.multiplier.onmouseup = () => {
         let s = 'y(x) = ' + `${eqn}*(\\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>frequency sensistivity : ${obj.frequencySensistivity}</h1>
+      `
         selectors.model.value = "mode"
       } else {
         alert('Please connect the wires')
@@ -1203,11 +1297,18 @@ selectors.modulator.onmouseup = () => {
       selectors.modulatorBlockRight.style.display = 'none';
       selectors.modulatorBlockTop.style.display = 'none';
       isModulatorPlaced = false
+      // removing wire
+      carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+      multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator
+        .width, canvasWireBwMultiplierToModulator
+        .height); //clear canvas
+      modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+        .width, canvasWireBwModulatorToDifferentiator
+        .height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (carrierSig_isWireConnected && multiplier_isWireConnected) {
         let elt = document.getElementById('calculator');
@@ -1217,6 +1318,13 @@ selectors.modulator.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         selectors.model.value = "mode"
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+      `
       } else {
         alert('Please connect the wires')
       }
@@ -1283,11 +1391,17 @@ selectors.differentiator.onmouseup = () => {
       selectors.differentiatorBlockLeft.style.display = 'none';
       selectors.differentiatorBlockRight.style.display = 'none';
       isDifferentiatorPlaced = false
+      // removing wire
+      modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
+        .width, canvasWireBwModulatorToDifferentiator
+        .height); //clear canvas
+      differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
+        .width, canvasWireBwDifferentiatorTodcLimiter
+        .height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (modulator_isWireConnected) {
         let elt = document.getElementById('calculator');
@@ -1296,6 +1410,13 @@ selectors.differentiator.onmouseup = () => {
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+      `
         selectors.model.value = "mode"
       }
       else {
@@ -1361,11 +1482,17 @@ selectors.envelopeDetector.onmouseup = () => {
       selectors.envelopeDetectorBlockLeft.style.display = 'none';
       selectors.envelopeDetectorBlockRight.style.display = 'none';
       isEnvelopeDetectorPlaced = false
+      // removing wire
+      differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
+        .width, canvasWireBwDifferentiatorTodcLimiter
+        .height); //clear canvas
+      envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
+        .width, canvasWireBwenvelopeDetToParamExtract
+        .height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (differentiator_isWireConnected) {
         let elt = document.getElementById('calculator');
@@ -1374,6 +1501,13 @@ selectors.envelopeDetector.onmouseup = () => {
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+      `
       } else {
         alert('please connect the wires')
       }
@@ -1438,11 +1572,17 @@ selectors.dcLimitedCircuit.onmouseup = () => {
       selectors.dcLimitedCircuitBlockLeft.style.display = 'none';
       selectors.dcLimitedCircuitBlockRight.style.display = 'none';
       isDcLimiterPlaced = false
+      // removing wire
+      envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
+        .width, canvasWireBwenvelopeDetToParamExtract
+        .height); //clear canvas
+      dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+        .width, canvasWireBwdcLimiterToEnvelopeDetector
+        .height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
       if (envelope_isWireConnected) {
         let elt = document.getElementById('calculator');
@@ -1451,6 +1591,13 @@ selectors.dcLimitedCircuit.onmouseup = () => {
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
+        document.querySelector('.result').innerHTML = `
+        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+      `
       } else {
         alert('Please connect the wires')
       }
@@ -1508,14 +1655,36 @@ selectors.parameterExtraction.onmouseup = () => {
         document.querySelector('.parameterExtraction--block'));
       selectors.parameterExtractionBlockLeft.style.display = 'none';
       isParamExtractionPlaced = false
+      // removing wire
+      dcLimiter_ctx.clearRect(0, 0, canvasWireBwdcLimiterToEnvelopeDetector
+        .width, canvasWireBwdcLimiterToEnvelopeDetector
+        .height); //clear canvas
+      //
       selectors.model.value = "mode"
     }
-    // else if (selectors.model.value === "Edit") {
-    //   selectors.model.value = "mode"
-    // }
+
     else if (selectors.model.value === "output") {
-      if (envelope_isWireConnected) {
-        alert('output of the parameterExtraction')
+      if (dcLimiter_isWireConnected) {
+        $('#paraExtOutput').modal('show');
+        let beta = (obj.frequencySensistivity * obj.modulating.amplitude) / obj.modulating.frequency
+        console.log(beta);
+        let power = obj.carrier.amplitude * obj.carrier.amplitude / 2
+        if (beta > 1) {
+          let bandWidth = 2 * (beta + 1) * obj.modulating.frequency;
+          document.querySelector('.paramExtractResult').innerHTML = `
+          <h1 class='fontStyle'>Signal Type: Wide band frequency modulation</h1>
+          <h1 class='fontStyle'>BandWidth: ${bandWidth}</h1>
+          <h1 class='fontStyle'>Power:${power}</h1>
+        `
+        }
+        else {
+          let bandWidth = 2 * obj.modulating.frequency;
+          document.querySelector('.paramExtractResult').innerHTML = `
+          <h1 class='fontStyle'>Signal Type: Narrow band frequency modulation</h1>
+          <h1 class='fontStyle'>BandWidth: ${bandWidth}</h1>
+          <h1 class='fontStyle'>Power:${power}</h1>
+        `
+        }
       } else {
         alert('please connect the wires')
       }

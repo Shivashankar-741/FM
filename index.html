@@ -32,7 +32,7 @@
               <option selected>mode</option>
               <option value="output">output</option>
               <option value="Delete">Delete</option>
-              <!-- <option value="Edit">Edit</option> -->
+              <option value="Edit">Edit</option>
             </select>
           </ul>
           <form class="d-flex">
@@ -261,13 +261,17 @@
           <div class="modal-content">
             <div class="modal-header">
               <h6 id="exampleModalLabel">
-                Output of modulating signal
+                <!-- Output of modulating signal -->
               </h6>
               <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
             </div>
             <div class="modal-body" id='container'>
               <div id="calculator" style="width: 1000px; height: 450px;"></div>
             </div>
+            <div class='btnOutput'>
+              <button class="btn btn-success" id='downloadGraph'>download graph</button>
+            </div>
+            <div class="result"></div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" id='removeGraph' data-bs-dismiss="modal">Close</button>
               <!-- <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="carrierSubmit">Create</button> -->
@@ -275,6 +279,46 @@
           </div>
         </div>
       </div>
+
+      <!-- Frequency sensistivity output modal -->
+      <div class="modal fade" id="freqSenOutput" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Frequency sensistivity Report</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="freqSenResult"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- parameter extraction output modal -->
+      <div class="modal fade" id="paraExtOutput" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Report</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="paramExtractResult"></div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="checkgraph"></div>
     </div>
 
 
@@ -283,6 +327,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
+    </script>
 </body>
 
 </html>
