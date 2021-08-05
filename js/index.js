@@ -875,6 +875,9 @@ selectors.modulatingSubmit.onmouseup = () => {
         selectors.model.value = "mode"
       }
       else if (selectors.model.value === "output") {
+        // var confettiSettings = { target: 'demo', clock: 100, size: 1 };
+        // var confetti = new ConfettiGenerator(confettiSettings);
+        // confetti.render();
         // Output graph
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
