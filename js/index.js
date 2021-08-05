@@ -21,24 +21,36 @@ document.getElementById('removeGraph').onclick = () => {
 document.querySelector('#downloadGraph').addEventListener('click', function () {
   console.log('chcecking')
   html2canvas(document.getElementById("calculator")).then(canvas => {
-    // (A) CONVERT CANVAS TO IMAGE
     let url = canvas.toDataURL("image/png");
-
-    // canvas.toDataURL(DATA-TYPE, OPTIONAL-QUALITY);
-    // So if you want JPG instead:
-    // let url = canvas.toDataURL("image/jpeg", 0.7);
-    // Also remember to change download="screenshot.jpg" below
-
-    // (B) "FORCE DOWNLOAD"
     let nindown = document.getElementById("ninjadown")
     nindown.href = url;
     nindown.click();
-
-    // click() will simulate a click on the <a> link, starting the download.
-    // But some browsers may not allow it for security reasons.
-    // Better to let users click on the link manually.
   });
 });
+
+// FILTER BLOCKS
+/*
+let searchBlock = document.getElementById("searchBlock")
+let doc = document.querySelector('.sidebar__block');
+// let copiedDoc = doc
+
+// doc.removeChild(doc.childNodes[1]);
+// doc.removeChild(doc.childNodes[2]);
+// doc.removeChild(doc.childNodes[3]);
+// doc.removeChild(doc.childNodes[4]);
+// doc.removeChild(doc.childNodes[5]);
+
+searchBlock.addEventListener('change', function (e) {
+  for (let i = 0; i < doc.childNodes.length; i++) {
+    if (doc.childNodes[i].id === undefined || !doc.childNodes[i].id.includes(e.target.value)) {
+      // console.log(doc.childNodes[i].id, i);
+      // doc.removeChild(doc.childNodes[0]);
+    }
+  }
+  searchBlock.value = ''
+});
+*/
+
 
 
 const obj = {
