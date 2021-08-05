@@ -269,7 +269,9 @@
               <div id="calculator" style="width: 1000px; height: 450px;"></div>
             </div>
             <div class='btnOutput'>
-              <button class="btn btn-success" id='downloadGraph'>download graph</button>
+              <button type="button" class="btn btn-success" id='downloadGraph'>download
+                graph</button>
+              <a href="#" id="ninjadown" download="output.png" /></a>
             </div>
             <div class="result"></div>
             <div class="modal-footer">
@@ -318,16 +320,16 @@
         </div>
       </div>
 
-      <div id="checkgraph"></div>
+      <!-- <div id="checkgraph"></div> -->
     </div>
 
 
     <script type="module" src="./js/index.js"></script>
-    <script src="./js/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.7/dist/html2canvas.min.js"></script>
+    <script src="./js/confetti.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js"
       integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="https://www.desmos.com/api/v1.6/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
-    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js">
     </script>
 </body>
 

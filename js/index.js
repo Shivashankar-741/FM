@@ -18,18 +18,28 @@ document.getElementById('removeGraph').onclick = () => {
   document.querySelector('.result').innerHTML = ''
 }
 
-document.getElementById('downloadGraph').onclick = () => {
-  console.log('its working fine');
-  let div = document.getElementById('calculator');
-  html2canvas(div).then(
-    function (canvas) {
-      document
-        .getElementById('checkgraph')
-        .appendChild(canvas);
-    })
-}
+document.querySelector('#downloadGraph').addEventListener('click', function () {
+  console.log('chcecking')
+  html2canvas(document.getElementById("calculator")).then(canvas => {
+    // (A) CONVERT CANVAS TO IMAGE
+    let url = canvas.toDataURL("image/png");
 
-// document.querySelector('.dcg-exppanel-outer').style.display = 'none'
+    // canvas.toDataURL(DATA-TYPE, OPTIONAL-QUALITY);
+    // So if you want JPG instead:
+    // let url = canvas.toDataURL("image/jpeg", 0.7);
+    // Also remember to change download="screenshot.jpg" below
+
+    // (B) "FORCE DOWNLOAD"
+    let nindown = document.getElementById("ninjadown")
+    nindown.href = url;
+    nindown.click();
+
+    // click() will simulate a click on the <a> link, starting the download.
+    // But some browsers may not allow it for security reasons.
+    // Better to let users click on the link manually.
+  });
+});
+
 
 const obj = {
   modulating: {
