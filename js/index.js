@@ -12,6 +12,7 @@ let isEnvelopeDetectorPlaced = false
 let isDcLimiterPlaced = false
 let isParamExtractionPlaced = false
 
+
 document.getElementById('removeGraph').onclick = () => {
   document.getElementById('calculator').removeChild(
     document.querySelector('.dcg-wrapper'))
@@ -876,6 +877,7 @@ selectors.modulatingSubmit.onmouseup = () => {
           document.querySelector('.modulating__signal--block'))
         selectors.modulatingSignalRight.style.display = 'none';
         isModulatingSignalPlaced = false
+        modSig_isWireConnected = false
         // removing the wire
         modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
         //
@@ -887,15 +889,18 @@ selectors.modulatingSubmit.onmouseup = () => {
         selectors.model.value = "mode"
       }
       else if (selectors.model.value === "output") {
-        // var confettiSettings = { target: 'demo', clock: 100, size: 1 };
-        // var confetti = new ConfettiGenerator(confettiSettings);
-        // confetti.render();
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         // Output graph
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
         calculator.setExpression({ id: 'graph1', latex: s });
-        $('#output').modal('show');
+        $('#output').modal("show");
+        console.log(document.getElementById('calculator'));
+        console.log(document.getElementById('calculator').childNodes.length);
         document.querySelector('.result').innerHTML = `
           <h1 class='fontStyle'>Modulating frequency (Hz) : ${obj.modulating.frequency}</h1>
           <h1 class='fontStyle'>Modulating amplitute (v): ${obj.modulating.amplitude}</h1>
@@ -974,6 +979,7 @@ selectors.carrierSubmit.onmouseup = () => {
           document.querySelector('.carrier__signal--block'));
         selectors.carrierSignalRight.style.display = 'none';
         isCarrierSignalPlaced = false;
+        carrierSig_isWireConnected = false
         //remove wire
         carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
         selectors.model.value = "mode"
@@ -984,6 +990,10 @@ selectors.carrierSubmit.onmouseup = () => {
         selectors.model.value = "mode"
       }
       else if (selectors.model.value === "output") {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
@@ -1052,6 +1062,7 @@ selectors.frequencySensistivitySubmit.onmouseup = () => {
           document.querySelector('.frequencySensistivity__signal--block'));
         selectors.frequencySensistivityRight.style.display = 'none';
         isFreqSensistivityPlaced = false
+        freqSen_isWireConnected = false;
         //removing the wire
         freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
         //
@@ -1127,7 +1138,7 @@ selectors.integrator.onmouseup = () => {
       selectors.integratorBlockLeft.style.display = 'none';
       selectors.integratorBlockBottom.style.display = 'none';
       isIntegratorPlaced = false
-
+      integrator_isWireConnected = false
       // removing the wire
       modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
       integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
@@ -1138,6 +1149,10 @@ selectors.integrator.onmouseup = () => {
     else if (selectors.model.value === "output") {
       if (modSig_isWireConnected) {
         // alert('output of integrator')
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let numerator = `(${obj.modulating.amplitude} * \\sin( 2 * \\pi * ${obj.modulating.frequency} * x))`;
@@ -1223,6 +1238,7 @@ selectors.multiplier.onmouseup = () => {
       selectors.multiplierBlockTop.style.display = 'none';
       selectors.multiplierBlockBottom.style.display = 'none';
       isMultiplierPlaced = false
+      multiplier_isWireConnected = false
       //removing the wire
       integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
       freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
@@ -1234,8 +1250,12 @@ selectors.multiplier.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (freqSen_isWireConnected && integrator_isWireConnected) {
+      if (freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected) {
         // alert('output of integrator')
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let eqn = `((${obj.frequencySensistivity} * ${obj.modulating.amplitude}/${obj.modulating.frequency}))`;
@@ -1322,6 +1342,7 @@ selectors.modulator.onmouseup = () => {
       selectors.modulatorBlockRight.style.display = 'none';
       selectors.modulatorBlockTop.style.display = 'none';
       isModulatorPlaced = false
+      modulator_isWireConnected = false
       // removing wire
       carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
       multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator
@@ -1335,7 +1356,13 @@ selectors.modulator.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (carrierSig_isWireConnected && multiplier_isWireConnected) {
+      if (
+        freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected
+        && carrierSig_isWireConnected && multiplier_isWireConnected) {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let eqn = `(${obj.carrier.amplitude}* \\cos( 2 * \\pi * ${obj.carrier.frequency} * x+((${obj.frequencySensistivity}*${obj.modulating.amplitude}/${obj.modulating.frequency}))*(\\sin( 2 * \\pi * ${obj.modulating.frequency} * x))))`
@@ -1416,6 +1443,7 @@ selectors.differentiator.onmouseup = () => {
       selectors.differentiatorBlockLeft.style.display = 'none';
       selectors.differentiatorBlockRight.style.display = 'none';
       isDifferentiatorPlaced = false
+      differentiator_isWireConnected = false
       // removing wire
       modulator_ctx.clearRect(0, 0, canvasWireBwModulatorToDifferentiator
         .width, canvasWireBwModulatorToDifferentiator
@@ -1428,7 +1456,12 @@ selectors.differentiator.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (modulator_isWireConnected) {
+      if (modulator_isWireConnected && freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected
+        && carrierSig_isWireConnected && multiplier_isWireConnected) {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}(1+(${obj.frequencySensistivity}/${obj.carrier.frequency})*${obj.modulating.amplitude}* \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))*\\sin(2 * \\pi * ${obj.carrier.frequency} * x+((${obj.frequencySensistivity * obj.modulating.amplitude})/${obj.modulating.frequency})* \\sin( 2 * \\pi * ${obj.modulating.frequency} * x)-180)`
@@ -1507,6 +1540,7 @@ selectors.envelopeDetector.onmouseup = () => {
       selectors.envelopeDetectorBlockLeft.style.display = 'none';
       selectors.envelopeDetectorBlockRight.style.display = 'none';
       isEnvelopeDetectorPlaced = false
+      envelope_isWireConnected = false;
       // removing wire
       differentiator_ctx.clearRect(0, 0, canvasWireBwDifferentiatorTodcLimiter
         .width, canvasWireBwDifferentiatorTodcLimiter
@@ -1519,7 +1553,12 @@ selectors.envelopeDetector.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (differentiator_isWireConnected) {
+      if (differentiator_isWireConnected && modulator_isWireConnected && freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected
+        && carrierSig_isWireConnected && multiplier_isWireConnected) {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
         let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}+((${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`
@@ -1597,6 +1636,7 @@ selectors.dcLimitedCircuit.onmouseup = () => {
       selectors.dcLimitedCircuitBlockLeft.style.display = 'none';
       selectors.dcLimitedCircuitBlockRight.style.display = 'none';
       isDcLimiterPlaced = false
+      dcLimiter_isWireConnected = false
       // removing wire
       envelope_ctx.clearRect(0, 0, canvasWireBwenvelopeDetToParamExtract
         .width, canvasWireBwenvelopeDetToParamExtract
@@ -1609,10 +1649,17 @@ selectors.dcLimitedCircuit.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (envelope_isWireConnected) {
+      if (envelope_isWireConnected && differentiator_isWireConnected && modulator_isWireConnected && freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected
+        && carrierSig_isWireConnected && multiplier_isWireConnected) {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
-        let eqn = `(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x)`
+        let envDetectorEqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}+((${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`
+        // let eqn = `(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x)`
+        let eqn = `(${envDetectorEqn}-(${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}))/(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})`;
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
@@ -1689,7 +1736,12 @@ selectors.parameterExtraction.onmouseup = () => {
     }
 
     else if (selectors.model.value === "output") {
-      if (dcLimiter_isWireConnected) {
+      if (dcLimiter_isWireConnected && envelope_isWireConnected && differentiator_isWireConnected && modulator_isWireConnected && freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected
+        && carrierSig_isWireConnected && multiplier_isWireConnected) {
+        if (document.getElementById('calculator').childNodes.length !== 0) {
+          document.getElementById('calculator').removeChild(
+            document.querySelector('.dcg-wrapper'))
+        }
         $('#paraExtOutput').modal('show');
         let beta = (obj.frequencySensistivity * obj.modulating.amplitude) / obj.modulating.frequency
         console.log(beta);
