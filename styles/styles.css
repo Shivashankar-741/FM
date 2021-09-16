@@ -1,41 +1,41 @@
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-body{
+body {
   font-family: sans-serif;
 }
 
-.fontStyle{
+.fontStyle {
   font-weight: 800;
   font-family: monospace;
 }
 
-.custom-nav{
+.custom-nav {
   padding: 10px;
 }
 
-.workspace{
+.workspace {
   display: flex;
 }
 
-.sidebar{
+.sidebar {
   width: 10%;
-  background-color:#ffffff;
+  background-color: #ffffff;
 }
 
-.simulation-area{
+.simulation-area {
   width: 100%;
   background-color: whitesmoke;
 }
 
-.sidebar__block{
+.sidebar__block {
   padding: 0;
 }
 
-.sidebar__block--list{
+.sidebar__block--list {
   list-style: none;
   border-bottom: 1px solid #3333;
   padding: 15px 0;
@@ -45,11 +45,11 @@ body{
   justify-content: center;
 }
 
-.sidebar__block--img{
-  width:110px;
+.sidebar__block--img {
+  width: 110px;
 }
 
-.simulation-area{
+.simulation-area {
   /* display: flex;
   justify-content: center;
   align-items: center; */
@@ -57,32 +57,32 @@ body{
   /* border: 3px solid black; */
 }
 
-.footer{
+.footer {
   background-color: #333;
-  color:whitesmoke;
+  color: whitesmoke;
   font-size: 16px;
 }
 
-.circle{
+.circle {
   width: 12px;
   height: 12px;
-  border-radius:50%;
-  background-color:rgb(231, 231, 19);
-  cursor:pointer;
+  border-radius: 50%;
+  background-color: rgb(231, 231, 19);
+  cursor: pointer;
 
   display: none;
 }
 
-.canvas{
-  position:absolute;
+.canvas {
+  position: absolute;
   top: 75px;
   left: 190px;
 
   border: 5px solid black;
 }
 
-.result{
-  margin-left :60px;
+.result {
+  margin-left: 60px;
   width: 80%;
   /* height: 200px; */
   /* border: 1px solid gray; */
@@ -90,18 +90,33 @@ body{
   /* background-color:red; */
 }
 
-.btnOutput{
+.btnOutput {
   display: flex;
   justify-content: flex-end;
   margin-right: 120px;
 }
 
-.dcg-exppanel-outer{
-  display:none;
+.dcg-exppanel-outer {
+  display: none;
 }
 
-.demo{
+.demo {
   position: absolute;
+}
+
+#modulatingSignal,
+#carrierSignal,
+#frequencySensistivity,
+#integrator,
+#multiplier,
+#modulator,
+#differentiator,
+#envelopeDetector,
+#dcLimitedCircuit,
+#parameterExtraction {
+  display: block;
+  /* display: none; */
+  margin-left: 20px;
 }
 
 /* .parameterExtraction--block--left{
