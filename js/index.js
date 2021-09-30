@@ -30,7 +30,6 @@ document.querySelector('#downloadGraph').addEventListener('click', function () {
 
 // FILTER BLOCKS
 let searchBlock = document.getElementById('searchBlock');
-// let doc = document.querySelector('.sidebar__block');
 
 let blockElements = [
   'modulating signal',
@@ -44,17 +43,6 @@ let blockElements = [
   'dc limited circuit',
   'parameter extraction',
 ];
-
-// modulatingSignal
-// carrierSignal
-// frequencySensistivity
-// integrator
-// multiplier
-// modulator
-// differentiator
-// envelopeDetector
-// dcLimitedCircuit
-// parameterExtraction
 
 searchBlock.addEventListener('change', function (e) {
   let searchElement;
@@ -1009,6 +997,7 @@ selectors.modulatingSubmit.onmouseup = () => {
         $('#modulatingSignalModal').modal('show');
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'output') {
+        document.querySelector('.outputTitle').innerText = `Output of modulating signal`;
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1021,10 +1010,12 @@ selectors.modulatingSubmit.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         console.log(document.getElementById('calculator'));
+        document.querySelector('.dcg-expressionlist').style.display = 'none';
+
         console.log(document.getElementById('calculator').childNodes.length);
         document.querySelector('.result').innerHTML = `
-          <h1 class='fontStyle'>Modulating frequency (Hz) : ${obj.modulating.frequency}</h1>
-          <h1 class='fontStyle'>Modulating amplitute (v): ${obj.modulating.amplitude}</h1>
+          <h1 class='fontStyle'>Modulating frequency  : ${obj.modulating.frequency} Hz</h1>
+          <h1 class='fontStyle'>Modulating amplitute  : ${obj.modulating.amplitude} V</h1>
         `;
         selectors.model.value = 'mode';
       }
@@ -1125,6 +1116,7 @@ selectors.carrierSubmit.onmouseup = () => {
         $('#carrierSignalModal').modal('show');
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'output') {
+        document.querySelector('.outputTitle').innerText = `Output of carrier signal`;
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1137,8 +1129,8 @@ selectors.carrierSubmit.onmouseup = () => {
         $('#output').modal('show');
         selectors.model.value = 'mode';
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
-        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
+        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}Hz</h1>
+        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}V</h1>
       `;
       }
       carrierSig_isCarrierSignalMoving = false;
@@ -1305,6 +1297,7 @@ selectors.integrator.onmouseup = () => {
     } else if (selectors.model.value === 'output') {
       if (modSig_isWireConnected) {
         // alert('output of integrator')
+        document.querySelector('.outputTitle').innerText = `Output of Integrator`;
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1424,6 +1417,8 @@ selectors.multiplier.onmouseup = () => {
       selectors.model.value = 'mode';
     } else if (selectors.model.value === 'output') {
       if (freqSen_isWireConnected && integrator_isWireConnected && modSig_isWireConnected) {
+        document.querySelector('.outputTitle').innerText = `Output of Multiplier`;
+
         // alert('output of integrator')
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
@@ -1552,6 +1547,8 @@ selectors.modulator.onmouseup = () => {
         carrierSig_isWireConnected &&
         multiplier_isWireConnected
       ) {
+        document.querySelector('.outputTitle').innerText = `Output of Modulator`;
+
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1665,6 +1662,8 @@ selectors.differentiator.onmouseup = () => {
         carrierSig_isWireConnected &&
         multiplier_isWireConnected
       ) {
+        document.querySelector('.outputTitle').innerText = `Output of Differentiator`;
+
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1784,6 +1783,8 @@ selectors.envelopeDetector.onmouseup = () => {
         carrierSig_isWireConnected &&
         multiplier_isWireConnected
       ) {
+        document.querySelector('.outputTitle').innerText = `Output of Envelope Detector`;
+
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -1897,6 +1898,8 @@ selectors.dcLimitedCircuit.onmouseup = () => {
         carrierSig_isWireConnected &&
         multiplier_isWireConnected
       ) {
+        document.querySelector('.outputTitle').innerText = `Output of DC Limiter Circuit`;
+
         if (document.getElementById('calculator').childNodes.length !== 0) {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
@@ -2004,9 +2007,13 @@ selectors.parameterExtraction.onmouseup = () => {
           (obj.frequencySensistivity * obj.modulating.amplitude) / obj.modulating.frequency;
         console.log(beta);
         let power = (obj.carrier.amplitude * obj.carrier.amplitude) / 2;
+        let freqDeviation = obj.frequencySensistivity * obj.modulating.amplitude;
+        let betaValue = freqDeviation / obj.modulating.frequency;
         if (beta > 1) {
           let bandWidth = 2 * (beta + 1) * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
+          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation}</h1>
+          <h1 class='fontStyle'>	β : ${betaValue}</h1>
           <h1 class='fontStyle'>Signal Type: Wide band frequency modulation</h1>
           <h1 class='fontStyle'>BandWidth: ${bandWidth}</h1>
           <h1 class='fontStyle'>Power:${power}</h1>
@@ -2014,9 +2021,11 @@ selectors.parameterExtraction.onmouseup = () => {
         } else {
           let bandWidth = 2 * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
+          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation}</h1>
+          <h1 class='fontStyle'>	β : ${betaValue}</h1>
           <h1 class='fontStyle'>Signal Type: Narrow band frequency modulation</h1>
-          <h1 class='fontStyle'>BandWidth: ${bandWidth}</h1>
-          <h1 class='fontStyle'>Power:${power}</h1>
+          <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
+          <h1 class='fontStyle'>Power:${power} W</h1>
         `;
         }
       } else {
