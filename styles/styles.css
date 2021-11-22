@@ -117,11 +117,16 @@ body {
   color: #eee;
   position: sticky;
   bottom: 0;
+  left: 0;
   padding: 5px;
 }
 
 .footer_fs {
   font-size: 21px;
+}
+
+.sidebar {
+  min-height: 100vh;
 }
 
 #modulatingSignal,
