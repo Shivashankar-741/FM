@@ -21,12 +21,12 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
       <div class="custom-nav container-fluid">
-        <a class="navbar-brand" href="#">Frequency Modulation and Demodulation</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse custom_nav" id="navbarSupportedContent">
+          <div>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <select class="form-select" aria-label="Default select example" id="selectMode">
               <option selected>mode</option>
@@ -35,6 +35,10 @@
               <option value="Edit">Edit</option>
             </select>
           </ul>
+        </div>
+        <div>
+          <h1 class="navbar-brand custom_fs">Frequency Modulation and Demodulation Simulator<h1/>
+        </div>
           <div class="d-flex">
             <button class="btn btn-outline-success mx-xxl-2" type="submit">Search</button>
             <input type="text" class="form-control" id="searchBlock" placeholder="Search block">
@@ -327,6 +331,10 @@
       </div>
       <canvas id="demo"></canvas>
     </div>
+
+    <footer class="footer">
+      <h2 class="footer_fs">We Acknowledge NITK and PALS for extending their support towards successful completion of this experiment</h2>
+    </footer>
 
 
     <script type="module" src="./js/index.js"></script>

@@ -1014,8 +1014,8 @@ selectors.modulatingSubmit.onmouseup = () => {
 
         console.log(document.getElementById('calculator').childNodes.length);
         document.querySelector('.result').innerHTML = `
-          <h1 class='fontStyle'>Modulating frequency  : ${obj.modulating.frequency} Hz</h1>
-          <h1 class='fontStyle'>Modulating amplitute  : ${obj.modulating.amplitude} V</h1>
+          <h1 class='fontStyle'>frequency  : ${obj.modulating.frequency} Hz</h1>
+          <h1 class='fontStyle'>amplitute  : ${obj.modulating.amplitude} V</h1>
         `;
         selectors.model.value = 'mode';
       }
@@ -1129,8 +1129,8 @@ selectors.carrierSubmit.onmouseup = () => {
         $('#output').modal('show');
         selectors.model.value = 'mode';
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}Hz</h1>
-        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}V</h1>
+        <h1 class='fontStyle'>frequency : ${obj.carrier.frequency}Hz</h1>
+        <h1 class='fontStyle'>amplitute : ${obj.carrier.amplitude}V</h1>
       `;
       }
       carrierSig_isCarrierSignalMoving = false;
@@ -1214,7 +1214,7 @@ selectors.frequencySensistivitySubmit.onmouseup = () => {
           2 *
           3.14 *
           obj.frequencySensistivity
-        ).toFixed(2)}</h4>
+        ).toFixed(2)} Hz/v</h4>
       `;
         selectors.model.value = 'mode';
       }
@@ -1313,8 +1313,10 @@ selectors.integrator.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>frequency : ${obj.modulating.amplitude} Hz</h1>
+        <h1 class='fontStyle'>amplitude : ${
+          obj.modulating.amplitude / (2 * Math.PI * obj.modulating.frequency)
+        } v</h1>
       `;
         selectors.model.value = 'mode';
       } else {
@@ -1434,9 +1436,10 @@ selectors.multiplier.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>amplitude : ${obj.modulating.amplitude}</h1>
-        <h1 class='fontStyle'>frequency sensistivity : ${obj.frequencySensistivity}</h1>
+        <h1 class='fontStyle'>frequency : ${obj.modulating.frequency} Hz</h1>
+        <h1 class='fontStyle'>amplitude : ${
+          obj.frequencySensistivity * (obj.modulating.amplitude / obj.modulating.frequency)
+        } V</h1>
       `;
         selectors.model.value = 'mode';
       } else {
@@ -1564,11 +1567,7 @@ selectors.modulator.onmouseup = () => {
         $('#output').modal('show');
         selectors.model.value = 'mode';
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
-        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
-        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
-        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+        <h1 class='fontStyle'>amplitute : ${obj.carrier.amplitude} V</h1>
       `;
       } else {
         alert('Please connect the wires');
@@ -1799,11 +1798,9 @@ selectors.envelopeDetector.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
-        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
-        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
-        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+        <h1 class='fontStyle'>amplitute : ${
+          obj.carrier.amplitude * 2 * Math.PI * obj.frequencySensistivity
+        }</h1>
       `;
       } else {
         alert('please connect the wires');
@@ -1917,11 +1914,8 @@ selectors.dcLimitedCircuit.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
-        <h1 class='fontStyle'>carrier frequency : ${obj.carrier.frequency}</h1>
-        <h1 class='fontStyle'>carrier amplitute : ${obj.carrier.amplitude}</h1>
-        <h1 class='fontStyle'>frequency sensistivity: ${obj.frequencySensistivity}</h1>
+        <h1 class='fontStyle'>frequency : ${obj.modulating.frequency} Hz</h1>
+        <h1 class='fontStyle'>amplitude : ${obj.modulating.amplitude} V</h1>
       `;
       } else {
         alert('Please connect the wires');
@@ -2017,16 +2011,16 @@ selectors.parameterExtraction.onmouseup = () => {
         if (beta > 1) {
           let bandWidth = 2 * (beta + 1) * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
-          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation}</h1>
+          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation} Hz</h1>
           <h1 class='fontStyle'>	β : ${betaValue}</h1>
           <h1 class='fontStyle'>Signal Type: Wide band frequency modulation</h1>
           <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
-          <h1 class='fontStyle'>Power:${power}w</h1>
+          <h1 class='fontStyle'>Power:${power} W</h1>
         `;
         } else {
           let bandWidth = 2 * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
-          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation}</h1>
+          <h1 class='fontStyle'>Frequency deviation : ${freqDeviation} Hz</h1>
           <h1 class='fontStyle'>	β : ${betaValue}</h1>
           <h1 class='fontStyle'>Signal Type: Narrow band frequency modulation</h1>
           <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
