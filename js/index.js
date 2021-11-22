@@ -2012,7 +2012,7 @@ selectors.parameterExtraction.onmouseup = () => {
           let bandWidth = 2 * (beta + 1) * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
           <h1 class='fontStyle'>Frequency deviation : ${freqDeviation} Hz</h1>
-          <h1 class='fontStyle'>	β : ${betaValue}</h1>
+          <h1 class='fontStyle'>	β : ${betaValue}(no unit)</h1>
           <h1 class='fontStyle'>Signal Type: Wide band frequency modulation</h1>
           <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
           <h1 class='fontStyle'>Power:${power} W</h1>
@@ -2021,7 +2021,7 @@ selectors.parameterExtraction.onmouseup = () => {
           let bandWidth = 2 * obj.modulating.frequency;
           document.querySelector('.paramExtractResult').innerHTML = `
           <h1 class='fontStyle'>Frequency deviation : ${freqDeviation} Hz</h1>
-          <h1 class='fontStyle'>	β : ${betaValue}</h1>
+          <h1 class='fontStyle'>	β : ${betaValue}(no unit)</h1>
           <h1 class='fontStyle'>Signal Type: Narrow band frequency modulation</h1>
           <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
           <h1 class='fontStyle'>Power:${power} W</h1>
