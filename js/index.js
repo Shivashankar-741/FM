@@ -1210,7 +1210,11 @@ selectors.frequencySensistivitySubmit.onmouseup = () => {
       } else if (selectors.model.value === 'output') {
         $('#freqSenOutput').modal('show');
         document.querySelector('.freqSenResult').innerHTML = `
-        <h2 class='fontStyle'>frequency sensistivity : ${2 * 3.14 * obj.frequencySensistivity}</h4>
+        <h2 class='fontStyle'>frequency sensistivity : ${(
+          2 *
+          3.14 *
+          obj.frequencySensistivity
+        ).toFixed(2)}</h4>
       `;
         selectors.model.value = 'mode';
       }
@@ -1430,8 +1434,8 @@ selectors.multiplier.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>modulating frequency : ${obj.modulating.frequency}</h1>
-        <h1 class='fontStyle'>modulating amplitute : ${obj.modulating.amplitude}</h1>
+        <h1 class='fontStyle'>frequency : ${obj.modulating.frequency}</h1>
+        <h1 class='fontStyle'>amplitude : ${obj.modulating.amplitude}</h1>
         <h1 class='fontStyle'>frequency sensistivity : ${obj.frequencySensistivity}</h1>
       `;
         selectors.model.value = 'mode';
@@ -1908,6 +1912,7 @@ selectors.dcLimitedCircuit.onmouseup = () => {
         let envDetectorEqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}+((${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
         // let eqn = `(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})*${obj.modulating.amplitude}*\\cos( 2 * \\pi * ${obj.modulating.frequency} * x)`
         let eqn = `(${envDetectorEqn}-(${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}))/(${obj.carrier.amplitude}* 2 * \\pi * ${obj.frequencySensistivity})`;
+        console.log(eqn);
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
@@ -2015,8 +2020,8 @@ selectors.parameterExtraction.onmouseup = () => {
           <h1 class='fontStyle'>Frequency deviation : ${freqDeviation}</h1>
           <h1 class='fontStyle'>	β : ${betaValue}</h1>
           <h1 class='fontStyle'>Signal Type: Wide band frequency modulation</h1>
-          <h1 class='fontStyle'>BandWidth: ${bandWidth}</h1>
-          <h1 class='fontStyle'>Power:${power}</h1>
+          <h1 class='fontStyle'>BandWidth: ${bandWidth} Hz</h1>
+          <h1 class='fontStyle'>Power:${power}w</h1>
         `;
         } else {
           let bandWidth = 2 * obj.modulating.frequency;
