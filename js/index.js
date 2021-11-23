@@ -45,6 +45,7 @@ let blockElements = [
 ];
 
 searchBlock.addEventListener('change', function (e) {
+  console.log(e.target.value);
   let searchElement;
   let str = e.target.value;
   for (let i = 0; i < blockElements.length; i++) {
@@ -57,6 +58,8 @@ searchBlock.addEventListener('change', function (e) {
     }
   }
   searchBlock.value = '';
+
+  console.log(searchElement);
 
   if (searchElement !== undefined) {
     for (let i = 0; i < blockElements.length; i++) {
@@ -71,6 +74,8 @@ searchBlock.addEventListener('change', function (e) {
         document.querySelector(`#${blockStr}`).style.display = 'none';
       }
     }
+
+    setTimeout(() => showAllBlocks(), 5000);
   }
 });
 
@@ -88,6 +93,11 @@ function showAllBlocks() {
     document.querySelector(`#${blockStr}`).style.display = 'block';
   }
 }
+
+// // RESET BLOCKS
+// selectors.resetBlocks.onclick = function () {
+//   showAllBlocks();
+// };
 
 //wire between modulating signal and integrator
 
