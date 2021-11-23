@@ -1,5 +1,6 @@
 import * as selectors from '../domSelector/domSelector.js';
 import { blockElements } from '../state/state.js';
+import { showAllBlocks } from './showBlocks.js';
 
 // FILTER BLOCKS
 
