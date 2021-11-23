@@ -19,7 +19,6 @@ document.getElementById('removeGraph').onclick = () => {
 };
 
 document.querySelector('#downloadGraph').addEventListener('click', function () {
-  console.log('chcecking');
   html2canvas(document.getElementById('calculator')).then((canvas) => {
     let url = canvas.toDataURL('image/png');
     let nindown = document.getElementById('ninjadown');
@@ -94,10 +93,32 @@ function showAllBlocks() {
   }
 }
 
-// // RESET BLOCKS
-// selectors.resetBlocks.onclick = function () {
-//   showAllBlocks();
-// };
+// clear input dropdown when clear and outside click
+
+selectors.modSig_close.onclick = function (e) {
+  console.log('clicking');
+  selectors.modulatingAmplitute.value = obj.modulating.amplitude;
+  selectors.modulatingFrequency.value = obj.modulating.frequency;
+};
+
+let clearModulatingSignal = false;
+let clearCarrierSignal = false;
+
+window.onclick = function (e) {
+  // || parentNode === 'workspace'
+  let parentNode = e.target.parentNode.className;
+  if (clearModulatingSignal && parentNode === 'simulation-area') {
+    selectors.modulatingAmplitute.value = obj.modulating.amplitude;
+    selectors.modulatingFrequency.value = obj.modulating.frequency;
+    clearModulatingSignal = false;
+  }
+
+  if (clearCarrierSignal && parentNode === 'simulation-area') {
+    selectors.carrierAmplitute.value = obj.carrier.amplitude;
+    selectors.carrierFrequency.value = obj.carrier.frequency;
+    clearCarrierSignal = false;
+  }
+};
 
 //wire between modulating signal and integrator
 
@@ -1003,8 +1024,13 @@ selectors.modulatingSubmit.onmouseup = () => {
         //
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'Edit') {
+        clearModulatingSignal = true;
         editModulatingSignal = true;
         $('#modulatingSignalModal').modal('show');
+        // $('#modulatingSignalModal').modal('show', {
+        //   backdrop: 'static',
+        //   keyboard: false,
+        // });
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'output') {
         document.querySelector('.outputTitle').innerText = `Output of modulating signal`;
@@ -1122,6 +1148,7 @@ selectors.carrierSubmit.onmouseup = () => {
         ); //clear canvas
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'Edit') {
+        clearCarrierSignal = true;
         editCarrierSignal = true;
         $('#carrierSignalModal').modal('show');
         selectors.model.value = 'mode';

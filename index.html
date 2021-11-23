@@ -25,7 +25,8 @@
         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse custom_nav" id="navbarSupportedContent">
+        <!--  -->
+          <div class="collapse navbar-collapse custom_nav" id="navbarSupportedContent">
           <div>
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <select class="form-select" aria-label="Default select example" id="selectMode">
@@ -40,7 +41,6 @@
           <h1 class="navbar-brand custom_fs">Frequency Modulation and Demodulation Simulator<h1/>
         </div>
           <div class="d-flex">
-            <!-- <button class="btn btn-outline-secondary reset__blocks" type="submit">reset</button> -->
             <button class="btn btn-outline-success mx-xxl-2" type="submit">Search</button>
             <input type="text" class="form-control" id="searchBlock" placeholder="Search block">
           </div>
@@ -149,12 +149,6 @@
         </div>
       </div>
 
-      <!-- <footer class="footer">
-          <h1 class="container">
-            We Acknowledge NITK and PALS for extending their support towards successful completion of the experiment
-          </h1>
-        </footer> -->
-
       <!-- Modal Popup -->
 
       <!-- Modal for modulatingSignal -->
@@ -163,11 +157,9 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <!-- <h5 class="modal-title" id="exampleModalLabel">asdf</h5> -->
               <h6 id="exampleModalLabel">
                 frequency and amplitude of modulating signal
               </h6>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form>
@@ -188,13 +180,17 @@
               </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                id="modulatingSubmit">Create</button>
+              <button type="button" class="btn btn-secondary" id='modulatingSignal_close' data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="modulatingSubmit">
+                Create
+              </button>
             </div>
           </div>
         </div>
-      </div>
+    </div> 
+  
       <!-- Model for carrierSignal -->
       <div class="modal fade" id="carrierSignalModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">

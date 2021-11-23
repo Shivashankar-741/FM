@@ -2,8 +2,8 @@ export let modulatingFrequency = document.querySelector('#modulatingFrequency');
 export let modulatingAmplitute = document.querySelector('#modulatingAmplitute');
 export let modulatingSubmit = document.querySelector('#modulatingSubmit');
 export let carrierFrequency = document.querySelector('#carrierFrequency');
-export let frequencySensistivitySubmit = document.querySelector('#frequencySensistivitySubmit');
 export let carrierAmplitute = document.querySelector('#carrierAmplitute');
+export let frequencySensistivitySubmit = document.querySelector('#frequencySensistivitySubmit');
 export let carrierSubmit = document.querySelector('#carrierSubmit');
 export let simulationArea = document.querySelector('.simulation-area');
 export let frequencySensistivityInput = document.querySelector('#frequencySensitivityInput');
@@ -42,6 +42,8 @@ export let parameterExtractionBlockLeft = document.querySelector(
 export let model = document.querySelector('#selectMode');
 
 export let resetBlocks = document.querySelector('.reset__blocks');
+
+export let modSig_close = document.querySelector('#modulatingSignal_close');
 
 // Wires
 export let connectionWireBwModsigToIntegrator = document.querySelector(
