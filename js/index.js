@@ -14,22 +14,7 @@ let isEnvelopeDetectorPlaced = false;
 let isDcLimiterPlaced = false;
 let isParamExtractionPlaced = false;
 
-document.getElementById('removeGraph').onclick = () => {
-  document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
-  document.querySelector('.result').innerHTML = '';
-};
-
-document.querySelector('#downloadGraph').addEventListener('click', function () {
-  html2canvas(document.getElementById('calculator')).then((canvas) => {
-    let url = canvas.toDataURL('image/png');
-    let nindown = document.getElementById('ninjadown');
-    nindown.href = url;
-    nindown.click();
-  });
-});
-
 // clear input dropdown when clear and outside click
-
 selectors.modSig_close.onclick = function (e) {
   console.log('clicking');
   selectors.modulatingAmplitute.value = obj.modulating.amplitude;
@@ -94,12 +79,7 @@ selectors.connectionWireBwModsigToIntegrator.onmousemove = function (e) {
   if (modSig_WireBwModulatingtoIntegrator) {
     modSig_mousex = parseInt(e.pageX - modSig_canvasx);
     modSig_mousey = parseInt(e.pageY - modSig_canvasy);
-    modSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToIntegrator.width,
-      canvasWireBwModsigToIntegrator.height
-    ); //clear canvas
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
     modSig_ctx.beginPath();
     modSig_ctx.moveTo(modSig_initial_mousex, modSig_initial_mousey);
     modSig_ctx.lineTo(modSig_mousex, modSig_mousey);
@@ -112,12 +92,7 @@ selectors.connectionWireBwModsigToIntegrator.onmousemove = function (e) {
     modSig_mousey = parseInt(e.pageY - modSig_canvasy);
     modSig_last_mousex = parseInt(e.pageX - 53 - modSig_canvasx);
     modSig_last_mousey = parseInt(e.pageY - modSig_canvasy);
-    modSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToIntegrator.width,
-      canvasWireBwModsigToIntegrator.height
-    ); //clear canvas
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
     modSig_ctx.beginPath();
     modSig_ctx.moveTo(modSig_initial_mousex, modSig_initial_mousey);
     modSig_ctx.lineTo(modSig_mousex, modSig_mousey);
@@ -130,12 +105,7 @@ selectors.connectionWireBwModsigToIntegrator.onmousemove = function (e) {
     modSig_mousey = parseInt(e.pageY - modSig_canvasy);
     modSig_initial_mousex = parseInt(e.pageX + 53 - modSig_canvasx);
     modSig_initial_mousey = parseInt(e.pageY - modSig_canvasy);
-    modSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToIntegrator.width,
-      canvasWireBwModsigToIntegrator.height
-    ); //clear canvas
+    modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
     modSig_ctx.beginPath();
     modSig_ctx.moveTo(modSig_mousex, modSig_mousey);
     modSig_ctx.lineTo(modSig_last_mousex, modSig_last_mousey);
@@ -183,12 +153,7 @@ selectors.connectionWireBwFreqSenToMultiplier.onmousemove = function (e) {
   if (freqSen_WireBwFreqSensistivityToMultiplier) {
     freqSen_mousex = parseInt(e.pageX - freqSen_canvasx);
     freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
-    freqSen_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToMultiplier.width,
-      canvasWireBwModsigToMultiplier.height
-    ); //clear canvas
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
     freqSen_ctx.beginPath();
     freqSen_ctx.moveTo(freqSen_initial_mousex, freqSen_initial_mousey);
     freqSen_ctx.lineTo(freqSen_mousex, freqSen_mousey);
@@ -201,12 +166,7 @@ selectors.connectionWireBwFreqSenToMultiplier.onmousemove = function (e) {
     freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
     freqSen_last_mousex = parseInt(e.pageX - 53 - freqSen_canvasx);
     freqSen_last_mousey = parseInt(e.pageY - freqSen_canvasy);
-    freqSen_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToMultiplier.width,
-      canvasWireBwModsigToMultiplier.height
-    ); //clear canvas
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
     freqSen_ctx.beginPath();
     freqSen_ctx.moveTo(freqSen_initial_mousex, freqSen_initial_mousey);
     freqSen_ctx.lineTo(freqSen_mousex, freqSen_mousey);
@@ -219,12 +179,7 @@ selectors.connectionWireBwFreqSenToMultiplier.onmousemove = function (e) {
     freqSen_mousey = parseInt(e.pageY - freqSen_canvasy);
     freqSen_initial_mousex = parseInt(e.pageX + 53 - freqSen_canvasx);
     freqSen_initial_mousey = parseInt(e.pageY - freqSen_canvasy);
-    freqSen_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwModsigToMultiplier.width,
-      canvasWireBwModsigToMultiplier.height
-    ); //clear canvas
+    freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
     freqSen_ctx.beginPath();
     freqSen_ctx.moveTo(freqSen_mousex, freqSen_mousey);
     freqSen_ctx.lineTo(freqSen_last_mousex, freqSen_last_mousey);
@@ -273,12 +228,7 @@ selectors.connectionWireBwCarsigToModulator.onmousemove = function (e) {
   if (carrierSig_WireBwCarSignaltoMultiplier) {
     carrierSig_mousex = parseInt(e.pageX - carrierSig_canvasx);
     carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
-    carrierSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwCarsigToModulator.width,
-      canvasWireBwCarsigToModulator.height
-    ); //clear canvas
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
     carrierSig_ctx.beginPath();
     carrierSig_ctx.moveTo(carrierSig_initial_mousex, carrierSig_initial_mousey);
     carrierSig_ctx.lineTo(carrierSig_mousex, carrierSig_mousey);
@@ -291,12 +241,7 @@ selectors.connectionWireBwCarsigToModulator.onmousemove = function (e) {
     carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
     carrierSig_last_mousex = parseInt(e.pageX - 53 - carrierSig_canvasx);
     carrierSig_last_mousey = parseInt(e.pageY - carrierSig_canvasy);
-    carrierSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwCarsigToModulator.width,
-      canvasWireBwCarsigToModulator.height
-    ); //clear canvas
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
     carrierSig_ctx.beginPath();
     carrierSig_ctx.moveTo(carrierSig_initial_mousex, carrierSig_initial_mousey);
     carrierSig_ctx.lineTo(carrierSig_mousex, carrierSig_mousey);
@@ -309,12 +254,7 @@ selectors.connectionWireBwCarsigToModulator.onmousemove = function (e) {
     carrierSig_mousey = parseInt(e.pageY - carrierSig_canvasy);
     carrierSig_initial_mousex = parseInt(e.pageX + 53 - carrierSig_canvasx);
     carrierSig_initial_mousey = parseInt(e.pageY - carrierSig_canvasy);
-    carrierSig_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwCarsigToModulator.width,
-      canvasWireBwCarsigToModulator.height
-    ); //clear canvas
+    carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
     carrierSig_ctx.beginPath();
     carrierSig_ctx.moveTo(carrierSig_mousex, carrierSig_mousey);
     carrierSig_ctx.lineTo(carrierSig_last_mousex, carrierSig_last_mousey);
@@ -327,9 +267,7 @@ selectors.connectionWireBwCarsigToModulator.onmousemove = function (e) {
 
 // wire between integrator to multiplier
 
-let canvasWireBwIntegratorToMultiplier = document.getElementById(
-  'canvasWireBwIntegratorToMultiplier'
-);
+let canvasWireBwIntegratorToMultiplier = document.getElementById('canvasWireBwIntegratorToMultiplier');
 let integrator_ctx = canvasWireBwIntegratorToMultiplier.getContext('2d');
 
 let integrator_canvasx = canvasWireBwIntegratorToMultiplier.offsetLeft;
@@ -365,12 +303,7 @@ selectors.connectionWireBwIntegratorToMultiplier.onmousemove = function (e) {
   if (integrator_WireBwIntegratorToMultiplier) {
     integrator_mousex = parseInt(e.pageX - integrator_canvasx);
     integrator_mousey = parseInt(e.pageY - integrator_canvasy);
-    integrator_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwIntegratorToMultiplier.width,
-      canvasWireBwIntegratorToMultiplier.height
-    ); //clear canvas
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
     integrator_ctx.beginPath();
     integrator_ctx.moveTo(integrator_initial_mousex, integrator_initial_mousey);
     integrator_ctx.lineTo(integrator_mousex, integrator_mousey);
@@ -383,12 +316,7 @@ selectors.connectionWireBwIntegratorToMultiplier.onmousemove = function (e) {
     integrator_mousey = parseInt(e.pageY - 38 - integrator_canvasy);
     integrator_last_mousex = parseInt(e.pageX + 0 - integrator_canvasx);
     integrator_last_mousey = parseInt(e.pageY - 38 - integrator_canvasy);
-    integrator_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwIntegratorToMultiplier.width,
-      canvasWireBwIntegratorToMultiplier.height
-    ); //clear canvas
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
     integrator_ctx.beginPath();
     integrator_ctx.moveTo(integrator_initial_mousex, integrator_initial_mousey);
     integrator_ctx.lineTo(integrator_mousex, integrator_mousey);
@@ -401,12 +329,7 @@ selectors.connectionWireBwIntegratorToMultiplier.onmousemove = function (e) {
     integrator_mousey = parseInt(e.pageY + 38 - integrator_canvasy);
     integrator_initial_mousex = parseInt(e.pageX + 0 - integrator_canvasx);
     integrator_initial_mousey = parseInt(e.pageY + 38 - integrator_canvasy);
-    integrator_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwIntegratorToMultiplier.width,
-      canvasWireBwIntegratorToMultiplier.height
-    ); //clear canvas
+    integrator_ctx.clearRect(0, 0, canvasWireBwIntegratorToMultiplier.width, canvasWireBwIntegratorToMultiplier.height); //clear canvas
     integrator_ctx.beginPath();
     integrator_ctx.moveTo(integrator_mousex, integrator_mousey);
     integrator_ctx.lineTo(integrator_last_mousex, integrator_last_mousey);
@@ -419,9 +342,7 @@ selectors.connectionWireBwIntegratorToMultiplier.onmousemove = function (e) {
 
 // Wire between multiplier to modulator
 
-let canvasWireBwMultiplierToModulator = document.getElementById(
-  'canvasWireBwMultiplierToModulator'
-);
+let canvasWireBwMultiplierToModulator = document.getElementById('canvasWireBwMultiplierToModulator');
 let multiplier_ctx = canvasWireBwMultiplierToModulator.getContext('2d');
 
 let multiplier_canvasx = canvasWireBwMultiplierToModulator.offsetLeft;
@@ -457,12 +378,7 @@ selectors.connectionWireBwMultiplierToModulator.onmousemove = function (e) {
   if (multiplier_WireBwMultiplierToModulator) {
     multiplier_mousex = parseInt(e.pageX - multiplier_canvasx);
     multiplier_mousey = parseInt(e.pageY - multiplier_canvasy);
-    multiplier_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwMultiplierToModulator.width,
-      canvasWireBwMultiplierToModulator.height
-    ); //clear canvas
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator.width, canvasWireBwMultiplierToModulator.height); //clear canvas
     multiplier_ctx.beginPath();
     multiplier_ctx.moveTo(multiplier_initial_mousex, multiplier_initial_mousey);
     multiplier_ctx.lineTo(multiplier_mousex, multiplier_mousey);
@@ -475,12 +391,7 @@ selectors.connectionWireBwMultiplierToModulator.onmousemove = function (e) {
     multiplier_mousey = parseInt(e.pageY - 38 - multiplier_canvasy);
     multiplier_last_mousex = parseInt(e.pageX + 0 - multiplier_canvasx);
     multiplier_last_mousey = parseInt(e.pageY - 38 - multiplier_canvasy);
-    multiplier_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwMultiplierToModulator.width,
-      canvasWireBwMultiplierToModulator.height
-    ); //clear canvas
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator.width, canvasWireBwMultiplierToModulator.height); //clear canvas
     multiplier_ctx.beginPath();
     multiplier_ctx.moveTo(multiplier_initial_mousex, multiplier_initial_mousey);
     multiplier_ctx.lineTo(multiplier_mousex, multiplier_mousey);
@@ -493,12 +404,7 @@ selectors.connectionWireBwMultiplierToModulator.onmousemove = function (e) {
     multiplier_mousey = parseInt(e.pageY + 38 - multiplier_canvasy);
     multiplier_initial_mousex = parseInt(e.pageX + 0 - multiplier_canvasx);
     multiplier_initial_mousey = parseInt(e.pageY + 38 - multiplier_canvasy);
-    multiplier_ctx.clearRect(
-      0,
-      0,
-      canvasWireBwMultiplierToModulator.width,
-      canvasWireBwMultiplierToModulator.height
-    ); //clear canvas
+    multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator.width, canvasWireBwMultiplierToModulator.height); //clear canvas
     multiplier_ctx.beginPath();
     multiplier_ctx.moveTo(multiplier_mousex, multiplier_mousey);
     multiplier_ctx.lineTo(multiplier_last_mousex, multiplier_last_mousey);
@@ -510,9 +416,7 @@ selectors.connectionWireBwMultiplierToModulator.onmousemove = function (e) {
 };
 
 // wire between modulator to differentiator
-let canvasWireBwModulatorToDifferentiator = document.getElementById(
-  'canvasWireBwModulatorToDifferentiator'
-);
+let canvasWireBwModulatorToDifferentiator = document.getElementById('canvasWireBwModulatorToDifferentiator');
 let modulator_ctx = canvasWireBwModulatorToDifferentiator.getContext('2d');
 let modulator_canvasx = canvasWireBwModulatorToDifferentiator.offsetLeft;
 let modulator_canvasy = canvasWireBwModulatorToDifferentiator.offsetTop;
@@ -602,9 +506,7 @@ selectors.connectionWireBwModulatorToDifferentiator.onmousemove = function (e) {
 
 // wire between differentiator to envelopedetector
 
-let canvasWireBwDifferentiatorTodcLimiter = document.getElementById(
-  'canvasWireBwDifferentiatorTodcLimiter'
-);
+let canvasWireBwDifferentiatorTodcLimiter = document.getElementById('canvasWireBwDifferentiatorTodcLimiter');
 let differentiator_ctx = canvasWireBwDifferentiatorTodcLimiter.getContext('2d');
 
 let differentiator_canvasx = canvasWireBwDifferentiatorTodcLimiter.offsetLeft;
@@ -695,9 +597,7 @@ selectors.check.onmousemove = function (e) {
 
 // wire between envelopeDetector to dclimiter
 
-let canvasWireBwenvelopeDetToParamExtract = document.getElementById(
-  'canvasWireBwenvelopeDetToParamExtract'
-);
+let canvasWireBwenvelopeDetToParamExtract = document.getElementById('canvasWireBwenvelopeDetToParamExtract');
 let envelope_ctx = canvasWireBwenvelopeDetToParamExtract.getContext('2d');
 
 let envelope_canvasx = canvasWireBwenvelopeDetToParamExtract.offsetLeft;
@@ -787,9 +687,7 @@ selectors.connectionWireBwDifferentiatorTodcLimiter.onmousemove = function (e) {
 
 // wire between dcLimiter to parameter extraction
 
-let canvasWireBwdcLimiterToEnvelopeDetector = document.getElementById(
-  'canvasWireBwdcLimiterToEnvelopeDetector'
-);
+let canvasWireBwdcLimiterToEnvelopeDetector = document.getElementById('canvasWireBwdcLimiterToEnvelopeDetector');
 let dcLimiter_ctx = canvasWireBwdcLimiterToEnvelopeDetector.getContext('2d');
 
 let dcLimiter_canvasx = canvasWireBwdcLimiterToEnvelopeDetector.offsetLeft;
@@ -900,9 +798,7 @@ selectors.modulatingSubmit.onmousedown = () => {
       editModulatingSignal = true;
       console.log(obj);
     } else {
-      alert(
-        'updating modulating frequency and amplitude should be less than actual carrier frequency and amplitute'
-      );
+      alert('updating modulating frequency and amplitude should be less than actual carrier frequency and amplitute');
     }
   } else {
     alert('You have already selected modulating signal');
@@ -949,12 +845,7 @@ selectors.modulatingSubmit.onmouseup = () => {
         isModulatingSignalPlaced = false;
         modSig_isWireConnected = false;
         // removing the wire
-        modSig_ctx.clearRect(
-          0,
-          0,
-          canvasWireBwModsigToIntegrator.width,
-          canvasWireBwModsigToIntegrator.height
-        ); //clear canvas
+        modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
         //
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'Edit') {
@@ -974,12 +865,9 @@ selectors.modulatingSubmit.onmouseup = () => {
         // Output graph
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
-        let s =
-          'y(x) = ' +
-          `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
+        let s = 'y(x) = ' + `(${obj.modulating.amplitude} * \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
-        console.log(document.getElementById('calculator'));
         document.querySelector('.dcg-expressionlist').style.display = 'none';
 
         console.log(document.getElementById('calculator').childNodes.length);
@@ -1011,9 +899,7 @@ selectors.carrierSubmit.onmousedown = () => {
       imgBlock.setAttribute('class', 'carrier__signal--block');
       selectors.simulationArea.appendChild(imgBlock);
     } else {
-      alert(
-        'carrier frequency and amplitude should be greater than modulating frequency and amplitude'
-      );
+      alert('carrier frequency and amplitude should be greater than modulating frequency and amplitude');
     }
   } else if (editCarrierSignal) {
     if (
@@ -1025,9 +911,7 @@ selectors.carrierSubmit.onmousedown = () => {
       editCarrierSignal = true;
       console.log(obj);
     } else {
-      alert(
-        'updating carrier frequency and amplitude should be greater than modulating frequency and amplitude'
-      );
+      alert('updating carrier frequency and amplitude should be greater than modulating frequency and amplitude');
     }
   } else {
     alert('you have already selected carrier signal');
@@ -1050,10 +934,8 @@ selectors.carrierSubmit.onmouseup = () => {
       carrierSignal.style.left = event.pageX - carrierSignal.offsetWidth / 2 + 'px';
       carrierSignal.style.top = event.pageY - carrierSignal.offsetHeight / 2 + 'px';
 
-      selectors.carrierSignalRight.style.left =
-        event.pageX + 53 - selectors.carrierSignalRight.offsetWidth / 2 + 'px';
-      selectors.carrierSignalRight.style.top =
-        event.pageY + 1 - selectors.carrierSignalRight.offsetHeight / 2 + 'px';
+      selectors.carrierSignalRight.style.left = event.pageX + 53 - selectors.carrierSignalRight.offsetWidth / 2 + 'px';
+      selectors.carrierSignalRight.style.top = event.pageY + 1 - selectors.carrierSignalRight.offsetHeight / 2 + 'px';
     }
 
     document.addEventListener('mousemove', onMouseMove);
@@ -1074,12 +956,7 @@ selectors.carrierSubmit.onmouseup = () => {
         isCarrierSignalPlaced = false;
         carrierSig_isWireConnected = false;
         //remove wire
-        carrierSig_ctx.clearRect(
-          0,
-          0,
-          canvasWireBwCarsigToModulator.width,
-          canvasWireBwCarsigToModulator.height
-        ); //clear canvas
+        carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'Edit') {
         clearCarrierSignal = true;
@@ -1093,9 +970,7 @@ selectors.carrierSubmit.onmouseup = () => {
         }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
-        let s =
-          'y(x) = ' +
-          `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
+        let s = 'y(x) = ' + `(${obj.carrier.amplitude} * \\cos( 2 * \\pi * ${obj.carrier.frequency} * x))`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         selectors.model.value = 'mode';
@@ -1166,12 +1041,7 @@ selectors.frequencySensistivitySubmit.onmouseup = () => {
         isFreqSensistivityPlaced = false;
         freqSen_isWireConnected = false;
         //removing the wire
-        freqSen_ctx.clearRect(
-          0,
-          0,
-          canvasWireBwModsigToMultiplier.width,
-          canvasWireBwModsigToMultiplier.height
-        ); //clear canvas
+        freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
         //
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'Edit') {
@@ -1181,11 +1051,7 @@ selectors.frequencySensistivitySubmit.onmouseup = () => {
       } else if (selectors.model.value === 'output') {
         $('#freqSenOutput').modal('show');
         document.querySelector('.freqSenResult').innerHTML = `
-        <h2 class='fontStyle'>frequency sensistivity : ${(
-          2 *
-          3.14 *
-          obj.frequencySensistivity
-        ).toFixed(2)} Hz/v</h4>
+        <h2 class='fontStyle'>frequency sensistivity : ${(2 * 3.14 * obj.frequencySensistivity).toFixed(2)} Hz/v</h4>
       `;
         selectors.model.value = 'mode';
       }
@@ -1225,10 +1091,8 @@ selectors.integrator.onmouseup = () => {
   function onMouseMove(event) {
     integrator.style.left = event.pageX - integrator.offsetWidth / 2 + 'px';
     integrator.style.top = event.pageY - integrator.offsetHeight / 2 + 'px';
-    selectors.integratorBlockLeft.style.left =
-      event.pageX - 53 - selectors.integratorBlockLeft.offsetWidth / 2 + 'px';
-    selectors.integratorBlockLeft.style.top =
-      event.pageY + 1 - selectors.integratorBlockLeft.offsetHeight / 2 + 'px';
+    selectors.integratorBlockLeft.style.left = event.pageX - 53 - selectors.integratorBlockLeft.offsetWidth / 2 + 'px';
+    selectors.integratorBlockLeft.style.top = event.pageY + 1 - selectors.integratorBlockLeft.offsetHeight / 2 + 'px';
     selectors.integratorBlockBottom.style.left =
       event.pageX + 0 - selectors.integratorBlockBottom.offsetWidth / 2 + 'px';
     selectors.integratorBlockBottom.style.top =
@@ -1247,20 +1111,13 @@ selectors.integrator.onmouseup = () => {
     showAllBlocks();
 
     if (selectors.model.value === 'Delete') {
-      document
-        .getElementsByClassName('simulation-area')[0]
-        .removeChild(document.querySelector('.integrator--block'));
+      document.getElementsByClassName('simulation-area')[0].removeChild(document.querySelector('.integrator--block'));
       selectors.integratorBlockLeft.style.display = 'none';
       selectors.integratorBlockBottom.style.display = 'none';
       isIntegratorPlaced = false;
       integrator_isWireConnected = false;
       // removing the wire
-      modSig_ctx.clearRect(
-        0,
-        0,
-        canvasWireBwModsigToIntegrator.width,
-        canvasWireBwModsigToIntegrator.height
-      ); //clear canvas
+      modSig_ctx.clearRect(0, 0, canvasWireBwModsigToIntegrator.width, canvasWireBwModsigToIntegrator.height); //clear canvas
       integrator_ctx.clearRect(
         0,
         0,
@@ -1285,9 +1142,7 @@ selectors.integrator.onmouseup = () => {
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
         <h1 class='fontStyle'>frequency : ${obj.modulating.amplitude} Hz</h1>
-        <h1 class='fontStyle'>amplitude : ${
-          obj.modulating.amplitude / (2 * Math.PI * obj.modulating.frequency)
-        } v</h1>
+        <h1 class='fontStyle'>amplitude : ${obj.modulating.amplitude / (2 * Math.PI * obj.modulating.frequency)} v</h1>
       `;
         selectors.model.value = 'mode';
       } else {
@@ -1336,14 +1191,10 @@ selectors.multiplier.onmouseup = () => {
     multiplier.style.left = event.pageX - multiplier.offsetWidth / 2 + 'px';
     multiplier.style.top = event.pageY - multiplier.offsetHeight / 2 + 'px';
 
-    selectors.multiplierBlockLeft.style.left =
-      event.pageX - 53 - selectors.multiplierBlockLeft.offsetWidth / 2 + 'px';
-    selectors.multiplierBlockLeft.style.top =
-      event.pageY + 1 - selectors.multiplierBlockLeft.offsetHeight / 2 + 'px';
-    selectors.multiplierBlockTop.style.left =
-      event.pageX + 0 - selectors.multiplierBlockTop.offsetWidth / 2 + 'px';
-    selectors.multiplierBlockTop.style.top =
-      event.pageY - 38 - selectors.multiplierBlockTop.offsetHeight / 2 + 'px';
+    selectors.multiplierBlockLeft.style.left = event.pageX - 53 - selectors.multiplierBlockLeft.offsetWidth / 2 + 'px';
+    selectors.multiplierBlockLeft.style.top = event.pageY + 1 - selectors.multiplierBlockLeft.offsetHeight / 2 + 'px';
+    selectors.multiplierBlockTop.style.left = event.pageX + 0 - selectors.multiplierBlockTop.offsetWidth / 2 + 'px';
+    selectors.multiplierBlockTop.style.top = event.pageY - 38 - selectors.multiplierBlockTop.offsetHeight / 2 + 'px';
     selectors.multiplierBlockBottom.style.left =
       event.pageX + 0 - selectors.multiplierBlockBottom.offsetWidth / 2 + 'px';
     selectors.multiplierBlockBottom.style.top =
@@ -1363,9 +1214,7 @@ selectors.multiplier.onmouseup = () => {
     showAllBlocks();
 
     if (selectors.model.value === 'Delete') {
-      document
-        .getElementsByClassName('simulation-area')[0]
-        .removeChild(document.querySelector('.multiplier--block'));
+      document.getElementsByClassName('simulation-area')[0].removeChild(document.querySelector('.multiplier--block'));
       selectors.multiplierBlockLeft.style.display = 'none';
       selectors.multiplierBlockTop.style.display = 'none';
       selectors.multiplierBlockBottom.style.display = 'none';
@@ -1378,12 +1227,7 @@ selectors.multiplier.onmouseup = () => {
         canvasWireBwIntegratorToMultiplier.width,
         canvasWireBwIntegratorToMultiplier.height
       ); //clear canvas
-      freqSen_ctx.clearRect(
-        0,
-        0,
-        canvasWireBwModsigToMultiplier.width,
-        canvasWireBwModsigToMultiplier.height
-      ); //clear canvas
+      freqSen_ctx.clearRect(0, 0, canvasWireBwModsigToMultiplier.width, canvasWireBwModsigToMultiplier.height); //clear canvas
       multiplier_ctx.clearRect(
         0,
         0,
@@ -1460,19 +1304,13 @@ selectors.modulator.onmouseup = () => {
     modulator.style.left = event.pageX - modulator.offsetWidth / 2 + 'px';
     modulator.style.top = event.pageY - modulator.offsetHeight / 2 + 'px';
 
-    selectors.modulatorBlockTop.style.left =
-      event.pageX + 0 - selectors.modulatorBlockTop.offsetWidth / 2 + 'px';
-    selectors.modulatorBlockTop.style.top =
-      event.pageY - 38 - selectors.modulatorBlockTop.offsetHeight / 2 + 'px';
+    selectors.modulatorBlockTop.style.left = event.pageX + 0 - selectors.modulatorBlockTop.offsetWidth / 2 + 'px';
+    selectors.modulatorBlockTop.style.top = event.pageY - 38 - selectors.modulatorBlockTop.offsetHeight / 2 + 'px';
 
-    selectors.modulatorBlockLeft.style.left =
-      event.pageX - 53 - selectors.modulatorBlockLeft.offsetWidth / 2 + 'px';
-    selectors.modulatorBlockLeft.style.top =
-      event.pageY + 1 - selectors.modulatorBlockLeft.offsetHeight / 2 + 'px';
-    selectors.modulatorBlockRight.style.left =
-      event.pageX + 53 - selectors.modulatorBlockRight.offsetWidth / 2 + 'px';
-    selectors.modulatorBlockRight.style.top =
-      event.pageY + 1 - selectors.modulatorBlockRight.offsetHeight / 2 + 'px';
+    selectors.modulatorBlockLeft.style.left = event.pageX - 53 - selectors.modulatorBlockLeft.offsetWidth / 2 + 'px';
+    selectors.modulatorBlockLeft.style.top = event.pageY + 1 - selectors.modulatorBlockLeft.offsetHeight / 2 + 'px';
+    selectors.modulatorBlockRight.style.left = event.pageX + 53 - selectors.modulatorBlockRight.offsetWidth / 2 + 'px';
+    selectors.modulatorBlockRight.style.top = event.pageY + 1 - selectors.modulatorBlockRight.offsetHeight / 2 + 'px';
   }
 
   document.addEventListener('mousemove', onMouseMove);
@@ -1488,27 +1326,15 @@ selectors.modulator.onmouseup = () => {
     showAllBlocks();
 
     if (selectors.model.value === 'Delete') {
-      document
-        .getElementsByClassName('simulation-area')[0]
-        .removeChild(document.querySelector('.modulator--block'));
+      document.getElementsByClassName('simulation-area')[0].removeChild(document.querySelector('.modulator--block'));
       selectors.modulatorBlockLeft.style.display = 'none';
       selectors.modulatorBlockRight.style.display = 'none';
       selectors.modulatorBlockTop.style.display = 'none';
       isModulatorPlaced = false;
       modulator_isWireConnected = false;
       // removing wire
-      carrierSig_ctx.clearRect(
-        0,
-        0,
-        canvasWireBwCarsigToModulator.width,
-        canvasWireBwCarsigToModulator.height
-      ); //clear canvas
-      multiplier_ctx.clearRect(
-        0,
-        0,
-        canvasWireBwMultiplierToModulator.width,
-        canvasWireBwMultiplierToModulator.height
-      ); //clear canvas
+      carrierSig_ctx.clearRect(0, 0, canvasWireBwCarsigToModulator.width, canvasWireBwCarsigToModulator.height); //clear canvas
+      multiplier_ctx.clearRect(0, 0, canvasWireBwMultiplierToModulator.width, canvasWireBwMultiplierToModulator.height); //clear canvas
       modulator_ctx.clearRect(
         0,
         0,
@@ -1643,13 +1469,13 @@ selectors.differentiator.onmouseup = () => {
         }
         let elt = document.getElementById('calculator');
         let calculator = Desmos.GraphingCalculator(elt);
-        let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}(1+(${
-          obj.frequencySensistivity
-        }/${obj.carrier.frequency})*${obj.modulating.amplitude}* \\cos( 2 * \\pi * ${
+        let eqn = `${obj.carrier.amplitude}* 2 * \\pi * ${obj.carrier.frequency}(1+(${obj.frequencySensistivity}/${
+          obj.carrier.frequency
+        })*${obj.modulating.amplitude}* \\cos( 2 * \\pi * ${obj.modulating.frequency} * x))*\\sin(2 * \\pi * ${
+          obj.carrier.frequency
+        } * x+((${obj.frequencySensistivity * obj.modulating.amplitude})/${
           obj.modulating.frequency
-        } * x))*\\sin(2 * \\pi * ${obj.carrier.frequency} * x+((${
-          obj.frequencySensistivity * obj.modulating.amplitude
-        })/${obj.modulating.frequency})* \\sin( 2 * \\pi * ${obj.modulating.frequency} * x)-180)`;
+        })* \\sin( 2 * \\pi * ${obj.modulating.frequency} * x)-180)`;
         let s = 'y(x) = ' + `${eqn}`;
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
@@ -1769,9 +1595,7 @@ selectors.envelopeDetector.onmouseup = () => {
         calculator.setExpression({ id: 'graph1', latex: s });
         $('#output').modal('show');
         document.querySelector('.result').innerHTML = `
-        <h1 class='fontStyle'>amplitute : ${
-          obj.carrier.amplitude * 2 * Math.PI * obj.frequencySensistivity
-        }</h1>
+        <h1 class='fontStyle'>amplitute : ${obj.carrier.amplitude * 2 * Math.PI * obj.frequencySensistivity}</h1>
       `;
       } else {
         alert('please connect the wires');
@@ -1973,8 +1797,7 @@ selectors.parameterExtraction.onmouseup = () => {
           document.getElementById('calculator').removeChild(document.querySelector('.dcg-wrapper'));
         }
         $('#paraExtOutput').modal('show');
-        let beta =
-          (obj.frequencySensistivity * obj.modulating.amplitude) / obj.modulating.frequency;
+        let beta = (obj.frequencySensistivity * obj.modulating.amplitude) / obj.modulating.frequency;
         console.log(beta);
         let power = (obj.carrier.amplitude * obj.carrier.amplitude) / 2;
         let freqDeviation = obj.frequencySensistivity * obj.modulating.amplitude;
