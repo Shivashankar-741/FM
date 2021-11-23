@@ -18,8 +18,6 @@ selectors.searchBlock.addEventListener('change', function (e) {
   }
   selectors.searchBlock.value = '';
 
-  console.log(searchElement);
-
   if (searchElement !== undefined) {
     for (let i = 0; i < blockElements.length; i++) {
       if (i !== searchElement) {
