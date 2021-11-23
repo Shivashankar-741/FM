@@ -579,7 +579,6 @@ let canvasWireBwModulatorToDifferentiator = document.getElementById(
   'canvasWireBwModulatorToDifferentiator'
 );
 let modulator_ctx = canvasWireBwModulatorToDifferentiator.getContext('2d');
-
 let modulator_canvasx = canvasWireBwModulatorToDifferentiator.offsetLeft;
 let modulator_canvasy = canvasWireBwModulatorToDifferentiator.offsetTop;
 let modulator_initial_mousex = 0;
