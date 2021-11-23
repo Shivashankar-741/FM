@@ -42,8 +42,11 @@ export let parameterExtractionBlockLeft = document.querySelector(
 export let model = document.querySelector('#selectMode');
 
 export let resetBlocks = document.querySelector('.reset__blocks');
-
 export let modSig_close = document.querySelector('#modulatingSignal_close');
+
+// Blocks
+
+export let searchBlock = document.getElementById('searchBlock');
 
 // Wires
 export let connectionWireBwModsigToIntegrator = document.querySelector(
