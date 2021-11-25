@@ -1,3 +1,4 @@
+// Blocks
 export let modulatingFrequency = document.querySelector('#modulatingFrequency');
 export let modulatingAmplitute = document.querySelector('#modulatingAmplitute');
 export let modulatingSubmit = document.querySelector('#modulatingSubmit');
@@ -35,13 +36,11 @@ export let envelopeDetectorBlockLeft = document.querySelector('.envelopeDetector
 export let envelopeDetectorBlockRight = document.querySelector('.envelopeDetector--block__right');
 export let parameterExtractionBlockLeft = document.querySelector('.parameterExtraction--block__left');
 
-export let model = document.querySelector('#selectMode');
-
-export let resetBlocks = document.querySelector('.reset__blocks');
-export let modSig_close = document.querySelector('#modulatingSignal_close');
-
-// Blocks
 export let searchBlock = document.getElementById('searchBlock');
+export let resetBlocks = document.querySelector('.reset__blocks');
+
+export let model = document.querySelector('#selectMode');
+export let modSig_close = document.querySelector('#modulatingSignal_close');
 
 // Graphs
 export let downloadGraph = document.querySelector('#downloadGraph');

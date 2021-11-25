@@ -1,6 +1,5 @@
 import * as selectors from './domSelector/domSelector.js';
 import { obj } from './state/state.js';
-import { wire } from './wire.js';
 import { showAllBlocks } from './blocks/showBlocks.js';
 
 let isModulatingSignalPlaced = false;
@@ -21,6 +20,8 @@ selectors.modSig_close.onclick = function (e) {
   selectors.modulatingFrequency.value = obj.modulating.frequency;
 };
 
+//clear signal
+
 let clearModulatingSignal = false;
 let clearCarrierSignal = false;
 
@@ -37,6 +38,32 @@ window.onclick = function (e) {
     selectors.carrierAmplitute.value = obj.carrier.amplitude;
     selectors.carrierFrequency.value = obj.carrier.frequency;
     clearCarrierSignal = false;
+  }
+};
+
+// update signal
+let updatedModulatingSignal = false;
+let updateCarrierSignal = false;
+
+selectors.modulatingSubmit.onclick = () => {
+  if (updatedModulatingSignal) {
+    if (obj.modulating.frequency > 0 && obj.modulating.amplitude > 0) {
+      alert('you have updated the modulating signal');
+      updatedModulatingSignal = false;
+    } else {
+      alert('The frequency or amplitude should be greater than zero');
+    }
+  }
+};
+
+selectors.carrierSubmit.onclick = () => {
+  if (updateCarrierSignal) {
+    if (obj.carrier.frequency > 0 && obj.carrier.amplitude > 0) {
+      alert('you have updated the modulating signal');
+      updateCarrierSignal = false;
+    } else {
+      alert('The frequency or amplitude should be greater than zero');
+    }
   }
 };
 
@@ -780,7 +807,10 @@ selectors.check2.onmousemove = function (e) {
 let editModulatingSignal = false;
 
 selectors.modulatingSubmit.onmousedown = () => {
-  if (!isModulatingSignalPlaced) {
+  if (!parseInt(selectors.modulatingFrequency.value) > 0 || !parseInt(selectors.modulatingAmplitute.value) > 0) {
+    console.log('debugger');
+    alert('frequency or amplitude should be greater than zero');
+  } else if (!isModulatingSignalPlaced) {
     obj.modulating.frequency = parseInt(selectors.modulatingFrequency.value);
     obj.modulating.amplitude = parseInt(selectors.modulatingAmplitute.value);
     console.log(obj);
@@ -806,6 +836,7 @@ selectors.modulatingSubmit.onmousedown = () => {
 };
 
 selectors.modulatingSubmit.onmouseup = () => {
+  console.log('up');
   if (!editModulatingSignal) {
     isModulatingSignalPlaced = true;
     let modulatingSignal = document.querySelector('.modulating__signal--block');
@@ -851,11 +882,8 @@ selectors.modulatingSubmit.onmouseup = () => {
       } else if (selectors.model.value === 'Edit') {
         clearModulatingSignal = true;
         editModulatingSignal = true;
+        updatedModulatingSignal = true;
         $('#modulatingSignalModal').modal('show');
-        // $('#modulatingSignalModal').modal('show', {
-        //   backdrop: 'static',
-        //   keyboard: false,
-        // });
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'output') {
         document.querySelector('.outputTitle').innerText = `Output of modulating signal`;
@@ -886,7 +914,10 @@ selectors.modulatingSubmit.onmouseup = () => {
 let editCarrierSignal = false;
 
 selectors.carrierSubmit.onmousedown = () => {
-  if (!isCarrierSignalPlaced) {
+  if (!parseInt(selectors.carrierFrequency.value) > 0 || !parseInt(selectors.carrierAmplitute.value) > 0) {
+    console.log('debugger');
+    alert('frequency or amplitude should be greater than zero');
+  } else if (!isCarrierSignalPlaced) {
     if (
       selectors.carrierFrequency.value > obj.modulating.frequency &&
       selectors.carrierAmplitute.value > obj.modulating.amplitude
@@ -961,6 +992,7 @@ selectors.carrierSubmit.onmouseup = () => {
       } else if (selectors.model.value === 'Edit') {
         clearCarrierSignal = true;
         editCarrierSignal = true;
+        updateCarrierSignal = true;
         $('#carrierSignalModal').modal('show');
         selectors.model.value = 'mode';
       } else if (selectors.model.value === 'output') {

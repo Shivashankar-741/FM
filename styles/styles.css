@@ -49,13 +49,13 @@ body {
   width: 110px;
 }
 
-.simulation-area {
-  /* display: flex;
+/* .simulation-area { */
+/* display: flex;
   justify-content: center;
   align-items: center; */
 
-  /* border: 3px solid black; */
-}
+/* border: 3px solid black; */
+/* } */
 
 .footer {
   background-color: #333;
@@ -106,7 +106,7 @@ body {
 
 .custom_nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .footer {
@@ -119,6 +119,7 @@ body {
   bottom: 0;
   left: 0;
   padding: 5px;
+  min-width: 100%;
 }
 
 .footer_fs {
